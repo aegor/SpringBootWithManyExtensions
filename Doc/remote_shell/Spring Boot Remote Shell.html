@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)http://coffeaelectronica.com/blog/2015/spring-shell.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Spring Boot Remote Shell</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Christopher J. Stehno">
+    <meta name="keywords" content="java,groovy,blog">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="./Spring Boot Remote Shell_files/bootstrap.min.css" rel="stylesheet">
+    <link href="./Spring Boot Remote Shell_files/asciidoctor.css" rel="stylesheet">
+    <link href="./Spring Boot Remote Shell_files/base.css" rel="stylesheet">
+    <link href="./Spring Boot Remote Shell_files/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="http://coffeaelectronica.com/favicon.ico">
+  <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+   
+	
+		<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://coffeaelectronica.com/">CoffeaElectronica.com</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="http://coffeaelectronica.com/index.html">Home</a></li>
+            <li><a href="http://coffeaelectronica.com/about.html">About</a></li>
+            <li><a href="http://coffeaelectronica.com/archive.html">Archive</a></li>
+            
+             <li role="presentation" class="dropdown">
+	      <a class="dropdown-toggle" data-toggle="dropdown" href="http://coffeaelectronica.com/blog/2015/spring-shell.html#" role="button" aria-expanded="false">
+		Tags <span class="caret"></span>
+	      </a>
+	      <ul class="dropdown-menu" role="menu">
+		
+		  <li><a href="http://coffeaelectronica.com/tags/ant.html">ant</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/blog.html">blog</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/gradle.html">gradle</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/groovy.html">groovy</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/java.html">java</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/javascript.html">javascript</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/maven.html">maven</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/python.html">python</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/spring.html">spring</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/testing.html">testing</a></li>
+		
+		  <li><a href="http://coffeaelectronica.com/tags/vanilla.html">vanilla</a></li>
+		
+		
+	      </ul>
+	    </li>
+            
+            <li><a href="http://coffeaelectronica.com/feed.xml">Subscribe</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+    
+
+	
+	<div class="page-header">
+		<h1>Spring Boot Remote Shell</h1>
+	</div>
+
+	<p><em>07 November 2015</em> ~ <a href="http://coffeaelectronica.com/tags/blog.html">blog</a>, <a href="http://coffeaelectronica.com/tags/groovy.html">groovy</a>, <a href="http://coffeaelectronica.com/tags/spring.html">spring</a></p>
+
+	<p></p><div class="paragraph">
+<p><a href="http://projects.spring.io/spring-boot/">Spring Boot</a> comes with a ton of useful features that you can enable as needed, and in general the documentation is pretty good; however, sometimes it feels like they gloss over a feature that eventually realize is much more useful than it originally seemed. The remote shell support is one of those features.</p>
+</div>
+<div class="paragraph">
+<p>Let’s start off with a simple Spring Boot project based on the example provided with the Boot documentation. Our <code>build.gradle</code>
+file is:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="pln">buildscript </span><span class="pun">{</span><span class="pln">
+    repositories </span><span class="pun">{</span><span class="pln">
+        jcenter</span><span class="pun">()</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    dependencies </span><span class="pun">{</span><span class="pln">
+        classpath </span><span class="str">'org.springframework.boot:spring-boot-gradle-plugin:1.2.7.RELEASE'</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+version </span><span class="pun">=</span><span class="pln"> </span><span class="str">"0.0.1"</span><span class="pln">
+</span><span class="kwd">group</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"com.stehno"</span><span class="pln">
+
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'groovy'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'spring-boot'</span><span class="pln">
+
+sourceCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">8</span><span class="pln">
+targetCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">8</span><span class="pln">
+
+mainClassName </span><span class="pun">=</span><span class="pln"> </span><span class="str">'com.stehno.SampleController'</span><span class="pln">
+
+repositories </span><span class="pun">{</span><span class="pln">
+    jcenter</span><span class="pun">()</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+dependencies </span><span class="pun">{</span><span class="pln">
+    compile </span><span class="str">"org.codehaus.groovy:groovy-all:2.4.5"</span><span class="pln">
+
+    compile </span><span class="str">'org.springframework.boot:spring-boot-starter-web'</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+task wrapper</span><span class="pun">(</span><span class="pln">type</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Wrapper</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    gradleVersion </span><span class="pun">=</span><span class="pln"> </span><span class="str">"2.8"</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, our simple controller and starter class looks like:</p>
+</div>
+<div class="listingblock">
+<div class="title">SampleController.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="lit">@Controller</span><span class="pln">
+</span><span class="lit">@EnableAutoConfiguration</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">SampleController</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="lit">@RequestMapping</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">)</span><span class="pln">
+    </span><span class="lit">@ResponseBody</span><span class="pln">
+    </span><span class="typ">String</span><span class="pln"> home</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="str">'Hello World!'</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="pln">args</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">Exception</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">SampleController</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run it using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./gradlew clean build bootRun</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and you get your run of the mill "Hello world" application. For our demonstration purposes, we need something a bit more
+interesting. Let’s make the controller something like a "Message of the Day" server which will return a fixed configured
+message. Remove the <code>hello</code> controller action and add in the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="typ">String</span><span class="pln"> message </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Message for you, sir!'</span><span class="pln">
+
+</span><span class="lit">@RequestMapping</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">)</span><span class="pln"> </span><span class="lit">@ResponseBody</span><span class="pln">
+</span><span class="typ">String</span><span class="pln"> message</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    message
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which will return the static message "Message for you, sir!" for every request. Running the application now, will still
+be pretty uninteresting, but wait, it gets better.</p>
+</div>
+<div class="paragraph">
+<p>Now, we would like to have the ability to change the message as needed without rebuilding or even restarting the server.
+There are handful of ways to do this; however, I’m going to discuss one of the seemingly less used options…​ The
+<a href="http://www.crashub.org/">CRaSH Shell</a> integration provided in Spring Boot
+(<a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-remote-shell">43. Production Ready Remote Shell</a>).</p>
+</div>
+<div class="paragraph">
+<p>To add the remote shell support in Spring Boot, you add the following line to your <code>dependencies</code> block in your <code>build.gradle</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>compile 'org.springframework.boot:spring-boot-starter-remote-shell'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, when you run the application, you will see an extra line in the server log:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Using default password for shell access: 44b3556b-ff9f-4f82-9f1b-54a16da471d5</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since no password was configured, Boot has provided a randomly generated one for you (obviously you would configure this in a real system). You now have an SSH connection available to your application. Using the ssh client of your choice you can login using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ssh -p 2000 user@localhost</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which will ask you for the provided password. Once you have logged in you are connected to a secure shell running inside your application. You can run <code>help</code> at the prompt to get a list of available commands, which will look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; help
+Try one of these commands with the -h or --help switch:
+
+NAME       DESCRIPTION
+autoconfig Display auto configuration report from ApplicationContext
+beans      Display beans in ApplicationContext
+cron       manages the cron plugin
+dashboard  a monitoring dashboard
+egrep      search file(s) for lines that match a pattern
+endpoint   Invoke actuator endpoints
+env        display the term env
+filter     a filter for a stream of map
+java       various java language commands
+jmx        Java Management Extensions
+jul        java.util.logging commands
+jvm        JVM informations
+less       opposite of more
+mail       interact with emails
+man        format and display the on-line manual pages
+metrics    Display metrics provided by Spring Boot
+shell      shell related command
+sleep      sleep for some time
+sort       sort a map
+system     vm system properties commands
+thread     JVM thread commands
+help       provides basic help
+repl       list the repl or change the current repl</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, you get quite a bit of functionality right out of the box. I will leave the discussion of each of the provided commands to another post. What we are interested at this point is adding our own command to update the message displayed by our controller.</p>
+</div>
+<div class="paragraph">
+<p>The really interesting part of the shell integration is the fact that you can extend it with your own commands.</p>
+</div>
+<div class="paragraph">
+<p>Create a new directory <code>src/main/resources/commands</code> which is where your extended commands will live, and then add a simple starting point class for our command:</p>
+</div>
+<div class="listingblock">
+<div class="title">message.groovy</div>
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-goovy" data-lang="goovy"><span class="kwd">package</span><span class="pln"> commands
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">crsh</span><span class="pun">.</span><span class="pln">cli</span><span class="pun">.</span><span class="typ">Usage</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">crsh</span><span class="pun">.</span><span class="pln">cli</span><span class="pun">.</span><span class="typ">Command</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">crsh</span><span class="pun">.</span><span class="pln">command</span><span class="pun">.</span><span class="typ">InvocationContext</span><span class="pln">
+
+</span><span class="lit">@Usage</span><span class="pun">(</span><span class="str">'Interactions with the message of the day.'</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">class</span><span class="pln"> message </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="lit">@Usage</span><span class="pun">(</span><span class="str">'View the current message of the day.'</span><span class="pun">)</span><span class="pln">
+    </span><span class="lit">@Command</span><span class="pln">
+    </span><span class="kwd">def</span><span class="pln"> view</span><span class="pun">(</span><span class="typ">InvocationContext</span><span class="pln"> context</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'Hello'</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@Usage</code> annotations provide the help/usage documentation for the command, while the <code>@Command</code> annotation denotes that the <code>view</code> method is a command.</p>
+</div>
+<div class="paragraph">
+<p>Now, when you run the application and list the shell commands, you will see our new command added to the list:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>message    Interactions with the message of the day.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you run the command as <code>message view</code> you will get the static "Hello" message returned to you on the shell console.</p>
+</div>
+<div class="paragraph">
+<p>Okay, we need the ability to view our current message of the day. The <code>InvocationContext</code> has <code>attributes</code> which are propulated by Spring, one of which is <code>spring.beanfactory</code> a reference to the Spring <code>BeanFactory</code> for your application. We can access the current message of the day by replacing the content of the <code>view</code> method with the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-java" data-lang="java"><span class="typ">BeanFactory</span><span class="pln"> beans </span><span class="pun">=</span><span class="pln"> context</span><span class="pun">.</span><span class="pln">attributes</span><span class="pun">[</span><span class="str">'spring.beanfactory'</span><span class="pun">]</span><span class="pln">
+</span><span class="kwd">return</span><span class="pln"> beans</span><span class="pun">.</span><span class="pln">getBean</span><span class="pun">(</span><span class="typ">SampleController</span><span class="pun">).</span><span class="pln">message</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where we find our controller bean and simply read the <code>message</code> property. Running the application and the shell command now, yield:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Message for you, sir!</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While that is pretty cool, we are actually here to modify the message, not just view it and this is just as easy. Add a new command named <code>update</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="lit">@Usage</span><span class="pun">(</span><span class="str">'Update the current message of the day.'</span><span class="pun">)</span><span class="pln">
+</span><span class="lit">@Command</span><span class="pln">
+</span><span class="kwd">def</span><span class="pln"> update</span><span class="pun">(</span><span class="pln">
+    </span><span class="typ">InvocationContext</span><span class="pln"> context</span><span class="pun">,</span><span class="pln">
+    </span><span class="lit">@Usage</span><span class="pun">(</span><span class="str">'The new message'</span><span class="pun">)</span><span class="pln"> </span><span class="lit">@Argument</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> message
+</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="typ">BeanFactory</span><span class="pln"> beans </span><span class="pun">=</span><span class="pln"> context</span><span class="pun">.</span><span class="pln">attributes</span><span class="pun">[</span><span class="str">'spring.beanfactory'</span><span class="pun">]</span><span class="pln">
+    beans</span><span class="pun">.</span><span class="pln">getBean</span><span class="pun">(</span><span class="typ">SampleController</span><span class="pun">).</span><span class="pln">message </span><span class="pun">=</span><span class="pln"> message
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Message updated to: $message"</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, rebuild/restart the server and start up the shell. If you execute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>message update "This is cool!"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will update the configured message, which you can verify using the <code>message view</code> command, or better yet, you can hit your server and see that the returned message has been updated…​ no restart required. Indeed, this is cool.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+You can find a lot more information about writing your own commands in the CRaSH documentation for <a href="http://www.crashub.org/1.3/reference.html#developping_commands">Developing Commands</a>. There is a lot of functionality that I am not covering here.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>At this point, we are functionally complete. We can view and update the message of the day without requiring a restart of the server. But, there are still some added goodies provided by the shell, especially around shell UI support - yes, it’s text, but it can still be pretty and one of the ways CRaSH allows you to pretty things up is with colors and formatting via styles and the <code>UIBuilder</code> (which is sadly under-documented).</p>
+</div>
+<div class="paragraph">
+<p>Let’s add another property to our controller to make things more interesting. Just add a <code>Date lastUpdated = new Date()</code> field. This will give us two properties to play with. Update the <code>view</code> action as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="typ">SampleController</span><span class="pln"> controller </span><span class="pun">=</span><span class="pln"> context</span><span class="pun">.</span><span class="pln">attributes</span><span class="pun">[</span><span class="str">'spring.beanfactory'</span><span class="pun">].</span><span class="pln">getBean</span><span class="pun">(</span><span class="typ">SampleController</span><span class="pun">)</span><span class="pln">
+
+</span><span class="typ">String</span><span class="pln"> message </span><span class="pun">=</span><span class="pln"> controller</span><span class="pun">.</span><span class="pln">message
+</span><span class="typ">String</span><span class="pln"> date </span><span class="pun">=</span><span class="pln"> controller</span><span class="pun">.</span><span class="pln">lastUpdated</span><span class="pun">.</span><span class="pln">format</span><span class="pun">(</span><span class="str">'MM/dd/yyyy HH:mm'</span><span class="pun">)</span><span class="pln">
+
+</span><span class="kwd">out</span><span class="pun">.</span><span class="kwd">print</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">UIBuilder</span><span class="pun">().</span><span class="pln">table</span><span class="pun">(</span><span class="pln">separator</span><span class="pun">:</span><span class="pln"> dashed</span><span class="pun">,</span><span class="pln"> overflow</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Overflow</span><span class="pun">.</span><span class="pln">HIDDEN</span><span class="pun">,</span><span class="pln"> rightCellPadding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    header</span><span class="pun">(</span><span class="pln">decoration</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">,</span><span class="pln"> foreground</span><span class="pun">:</span><span class="pln"> black</span><span class="pun">,</span><span class="pln"> background</span><span class="pun">:</span><span class="pln"> white</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        label</span><span class="pun">(</span><span class="str">'Date'</span><span class="pun">)</span><span class="pln">
+        label</span><span class="pun">(</span><span class="str">'Message'</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    row </span><span class="pun">{</span><span class="pln">
+        label</span><span class="pun">(</span><span class="pln">date</span><span class="pun">,</span><span class="pln"> foreground</span><span class="pun">:</span><span class="pln"> green</span><span class="pun">)</span><span class="pln">
+        label</span><span class="pun">(</span><span class="pln">message</span><span class="pun">,</span><span class="pln"> foreground</span><span class="pun">:</span><span class="pln"> yellow</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We still retrieve the instance of the controller as before; however, now our output rendering is a bit more complicated, though still pretty understandable. We are creating a new <code>UIBuilder</code> for a <code>table</code> and then applying the <code>header</code> and <code>row</code> contents to it. It’s actually a very powerful construct, I just had to dig around in the project source code to actually figure out how to make it work.</p>
+</div>
+<div class="paragraph">
+<p>You will also need to update the <code>update</code> command to set the new date field:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight prettyprinted"><code class="language-groovy" data-lang="groovy"><span class="typ">SampleController</span><span class="pln"> controller </span><span class="pun">=</span><span class="pln"> context</span><span class="pun">.</span><span class="pln">attributes</span><span class="pun">[</span><span class="str">'spring.beanfactory'</span><span class="pun">].</span><span class="pln">getBean</span><span class="pun">(</span><span class="typ">SampleController</span><span class="pun">)</span><span class="pln">
+controller</span><span class="pun">.</span><span class="pln">message </span><span class="pun">=</span><span class="pln"> message
+controller</span><span class="pun">.</span><span class="pln">lastUpdated </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Date</span><span class="pun">()</span><span class="pln">
+
+</span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Message updated to: $message"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have that built and running you can run the <code>message view</code> command and get a much nicer multi-colored table output.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>&gt; message view
+Date             Message
+-------------------------------------------------------------
+11/05/2015 10:37 And now for something completely different.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which puts wraps up what we are trying to do here and even puts a bow on it. You can find more information on the remote shell configuration options in the Spring Boot documentation in <a href="http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#common-application-properties">Appendix A: Common Application Properties</a>. This is where you can configure the port, change the authentication settings, and even disable some of the default provided commands.</p>
+</div>
+<div class="paragraph">
+<p>The remote shell support is one of the more interesting, but underused features in Spring Boot. Before Spring Boot was around, I was working on a project where we did a similar integration of CRaSH shell with a Spring-based server project and it provided a wealth of interesting and useful opportunities to dig into our running system and observe or make changes. Very powerful.</p>
+</div><p></p>
+
+	<hr>
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">© 2015 <a href="https://plus.google.com/+ChristopherStehno">Christopher J. Stehno</a> | Mixed with <a href="http://getbootstrap.com/">Bootstrap v3.1.1</a> | Baked with <a href="http://jbake.org/">JBake v2.3.2</a></p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script async="" src="./Spring Boot Remote Shell_files/analytics.js"></script><script src="./Spring Boot Remote Shell_files/jquery-1.11.1.min.js"></script>
+    <script src="./Spring Boot Remote Shell_files/bootstrap.min.js"></script>
+    <script src="./Spring Boot Remote Shell_files/prettify.js"></script>
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-27165855-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+  
+<div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>

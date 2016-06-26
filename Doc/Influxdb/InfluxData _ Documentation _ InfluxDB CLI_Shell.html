@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://docs.influxdata.com/influxdb/v0.9/tools/shell/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>InfluxData | Documentation | InfluxDB CLI/Shell</title>
+        <meta name="description" content="Documentation for the InfluxData products InfluxDB, Telegraf, Chronograf and Kapacitor, along with the Hosted and Enterprise services">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="shortcut icon" href="https://docs.influxdata.com/img/favicon.ico" type="image/x-icon">
+
+        <link rel="stylesheet" href="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/docsearch.min.css">
+        <link rel="stylesheet" title="dark-theme" href="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/docs-default.css">
+        <link rel="alternate stylesheet" title="light-theme" href="https://docs.influxdata.com/css/docs-light.css">
+        <link rel="stylesheet" href="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/influxdb.css" type="text/css">
+        
+        <link href="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/css" rel="stylesheet" type="text/css">
+
+        
+        
+
+        <meta name="application-name" content="InfluxData">
+        <meta name="msapplication-TileColor" content="">
+        <meta name="msapplication-TileImage" content="https://docs.influxdata.com/img/logo.png">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@influxdb">
+        <meta name="twitter:title" content="InfluxData Documentation">
+        <meta name="twitter:description" content="Documentation for InfluxDB, Telegraf, Chronograf, and Kapacitor">
+        <meta name="twitter:image" content="https://docs.influxdata.com/img/logo.png">
+
+        <meta property="og:title" content="InfluxData Documentation">
+        <meta property="og:description" content="Documentation for InfluxDB, Telegraf, Chronograf, and Kapacitor">
+        <meta property="og:url" content="https://docs.influxdata.com/">
+        <meta property="og:image" content="https://docs.influxdata.com/img/logo.png">
+
+        <meta name="Copyright" content="InfluxData Inc.">
+
+	<script async="" src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/analytics.js"></script><script async="" src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/16929"></script><script src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/js.cookie.js" type="text/javascript"></script>
+	<script src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/docs-themes.js" type="text/javascript"></script>
+	<script type="text/javascript">set_style_from_cookie();</script>
+    <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+    <body>
+    <nav class="navbar" id="main-nav">
+    <a href="https://docs.influxdata.com/" target="_blank" title="Go to Documentation Home"><span class="icon logotype navbar--logo"></span></a>
+    
+
+<div class="navbar--hamburger" id="navbar--hamburger">
+    <div class="navbar--hamburger-bar top"></div>
+    <div class="navbar--hamburger-bar middle"></div>
+    <div class="navbar--hamburger-bar bottom"></div>
+</div>
+<div class="navbar--product-dropdown" id="navbar--dropdown">
+    <div class="navbar--current-product">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+influxdb v0.9
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+    <div class="navbar--product-dropdown-caret"><span class="icon arrow-down"></span></div>
+</div>
+<div class="navbar--product-container" id="navbar--product-container">
+    <div class="navbar--dropdown-dismiss" id="navbar--dropdown-dismiss"></div>
+    <ul class="navbar--product-menu" id="navbar--product-menu">
+        
+        <li><a class="navbar--product" href="https://docs.influxdata.com/telegraf/v0.13/">Telegraf</a></li>
+        
+        <li><a class="navbar--product" href="https://docs.influxdata.com/influxdb/v0.13/">InfluxDB</a></li>
+        
+        <li><a class="navbar--product" href="https://docs.influxdata.com/chronograf/v0.13/">Chronograf</a></li>
+        
+        <li><a class="navbar--product" href="https://docs.influxdata.com/kapacitor/v0.13/">Kapacitor</a></li>
+        
+        <li class="navbar--product-divider"></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/use-cases/" target="_blank">►&nbsp; See how the TICK Stack is used</a></li>
+        <li><a class="navbar--product external" href="https://influxdata.com/pricing/" target="_blank">►&nbsp; Need help using our stack?</a></li>
+    </ul>
+</div>
+
+
+    <div class="navbar--search" id="navbar--search">
+	<span class="algolia-autocomplete" style="position: relative; display: inline-block; direction: ltr;"><input class="navbar--search-field aa-input" id="algolia-search-input" type="text" accesskey="s" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" dir="auto" placeholder="Search the docs..." style="position: relative; vertical-align: top;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Roboto, Helvetica, Arial, Tahoma, Verdana, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 500; word-spacing: 0px; letter-spacing: normal; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><span class="aa-dropdown-menu" style="position: absolute; top: 100%; z-index: 100; display: none; left: 0px; right: auto;"><div class="aa-dataset-0"></div></span></span>
+</div>
+    <button class="theme-switcher" id="theme-switch-light" onclick="switch_style(&#39;light-theme&#39;);return false;"><span class="icon sun2"></span></button>
+<button class="theme-switcher" id="theme-switch-dark" onclick="switch_style(&#39;dark-theme&#39;);return false;"><span class="icon moon"></span></button>
+
+
+</nav>
+
+
+
+<article class="article">
+	
+	<section class="article-section article-heading">
+		<div class="article-content">
+			<h1>InfluxDB CLI/Shell</h1>
+		</div>
+	</section>
+	
+	<section class="article-section">
+		<div class="article-content">
+			
+<div class="old-version">
+
+    <strong>Warning!</strong> This page documents an old version of InfluxDB, which is no longer actively developed. <a href="https://docs.influxdata.com/influxdb/v0.13/">InfluxDB v0.13</a> is the most recent stable version of InfluxDB.
+
+</div>
+
+
+			
+
+<p>The InfluxDB’s command line interface (<code>influx</code>) is an interactive shell for the database, and is part of all InfluxDB distributions starting with version 0.9.0.
+Use <code>influx</code> to write data (manually or from a file), query data interactively, and view query output in different formats.</p>
+
+<ul>
+<li><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#launch-influx">Launch <code>influx</code></a></li>
+<li><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#influx-arguments"><code>influx</code> Arguments</a></li>
+<li><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#influx-commands"><code>influx</code> Commands</a></li>
+</ul>
+
+<h2 id="launch-influx"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#launch-influx">Launch influx</a></h2>
+
+<p>If you <a href="https://influxdata.com/downloads/">install</a> InfluxDB via a package manager, the CLI is installed at <code>/usr/bin/influx</code> (<code>/usr/local/bin/influx</code> on OS X).</p>
+
+<p>Access the CLI by starting the <code>influxd</code> process and entering <code>influx</code> in your terminal.
+Once you’ve entered the shell and successfully connected to an InfluxDB node, you’ll see the following output:
+<br>
+<br></p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx
+Connected to http://localhost:8086 version 0.9.x
+InfluxDB shell 0.9.x
+</code></pre>
+
+<h2 id="influx-arguments"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#influx-arguments">influx Arguments</a></h2>
+
+<p>There are several arguments you can pass into <code>influx</code> when starting.
+List them with <code>$ influx --help</code>.
+The list below offers a brief discussion of each option.
+We provide detailed information on <code>-execute</code>, <code>-format</code>, and <code>-import</code> at the end of this section.</p>
+
+<p><code>-compressed</code><br>
+Set to true if the import file is compressed.
+Use with <code>-import</code>.</p>
+
+<p><code>-consistency 'any|one|quorum|all'</code><br>
+Set the write consistency level.</p>
+
+<p><code>-database 'database name'</code><br>
+The database to which <code>influx</code> connects.</p>
+
+<p><code>-execute 'command'</code><br>
+Execute an <a href="https://docs.influxdata.com/influxdb/v0.9/query_language/data_exploration/">InfluxQL</a> command and quit.
+See <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#execute-an-influxql-command-and-quit-with-execute">-execute</a>.</p>
+
+<p><code>-format 'json|csv|column'</code><br>
+Specifies the format of the server responses.
+See <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#specify-the-format-of-the-server-responses-with-format">-format</a>.</p>
+
+<p><code>-host 'host name'</code><br>
+The host to which <code>influx</code> connects.
+By default, InfluxDB runs on localhost.</p>
+
+<p><code>-import</code><br>
+Import new data from a file or import a previously <a href="https://github.com/influxdb/influxdb/blob/master/importer/README.md">exported</a> database from a file.
+See <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#import-data-from-a-file-with-import">-import</a>.</p>
+
+<p><code>-password 'password'</code><br>
+The password <code>influx</code> uses to connect to the server.
+<code>influx</code> will prompt for a password if you leave it blank (<code>-password ''</code>).</p>
+
+<p><code>-path</code><br>
+The path to the file to import.
+Use with <code>-import</code>.</p>
+
+<p><code>-port 'port #'</code><br>
+The port to which <code>influx</code> connects.
+By default, InfluxDB runs on port <code>8086</code>.</p>
+
+<p><code>-pps</code><br>
+How many points per second the import will allow.
+By default, pps is zero and influx will not throttle importing.
+Use with <code>-import</code>.</p>
+
+<p><code>-precision 'rfc3339|h|m|s|ms|u|ns'</code><br>
+Specifies the format/precision of the timestamp: <code>rfc3339</code> (<code>YYYY-MM-DDTHH:MM:SS.nnnnnnnnnZ</code>), <code>h</code> (hours), <code>m</code> (minutes), <code>s</code> (seconds), <code>ms</code> (milliseconds), <code>u</code> (microseconds), <code>ns</code> (nanoseconds).
+Precision defaults to nanoseconds.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Setting the precision to <code>rfc3339</code> (<code>-precision rfc3339</code>) only works with the <code>-execute</code> option.
+It does not work with the <code>-import</code> option.
+It also doesn’t change the format of the timestamps displayed in the <code>influx</code> shell.
+To change the format of the <code>influx</code> shell’s timestamps to <code>rfc3339</code>, see <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#influx-commands">influx Commands</a>.
+All other precision formats (e.g.
+<code>h</code>,<code>m</code>,<code>s</code>,<code>ms</code>,<code>u</code>, and <code>ns</code>) work with the <code>-execute</code> and <code>-import</code> options, and they’ll change the format of the timestamps displayed in the <code>influx</code> shell.</p>
+</blockquote>
+
+<p><code>-pretty</code><br>
+Turns on pretty print for the <code>json</code> format.</p>
+
+<p><code>-ssl</code><br>
+Use https for requests.</p>
+
+<p><code>-username 'username'</code><br>
+The username <code>influx</code> uses to connect to the server.</p>
+
+<p><code>-version</code><br>
+Display the InfluxDB version and exit.</p>
+
+<h3 id="execute-an-influxql-command-and-quit-with-execute"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#execute-an-influxql-command-and-quit-with-execute">Execute an InfluxQL command and quit with -execute</a></h3>
+
+<p>Execute queries that don’t require a database specification:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -execute 'SHOW DATABASES'
+name: databases
+---------------
+name
+NOAA_water_database
+_internal
+telegraf
+pirates
+</code></pre>
+
+<p>Execute queries that do require a database specification, and change the timestamp precision:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -execute 'SELECT * FROM h2o_feet LIMIT 3' -database=NOAA_water_database -precision=rfc3339
+name: h2o_feet
+--------------
+time			               level description	    location	     water_level
+2015-08-18T00:00:00Z	 below 3 feet		        santa_monica	 2.064
+2015-08-18T00:00:00Z	 between 6 and 9 feet  coyote_creek  8.12
+2015-08-18T00:06:00Z	 between 6 and 9 feet  coyote_creek  8.005
+</code></pre>
+
+<h3 id="specify-the-format-of-the-server-responses-with-format"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#specify-the-format-of-the-server-responses-with-format">Specify the format of the server responses with -format</a></h3>
+
+<p>The default format is <code>column</code>:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -format=column
+[...]
+&gt; SHOW DATABASES
+name: databases
+---------------
+name
+NOAA_water_database
+_internal
+telegraf
+pirates
+</code></pre>
+
+<p>Change the format to <code>csv</code>:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -format=csv
+[...]
+&gt; SHOW DATABASES
+name,name
+databases,NOAA_water_database
+databases,_internal
+databases,telegraf
+databases,pirates
+</code></pre>
+
+<p>Change the format to <code>json</code>:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -format=json
+[...]
+&gt; SHOW DATABASES
+{"results":[{"series":[{"name":"databases","columns":["name"],"values":[["NOAA_water_database"],["_internal"],["telegraf"],["pirates"]]}]}]}
+</code></pre>
+
+<p>Change the format to <code>json</code> and turn on pretty print:</p>
+
+<pre class=" language-bash"><code class=" language-bash">$ influx -format=json -pretty
+[...]
+&gt; SHOW DATABASES
+{
+    "results": [
+        {
+            "series": [
+                {
+                    "name": "databases",
+                    "columns": [
+                        "name"
+                    ],
+                    "values": [
+                        [
+                            "NOAA_water_database"
+                        ],
+                        [
+                            "_internal"
+                        ],
+                        [
+                            "telegraf"
+                        ],
+                        [
+                            "pirates"
+                        ]
+                    ]
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+
+<h3 id="import-data-from-a-file-with-import"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#import-data-from-a-file-with-import">Import data from a file with -import</a></h3>
+
+<p>The import file has two sections:</p>
+
+<ul>
+<li><strong>DDL (Data Definition Language)</strong>: Contains the <a href="https://docs.influxdata.com/influxdb/v0.9/query_language/database_management/">InfluxQL commands</a> for creating the relevant <a href="https://docs.influxdata.com/influxdb/v0.9/concepts/glossary/">database</a> and managing the <a href="https://docs.influxdata.com/influxdb/v0.9/concepts/glossary/#retention-policy-rp">retention policy</a>.
+If your database and retention policy already exist, your file can skip this section.</li>
+<li><strong>DML (Data Manipulation Language)</strong>: Lists the relevant database and (if desired) retention policy and contains the data in <a href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/line/">line protocol</a>.</li>
+</ul>
+
+<p>Example:</p>
+
+<p>File (<code>datarrr.txt</code>):</p>
+
+<pre><code># DDL
+CREATE DATABASE IF NOT EXISTS pirates
+CREATE RETENTION POLICY oneday ON pirates DURATION 1d REPLICATION 1
+
+# DML
+# CONTEXT-DATABASE: pirates
+# CONTEXT-RETENTION-POLICY: oneday
+
+treasures,captain_id=dread_pirate_roberts value=801 1439856000
+treasures,captain_id=flint value=29 1439856000
+treasures,captain_id=sparrow value=38 1439856000
+treasures,captain_id=tetra value=47 1439856000
+treasures,captain_id=crunch value=109 1439858880
+</code></pre>
+
+<p>Command:</p>
+
+<pre><code>$influx -import -path=datarrr.txt -precision=s
+</code></pre>
+
+<p>Results:</p>
+
+<pre><code>2015/12/22 12:25:06 Processed 2 commands
+2015/12/22 12:25:06 Processed 5 inserts
+2015/12/22 12:25:06 Failed 0 inserts
+</code></pre>
+
+<blockquote>
+<p><strong>Note:</strong> For large datasets, <code>influx</code> writes out a status message every 100,000 points.
+For example:
+<br>
+<br></p>
+
+<pre><code>2015/08/21 14:48:01 Processed 3100000 lines.
+Time elapsed: 56.740578415s.
+Points per second (PPS): 54634
+</code></pre>
+</blockquote>
+
+<p>Things to note about <code>-import</code>:</p>
+
+<ul>
+<li>Allow the database to ingest points by using <code>-pps</code> to set the number of points per second allowed by the import.
+By default, pps is zero and <code>influx</code> does not throttle importing.</li>
+<li>Imports work with <code>.gz</code> files, just include <code>-compressed</code> in the command.</li>
+<li>If your data file has more than 5,000 points, it may be necessary to split that file into several files in order to write your data in batches to InfluxDB.
+By default, the HTTP request times out after five seconds.
+InfluxDB will still attempt to write the points after that time out but there will be no confirmation that they were successfully written.</li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> For how to export data from InfluxDB version 0.8.9, see <a href="https://github.com/influxdb/influxdb/blob/master/importer/README.md">Exporting from 0.8.9</a>.
+The exported data can be imported into InfluxDB versions 0.9.3+ as discussed above.</p>
+</blockquote>
+
+<h2 id="influx-commands"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#influx-commands">influx Commands</a></h2>
+
+<p>Enter <code>help</code> in the CLI for a partial list of the available commands.</p>
+
+<h3 id="commands"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#commands">Commands</a></h3>
+
+<p>The list below offers a brief discussion of each command.
+We provide detailed information on <code>insert</code> at the end of this section.</p>
+
+<p><code>auth</code><br>
+Prompts you for your username and password.
+<code>influx</code> uses those credentials when querying a database.</p>
+
+<p><code>connect &lt;host:port&gt;</code><br>
+Connect to a different server without exiting the shell.
+By default, <code>influx</code> connects to <code>localhost:8086</code>.
+If you do not specify either the host or the port, <code>influx</code> assumes the default setting for the missing attribute.</p>
+
+<p><code>consistency &lt;level&gt;</code><br>
+Sets the write consistency level: <code>any</code>, <code>one</code>, <code>quorum</code>, or <code>all</code>.</p>
+
+<p><code>exit</code><br>
+Quits the <code>influx</code> shell.</p>
+
+<p><code>format &lt;format&gt;</code><br>
+Specifies the format of the server responses: <code>json</code>, <code>csv</code>, or <code>column</code>.
+See the description of <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#specify-the-format-of-the-server-responses-with-format">-format</a> for examples of each format.</p>
+
+<p><code>history</code><br>
+Displays your command history.
+To use the history while in the shell, simply use the “up” arrow.
+<code>influx</code> stores your last 1,000 commands in your home directory in <code>.influx_history</code>.</p>
+
+<p><code>insert</code><br>
+Write data using line protocol.
+See <a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#write-data-to-influxdb-with-insert">insert</a>.</p>
+
+<p><code>precision &lt;format&gt;</code><br>
+Specifies the format/precision of the timestamp: <code>rfc3339</code> (<code>YYYY-MM-DDTHH:MM:SS.nnnnnnnnnZ</code>), <code>h</code> (hours), <code>m</code> (minutes), <code>s</code> (seconds), <code>ms</code> (milliseconds), <code>u</code> (microseconds), <code>ns</code> (nanoseconds).
+Precision defaults to nanoseconds.</p>
+
+<p><code>pretty</code><br>
+Turns on pretty print for the <code>json</code> format.</p>
+
+<p><code>settings</code><br>
+Outputs the current settings for the shell including the <code>Host</code>, <code>Username</code>, <code>Database</code>, <code>Pretty</code> status, <code>Format</code>, and <code>Write Consistency</code>.</p>
+
+<p><code>use &lt;db_name&gt;</code><br>
+Sets the current database.
+Once <code>influx</code> sets the current database, there is no need to specify that database in queries.
+<code>influx</code> automatically queries the current database and its <code>DEFAULT</code> retention policy.</p>
+
+<h4 id="write-data-to-influxdb-with-insert">Write data to InfluxDB with <code>insert</code></h4>
+
+<p>Enter <code>insert</code> followed by the data in <a href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/line/">line protocol</a> to write data to InfluxDB.
+Use <code>insert into &lt;retention policy&gt; &lt;line protocol&gt;</code> to write data to a specific <a href="https://docs.influxdata.com/influxdb/v0.9/concepts/glossary/#retention-policy-rp">retention policy</a>.</p>
+
+<p>Write data to a single field in the measurement <code>treasures</code> with the tag <code>captain_id = pirate_king</code>.
+<code>influx</code> automatically writes the point to the database’s <code>DEFAULT</code> retention policy.</p>
+
+<pre><code>&gt; INSERT treasures,captain_id=pirate_king value=2
+&gt;
+</code></pre>
+
+<p>Write the same point to the already-existing retention policy <code>oneday</code>:</p>
+
+<pre><code>&gt; INSERT INTO oneday treasures,captain_id=pirate_king value=2
+Using retention policy oneday
+&gt;
+</code></pre>
+
+<p>Note that once you specify a retention policy with <code>INSERT INTO</code>, <code>influx</code> automatically writes data to that retention policy.
+This occurs even for later <code>INSERT</code> entries that do not include an <code>INTO</code> clause.</p>
+
+<h3 id="queries"><a href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/#queries">Queries</a></h3>
+
+<p>Execute all InfluxQL queries in <code>influx</code>.
+See <a href="https://docs.influxdata.com/influxdb/v0.9/query_language/data_exploration/">Data Exploration</a>, <a href="https://docs.influxdata.com/influxdb/v0.9/query_language/schema_exploration/">Schema Exploration</a>, <a href="https://docs.influxdata.com/influxdb/v0.9/query_language/database_management/">Database Management</a>, <a href="https://docs.influxdata.com/influxdb/v0.9/administration/authentication_and_authorization/">Authentication and Authorization</a> for InfluxQL documentation.</p>
+
+		</div>
+	</section>
+	
+
+</article>
+<div class="sidebar--toggle" id="sidebar--toggle"><span class="icon search"></span> &nbsp;Browse InfluxDB Documentation</div>
+<div class="sidebar--mask-container" id="sidebar--mask-container">
+	<div class="sidebar--mask" id="sidebar--mask"></div>
+</div>
+<aside class="sidebar" id="sidebar">
+	<section class="sidebar--section">
+		<p class="sidebar--support-desc"><strong>Need immediate answers?</strong><br>Get support from the experts</p>
+		<a class="sidebar--support-ad" href="https://influxdata.com/pricing/#product-subscriptions" target="_blank">Get Support</a>
+	</section>
+	
+	
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+	
+		
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/introduction/">Introduction</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://influxdata.com/downloads/#influxdb" target="blank">Download</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/introduction/installation/">Installation</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/introduction/getting_started/">Getting Started</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/guides/">Guides</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/guides/writing_data/">Writing Data</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/guides/querying_data/">Querying Data</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/guides/downsampling_and_retention/">Downsampling and Data Retention</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/guides/hardware_sizing/">Hardware Sizing Guidelines</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/guides/clustering/">Clustering</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/concepts/">Concepts</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/key_concepts/">Key Concepts</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/glossary/">Glossary of Terms</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/crosswalk/">Comparison to SQL</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/08_vs_09/">Differences Between InfluxDB 0.8 and InfluxDB 0.9</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/schema_and_data_layout/">Schema Design</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/insights_tradeoffs/">Design Insights and Tradeoffs in InfluxDB</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/api/">API Endpoints &amp; Ports</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/concepts/storage_engine/">Storage Engine</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/troubleshooting/">Troubleshooting</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/troubleshooting/frequently_encountered_issues/">Frequently Encountered Issues</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/troubleshooting/system_monitoring/">System Monitoring</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/">Write Protocols and Plugins</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/line/">Line Protocol</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/write_syntax/">Write Syntax</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/json/">JSON Protocol</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/udp/">Service - UDP</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/graphite/">Service - Graphite</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/collectd/">Service - CollectD</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/write_protocols/opentsdb/">Service - OpenTSDB</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/query_language/">Query Language</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/data_exploration/">Data Exploration</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/schema_exploration/">Schema Exploration</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/database_management/">Database Management</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/functions/">Functions</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/continuous_queries/">Continuous Queries</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/continuous_queries_config/">Configuring Continuous Queries</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/spec/">InfluxDB Query Language Specification</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/query_syntax/">Query Syntax</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/query_language/math_operators/">Mathematical Operators</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/clients/">Client Libraries</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/clients/api/">HTTP API Client Libraries</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/administration/">Administration</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/authentication_and_authorization/">Authentication and Authorization</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/logs/">Logs</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/backup_and_restore/">Backup and Restore</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/upgrading/">Upgrading from previous versions</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/config/">Database Configuration</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/administration/statistics/">Server Monitoring</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/tools/">Tools</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/tools/shell/">InfluxDB CLI/Shell</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/tools/web_admin/">Web Admin Interface</a>
+						
+						  <a class="sidebar--page" href="https://github.com/influxdb/telegraf">Telegraf Metrics Collection</a>
+						
+						  <a class="sidebar--page" href="http://docs.grafana.org/datasources/influxdb/">Grafana Dashboards</a>
+						
+						  <a class="sidebar--page" href="https://docs.influxdata.com/chronograf/">Chronograf Dashboards</a>
+						
+						  <a class="sidebar--page" href="https://github.com/influxdb/kapacitor">Kapacitor Monitoring</a>
+						
+					
+				</section>
+			
+				<section class="sidebar--section">
+					<div class="sidebar--section-title">
+						<a class="" href="https://docs.influxdata.com/influxdb/v0.9/about/">About the Project</a>
+					</div>
+					
+						
+						  <a class="sidebar--page" href="https://github.com/influxdb/influxdb/blob/master/CHANGELOG.md">Release Notes/Changelog</a>
+						
+						  <a class="sidebar--page" href="https://github.com/influxdb/influxdb/blob/master/CONTRIBUTING.md">Contributing</a>
+						
+						  <a class="sidebar--page" href="https://influxdata.com/community/cla.html">CLA</a>
+						
+						  <a class="sidebar--page" href="https://github.com/influxdb/influxdb/blob/master/LICENSE">Licenses</a>
+						
+					
+				</section>
+			
+		
+	
+		
+	
+		
+	
+		
+	
+	<section class="sidebar--section">
+		<div class="sidebar--section-title">
+			<a href="https://docs.influxdata.com/influxdb/">InfluxDB Versions</a>
+		</div>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v1.0/">v1.0</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.13/">v0.13</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.12/">v0.12</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.11/">v0.11</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.10/">v0.10</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.9/">v0.9</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.8/">v0.8</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.7/">v0.7</a>
+		
+		<a class="sidebar--page" href="https://docs.influxdata.com/influxdb/v0.6/">v0.6</a>
+		
+	</section>
+</aside>
+
+<script>window.jQuery || document.write('<script src="/js/vendor/jquery-2.1.4.min.js"><\/script>')</script><script src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/jquery-2.1.4.min.js"></script>
+<script src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/docs-interactions.js" type="text/javascript"></script>
+<script src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/prism.js" type="text/javascript"></script>
+<script>[].slice.call(document.querySelectorAll(".article-content h2, .article-content h3")).forEach(function(el,i){var id,text;id=el.id;text=el.innerText?el.innerText:el.textContent;if(el.firstChild.tagName!='A'){el.innerHTML='<a href="#'+id+'">'+text+'</a>';}});</script>
+<script> (function(w,a,b,d,s){w[a]=w[a]||{};w[a][b]=w[a][b]||{q:[],track:function(r,e,t){this.q.push({r:r,e:e,t:t||+new Date});}};var e=d.createElement(s);var f=d.getElementsByTagName(s)[0];e.async=1;e.src='//marketing.influxdb.com/cdnr/93/acton/bn/tracker/16929';f.parentNode.insertBefore(e,f);})(window,'ActOn','Beacon',document,'script');ActOn.Beacon.track(); </script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-45024174-5', 'auto');ga('send', 'pageview');</script>
+<script type="text/javascript" src="./InfluxData _ Documentation _ InfluxDB CLI_Shell_files/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+apiKey: 'ba4435a9d456ac0d954cc276206eac06',
+appId: 'WHM9UWMP6M',
+indexName: 'influxdata',
+inputSelector: '#algolia-search-input',
+algoliaOptions: {
+hitsPerPage: 8,
+facetFilters: ["version:v0.9", "project:influxdb"]
+}
+});
+</script>
+
+
+
+<div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>

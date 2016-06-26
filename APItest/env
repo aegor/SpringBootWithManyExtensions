@@ -1,0 +1,8 @@
+client_id=clientapp
+client_secret=123456
+client_name=roy
+client_password=spring
+oauth_prefix="http://"
+oauth_host=localhost
+oauth_suffix=":9000/oauth/token"
+api_url="http://localhost:9000"

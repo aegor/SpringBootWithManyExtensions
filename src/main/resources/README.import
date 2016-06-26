@@ -1,0 +1,6 @@
+http://stackoverflow.com/questions/21422664/spring-boot-spring-data-import-sql-doesnt-run-spring-boot-1-0-0-rc1
+
+If spring.jpa.hibernate.ddl-auto=update, then import.sql will not run.
+Hey I came across similar issue. My sql script was not getting invoked initially. 
+Then I tried renaming the file from "import.sql" to "schema.sql", it worked. 
+May be give this a shot. My code can be found here - https://github.com/sidnan/spring-batch-example

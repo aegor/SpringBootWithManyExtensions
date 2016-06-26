@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)https://spring.io/guides/gs/consuming-rest/ -->
+<html data-clipboard-buttons="" data-code-prettify="" data-code-sidebar="" data-hide-show-guide="" data-sts-import="" data-mobile-support="" data-search=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Getting Started · Consuming a RESTful Web Service</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no" id="Viewport" name="viewport">
+<link rel="shortcut icon" type="image/x-icon" href="https://spring.io/img/favicon-ca31b78daf0dd9a106bbf3c6d87d4ec7.png">
+<link href="./Getting Started · Consuming a RESTful Web Service_files/css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./Getting Started · Consuming a RESTful Web Service_files/main-ec51f31c46d159463ee39c119ddaaf6b.css">
+<script type="text/javascript" async="" src="./Getting Started · Consuming a RESTful Web Service_files/inpage_linkid.js" id="undefined"></script><script type="text/javascript" async="" src="./Getting Started · Consuming a RESTful Web Service_files/ga.js"></script><script src="./Getting Started · Consuming a RESTful Web Service_files/system-e4da8155328f70ba57cce6f9c15e2f6e.js"></script>
+<script>
+    System.config({baseURL: "/b083b30"});
+  </script>
+<script src="./Getting Started · Consuming a RESTful Web Service_files/config-38c4939b47148a8786e0a17130a97055.js"></script>
+<script>
+      System.import('app/main.js')
+  </script>
+<meta content="7qGntFPD9lWAVCtUu5U77v4l68PsTHf6xpzgjQv2j2M" name="google-site-verification">
+<script>
+    //
+      var _gaq = _gaq || [];
+      var pluginUrl =
+       '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+      _gaq.push(
+        ['_require', 'inpage_linkid', pluginUrl],
+        ['_setAccount', 'UA-2728886-20'],
+        ['_trackPageview'],
+        ['b._require', 'inpage_linkid', pluginUrl],
+        ['b._setAccount', 'UA-2728886-19'],
+        ['b._trackPageview']
+      );
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+  </script>
+<link rel="stylesheet" type="text/css" href="./Getting Started · Consuming a RESTful Web Service_files/gsguide-d82195d19c5a1551f6453c7ad9519dfc.css">
+ 
+<meta property="og:title" content="Consuming a RESTful Web Service">
+<meta property="og:image" content="/img/spring-by-pivotal-9066b55828deb3c10e27e609af322c40.png">
+<meta property="og:description" content="this guide is designed to get you productive as quickly as possible and using the latest Spring project releases and techniques as recommended by the Spring team">
+<style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+<body>
+<script type="text/javascript">
+    // Work around Google font rendering issues in webkit browsers on Windows 7
+    if (navigator.userAgent.indexOf("NT 6.1") != -1) {
+      document.body.style.WebkitTextStroke = "0.5px";
+    }
+  </script>
+<div class="viewport">
+<header class="navbar header--navbar desktop-only">
+<div class="navbar-inner">
+<div class="container-fluid">
+<div class="spring-logo--container">
+<a class="spring-logo" href="https://spring.io/"><span></span></a>
+</div>
+<ul class="nav pull-right">
+<li class="navbar-link">
+<a href="https://spring.io/docs">Docs</a>
+</li>
+<li class="navbar-link active">
+<a href="https://spring.io/guides">Guides</a>
+</li>
+<li class="navbar-link">
+<a href="https://spring.io/projects">Projects</a>
+</li>
+<li class="navbar-link">
+<a href="https://spring.io/blog">Blog</a>
+</li>
+<li class="navbar-link">
+<a href="https://spring.io/questions">Questions</a>
+</li>
+<li class="navbar-link nav-search">
+<i class="icon-search navbar-search--icon js-search-input-open"></i>
+<div class="search-input-close js-search-input-close">x</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="search-dropdown--container js-search-dropdown">
+<div class="container-fluid">
+<div class="search-form--container">
+<form action="https://spring.io/search" class="form-inline form-search" method="get">
+<input class="search-query search-form--form js-search-input" name="q" placeholder="Search for documentation, guides, and posts..." type="text" value="">
+<button class="search-form--submit" type="submit"><i class="icon-search"></i></button>
+</form>
+</div>
+</div>
+</div>
+</header>
+<div>
+<div class="mobile-navigation--wrapper mobile-only">
+<div class="navigation-drawer--container">
+<div class="mobile-search--container">
+<form action="https://spring.io/search" class="form-inline form-search" method="get">
+<button class="search-form--submit" type="submit"><i class="icon-search"></i></button>
+<input class="search-query search-form--form js-search-input" name="q" placeholder="Search..." type="text" value="">
+</form>
+</div>
+<div class="navigation-item-list">
+<div class="navbar-link">
+<a href="https://spring.io/">
+Home
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/docs">
+Docs
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link active">
+<a href="https://spring.io/guides">
+Guides
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/projects">
+Projects
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/blog">
+Blog
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/questions">
+Questions
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="mobile-nav">
+<div class="nav-icon js-open-nav-drawer">
+<i class="icon-reorder"></i>
+</div>
+<div class="header-center-icon">
+<a href="https://spring.io/">
+<div class="icon icon-spring-logo-mobile"></div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="header--container"></div>
+<div class="container-fluid"></div>
+<div></div>
+<div class="container-fluid">
+<main class="main-body--wrapper">
+<div class="row-fluid">
+<div class="span8 mobile-left-pane">
+<div class="content--title desktop-only">Getting Started</div>
+<article class="content--container">
+<h1 class="title">Consuming a RESTful Web Service</h1>
+<div class="article-body"><div class="paragraph">
+<p>This guide walks you through the process of creating an application that consumes a RESTful web service.</p>
+</div>
+<div class="sect1">
+<h2 id="_what_you_ll_build">What you’ll build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You’ll build an application that uses Spring’s <code>RestTemplate</code> to retrieve a random Spring Boot quotation at <a href="http://gturnquist-quoters.cfapps.io/api/random" class="bare">http://gturnquist-quoters.cfapps.io/api/random</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_you_ll_need">What you’ll need</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li> <p>About 15 minutes</p> </li>
+<li> <p>A favorite text editor or IDE</p> </li>
+<li> <p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK 1.8</a> or later</p> </li>
+<li> <p><a href="http://www.gradle.org/downloads">Gradle 2.3+</a> or <a href="http://maven.apache.org/download.cgi">Maven 3.0+</a></p> </li>
+<li> <p>You can also import the code from this guide as well as view the web page directly into <a href="https://spring.io/guides/gs/sts">Spring Tool Suite (STS)</a> and work your way through it from there.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_complete_this_guide">How to complete this guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like most Spring <a href="https://spring.io/guides">Getting Started guides</a>, you can start from scratch and complete each step, or you can bypass basic setup steps that are already familiar to you. Either way, you end up with working code.</p>
+</div>
+<div class="paragraph">
+<p>To <strong>start from scratch</strong>, move on to <a href="https://spring.io/guides/gs/consuming-rest/#scratch">Build with Gradle</a>.</p>
+</div>
+<div class="paragraph">
+<p>To <strong>skip the basics</strong>, do the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p><a href="https://github.com/spring-guides/gs-consuming-rest/archive/master.zip">Download</a> and unzip the source repository for this guide, or clone it using <a href="https://spring.io/understanding/Git">Git</a>: <code>git clone <a href="https://github.com/spring-guides/gs-consuming-rest.git" class="bare">https://github.com/spring-guides/gs-consuming-rest.git</a></code></p> </li>
+<li> <p>cd into <code>gs-consuming-rest/initial</code></p> </li>
+<li> <p>Jump ahead to <a href="https://spring.io/guides/gs/consuming-rest/#initial">Fetch a REST resource</a>.</p> </li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>When you’re finished</strong>, you can check your results against the code in <code>gs-consuming-rest/complete</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-gradle">
+<h2 id="reveal-gradle">Build with Gradle</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-gradle">
+<h2 id="scratch">Build with Gradle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First you set up a basic build script. You can use any build system you like when building apps with Spring, but the code you need to work with <a href="http://gradle.org/">Gradle</a> and <a href="https://maven.apache.org/">Maven</a> is included here. If you’re not familiar with either, refer to <a href="https://spring.io/guides/gs/gradle">Building Java Projects with Gradle</a> or <a href="https://spring.io/guides/gs/maven">Building Java Projects with Maven</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_the_directory_structure">Create the directory structure</h3>
+<div class="paragraph">
+<p>In a project directory of your choosing, create the following subdirectory structure; for example, with <code>mkdir -p src/main/java/hello</code> on *nix systems:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="prettyprint">└── src
+    └── main
+        └── java
+            └── hello</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_a_gradle_build_file">Create a Gradle build file</h3>
+<div class="paragraph">
+<p>Below is the <a href="https://github.com/spring-guides/gs-consuming-rest/blob/master/initial/build.gradle">initial Gradle build file</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>build.gradle</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-0" data-clipboard-target="#code-block-0"></button><pre class="prettyprint highlight" id="code-block-0"><code class="language-java" data-lang="java"><span class="pln">buildscript </span><span class="pun">{</span><span class="pln">
+    repositories </span><span class="pun">{</span><span class="pln">
+        mavenCentral</span><span class="pun">()</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    dependencies </span><span class="pun">{</span><span class="pln">
+        classpath</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE"</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'java'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'eclipse'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'idea'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'spring-boot'</span><span class="pln">
+
+jar </span><span class="pun">{</span><span class="pln">
+    baseName </span><span class="pun">=</span><span class="pln"> </span><span class="str">'gs-consuming-rest'</span><span class="pln">
+    version </span><span class="pun">=</span><span class="pln">  </span><span class="str">'0.1.0'</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+repositories </span><span class="pun">{</span><span class="pln">
+    mavenCentral</span><span class="pun">()</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+sourceCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1.8</span><span class="pln">
+targetCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1.8</span><span class="pln">
+
+dependencies </span><span class="pun">{</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-starter"</span><span class="pun">)</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"org.springframework:spring-web"</span><span class="pun">)</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"com.fasterxml.jackson.core:jackson-databind"</span><span class="pun">)</span><span class="pln">
+    testCompile</span><span class="pun">(</span><span class="str">"junit:junit"</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+task wrapper</span><span class="pun">(</span><span class="pln">type</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Wrapper</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    gradleVersion </span><span class="pun">=</span><span class="pln"> </span><span class="str">'2.3'</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-tools/spring-boot-gradle-plugin">Spring Boot gradle plugin</a> provides many convenient features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p>It collects all the jars on the classpath and builds a single, runnable "über-jar", which makes it more convenient to execute and transport your service.</p> </li>
+<li> <p>It searches for the <code>public static void main()</code> method to flag as a runnable class.</p> </li>
+<li> <p>It provides a built-in dependency resolver that sets the version number to match <a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-dependencies/pom.xml">Spring Boot dependencies</a>. You can override any version you wish, but it will default to Boot’s chosen set of versions.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-maven">
+<h2 id="reveal-maven">Build with Maven</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-maven">
+<h2 id="use-maven">Build with Maven</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First you set up a basic build script. You can use any build system you like when building apps with Spring, but the code you need to work with <a href="https://maven.apache.org/">Maven</a> is included here. If you’re not familiar with Maven, refer to <a href="https://spring.io/guides/gs/maven">Building Java Projects with Maven</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_the_directory_structure_2">Create the directory structure</h3>
+<div class="paragraph">
+<p>In a project directory of your choosing, create the following subdirectory structure; for example, with <code>mkdir -p src/main/java/hello</code> on *nix systems:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="prettyprint">└── src
+    └── main
+        └── java
+            └── hello</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>pom.xml</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-1" data-clipboard-target="#code-block-1"></button><pre class="prettyprint highlight" id="code-block-1"><code class="language-xml" data-lang="xml"><span class="pun">&lt;?</span><span class="pln">xml version</span><span class="pun">=</span><span class="str">"1.0"</span><span class="pln"> encoding</span><span class="pun">=</span><span class="str">"UTF-8"</span><span class="pun">?&gt;</span><span class="pln">
+</span><span class="tag">&lt;project</span><span class="pln"> </span><span class="atn">xmlns</span><span class="pun">=</span><span class="atv">"http://maven.apache.org/POM/4.0.0"</span><span class="pln"> </span><span class="atn">xmlns:xsi</span><span class="pun">=</span><span class="atv">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="pln">
+    </span><span class="atn">xsi:schemaLocation</span><span class="pun">=</span><span class="atv">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;modelVersion&gt;</span><span class="pln">4.0.0</span><span class="tag">&lt;/modelVersion&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+    </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">gs-consuming-rest</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+    </span><span class="tag">&lt;version&gt;</span><span class="pln">0.1.0</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;parent&gt;</span><span class="pln">
+        </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter-parent</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;version&gt;</span><span class="pln">1.3.5.RELEASE</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/parent&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;properties&gt;</span><span class="pln">
+        </span><span class="tag">&lt;java.version&gt;</span><span class="pln">1.8</span><span class="tag">&lt;/java.version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/properties&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;dependencies&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-web</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">com.fasterxml.jackson.core</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">jackson-databind</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/dependencies&gt;</span><span class="pln">
+
+
+    </span><span class="tag">&lt;build&gt;</span><span class="pln">
+        </span><span class="tag">&lt;plugins&gt;</span><span class="pln">
+            </span><span class="tag">&lt;plugin&gt;</span><span class="pln">
+                </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+                </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-maven-plugin</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;/plugin&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/plugins&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/build&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-tools/spring-boot-maven-plugin">Spring Boot Maven plugin</a> provides many convenient features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p>It collects all the jars on the classpath and builds a single, runnable "über-jar", which makes it more convenient to execute and transport your service.</p> </li>
+<li> <p>It searches for the <code>public static void main()</code> method to flag as a runnable class.</p> </li>
+<li> <p>It provides a built-in dependency resolver that sets the version number to match <a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-dependencies/pom.xml">Spring Boot dependencies</a>. You can override any version you wish, but it will default to Boot’s chosen set of versions.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-sts">
+<h2 id="reveal-sts">Build with your IDE</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-sts">
+<h2 id="use-sts">Build with your IDE</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li> <p>Read how to import this guide straight into <a href="https://spring.io/guides/gs/sts/">Spring Tool Suite</a>.</p> </li>
+<li> <p>Read how to work with this guide in <a href="https://spring.io/guides/gs/intellij-idea">IntelliJ IDEA</a>.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="initial">Fetch a REST resource</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With project setup complete, you can create a simple application that consumes a RESTful service.</p>
+</div>
+<div class="paragraph">
+<p>A RESTful service has been stood up at <a href="http://gturnquist-quoters.cfapps.io/api/random" class="bare">http://gturnquist-quoters.cfapps.io/api/random</a>. It randomly fetches quotes about Spring Boot and returns them as a JSON document.</p>
+</div>
+<div class="paragraph">
+<p>If you request that URL through your web browser or curl, you’ll receive a JSON document that looks something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-2" data-clipboard-target="#code-block-2"></button><pre class="prettyprint highlight" id="code-block-2"><code class="language-javascript" data-lang="javascript"><span class="pun">{</span><span class="pln">
+   type</span><span class="pun">:</span><span class="pln"> </span><span class="str">"success"</span><span class="pun">,</span><span class="pln">
+   value</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      id</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10</span><span class="pun">,</span><span class="pln">
+      quote</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Really loving Spring Boot, makes stand alone Spring apps easy."</span><span class="pln">
+   </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Easy enough, but not terribly useful when fetched through a browser or through curl.</p>
+</div>
+<div class="paragraph">
+<p>A more useful way to consume a REST web service is programmatically. To help you with that task, Spring provides a convenient template class called <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html"><code>RestTemplate</code></a>. <code>RestTemplate</code> makes interacting with most RESTful services a one-line incantation. And it can even bind that data to custom domain types.</p>
+</div>
+<div class="paragraph">
+<p>First, create a domain class to contain the data that you need. If all you need to know are Pivotal’s name, phone number, website URL, and what the pivotalsoftware page is about, then the following domain class should do fine:</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/Quote.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-3" data-clipboard-target="#code-block-3"></button><pre class="prettyprint highlight" id="code-block-3"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">fasterxml</span><span class="pun">.</span><span class="pln">jackson</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">JsonIgnoreProperties</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@JsonIgnoreProperties</span><span class="pun">(</span><span class="pln">ignoreUnknown </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Quote</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> type</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Value</span><span class="pln"> value</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Quote</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getType</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> type</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setType</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> type</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> type</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Value</span><span class="pln"> getValue</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> value</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setValue</span><span class="pun">(</span><span class="typ">Value</span><span class="pln"> value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">value </span><span class="pun">=</span><span class="pln"> value</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="lit">@Override</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> toString</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Quote{"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">"type='"</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> type </span><span class="pun">+</span><span class="pln"> </span><span class="str">'\''</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">", value="</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> value </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">'}'</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, this is a simple Java class with a handful of properties and matching getter methods. It’s annotated with <code>@JsonIgnoreProperties</code> from the Jackson JSON processing library to indicate that any properties not bound in this type should be ignored.</p>
+</div>
+<div class="paragraph">
+<p>An additional class is needed to embed the inner quotation itself.</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/Value.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-4" data-clipboard-target="#code-block-4"></button><pre class="prettyprint highlight" id="code-block-4"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> com</span><span class="pun">.</span><span class="pln">fasterxml</span><span class="pun">.</span><span class="pln">jackson</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">JsonIgnoreProperties</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@JsonIgnoreProperties</span><span class="pun">(</span><span class="pln">ignoreUnknown </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Value</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Long</span><span class="pln"> id</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> quote</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Value</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">Long</span><span class="pln"> getId</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">id</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getQuote</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">quote</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setId</span><span class="pun">(</span><span class="typ">Long</span><span class="pln"> id</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">id </span><span class="pun">=</span><span class="pln"> id</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setQuote</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> quote</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">quote </span><span class="pun">=</span><span class="pln"> quote</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="lit">@Override</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> toString</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="str">"Value{"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">"id="</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> id </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">", quote='"</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> quote </span><span class="pun">+</span><span class="pln"> </span><span class="str">'\''</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+                </span><span class="str">'}'</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This uses the same annotations but simply maps onto other data fields.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_make_the_application_executable">Make the application executable</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Although it is possible to package this service as a traditional <a href="https://spring.io/understanding/WAR">WAR</a> file for deployment to an external application server, the simpler approach demonstrated below creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java <code>main()</code> method. Along the way, you use Spring’s support for embedding the <a href="https://spring.io/understanding/Tomcat">Tomcat</a> servlet container as the HTTP runtime, instead of deploying to an external instance.</p>
+</div>
+<div class="paragraph">
+<p>Now you can write the <code>Application</code> class that uses <code>RestTemplate</code> to fetch the data from our Spring Boot quotation service.</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/Application.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-5" data-clipboard-target="#code-block-5"></button><pre class="prettyprint highlight" id="code-block-5"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">boot</span><span class="pun">.</span><span class="typ">CommandLineRunner</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">boot</span><span class="pun">.</span><span class="typ">SpringApplication</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">boot</span><span class="pun">.</span><span class="pln">autoconfigure</span><span class="pun">.</span><span class="typ">SpringBootApplication</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">web</span><span class="pun">.</span><span class="pln">client</span><span class="pun">.</span><span class="typ">RestTemplate</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@SpringBootApplication</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Application</span><span class="pln"> </span><span class="kwd">implements</span><span class="pln"> </span><span class="typ">CommandLineRunner</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> log </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">Application</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> args</span><span class="pun">[])</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">Application</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="lit">@Override</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> run</span><span class="pun">(</span><span class="typ">String</span><span class="pun">...</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">Exception</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">RestTemplate</span><span class="pln"> restTemplate </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">RestTemplate</span><span class="pun">();</span><span class="pln">
+        </span><span class="typ">Quote</span><span class="pln"> quote </span><span class="pun">=</span><span class="pln"> restTemplate</span><span class="pun">.</span><span class="pln">getForObject</span><span class="pun">(</span><span class="str">"http://gturnquist-quoters.cfapps.io/api/random"</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Quote</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+        log</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="pln">quote</span><span class="pun">.</span><span class="pln">toString</span><span class="pun">());</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because the Jackson JSON processing library is in the classpath, <code>RestTemplate</code> will use it (via a <a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/converter/HttpMessageConverter.html">message converter</a>) to convert the incoming JSON data into a <code>Quote</code> object. From there, the contents of the <code>Quote</code> object will be logged to the console.</p>
+</div>
+<div class="paragraph">
+<p>Here you’ve only used <code>RestTemplate</code> to make an HTTP <code>GET</code> request. But <code>RestTemplate</code> also supports other HTTP verbs such as <code>POST</code>, <code>PUT</code>, and <code>DELETE</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="_build_an_executable_jar">Build an executable JAR</h3>
+<div class="paragraph">
+<p>If you are using Gradle, you can run the application using <code>./gradlew bootRun</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can build a single executable JAR file that contains all the necessary dependencies, classes, and resources. This makes it easy to ship, version, and deploy the service as an application throughout the development lifecycle, across different environments, and so forth.</p>
+</div>
+<div class="literalblock has-copy-button">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-6" data-clipboard-target="#code-block-6"></button><pre id="code-block-6" class="prettyprint">./gradlew build</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then you can run the JAR file:</p>
+</div>
+<div class="literalblock has-copy-button">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-7" data-clipboard-target="#code-block-7"></button><pre id="code-block-7" class="prettyprint">java -jar build/libs/gs-consuming-rest-0.1.0.jar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Maven, you can run the application using <code>mvn spring-boot:run</code>. Or you can build the JAR file with <code>mvn clean package</code> and run the JAR by typing:</p>
+</div>
+<div class="literalblock has-copy-button">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-8" data-clipboard-target="#code-block-8"></button><pre id="code-block-8" class="prettyprint">java -jar target/gs-consuming-rest-0.1.0.jar</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> The procedure above will create a runnable JAR. You can also opt to <a href="https://spring.io/guides/gs/convert-jar-to-war/">build a classic WAR file</a> instead. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>You should see the following output:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="prettyprint">2015-09-23 14:22:26.415  INFO 23613 --- [main] hello.Application  : Quote{type='success', value=Value{id=12, quote='@springboot with @springframework is pure productivity! Who said in #java one has to write double the code than in other langs? #newFavLib'}}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary">Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations! You have just developed a simple REST client using Spring.</p>
+</div>
+<div class="paragraph">
+<p>Want to write a new guide or contribute to an existing one? Check out our <a href="https://github.com/spring-guides/getting-started-guides/wiki">contribution guidelines</a>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-important" title="Important"></i> </td>
+<td class="content"> All guides are released with an ASLv2 license for the code, and an <a href="http://creativecommons.org/licenses/by-nd/3.0/">Attribution, NoDerivatives creative commons license</a> for the writing. </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</article>
+</div>
+<aside class="span4 content-right-pane--container mobile-left-pane" id="sidebar">
+<a class="ci-status desktop-only" href="https://travis-ci.org/spring-guides/gs-consuming-rest">
+<img src="./Getting Started · Consuming a RESTful Web Service_files/gs-consuming-rest.svg">
+</a>
+<div class="right-pane-widget--container desktop-only">
+<div class="github-actions https">
+<h2>Get the Code</h2>
+<div class="btn-group">
+<button class="btn" data-protocol="https">HTTPS</button>
+<button class="btn" data-protocol="ssh">SSH</button>
+<button class="btn" data-protocol="subversion">Subversion</button>
+</div>
+<div class="clone-url https">
+<input id="clone-url-https" readonly="readonly" type="text" value="https://github.com/spring-guides/gs-consuming-rest.git">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="https://github.com/spring-guides/gs-consuming-rest.git"></button>
+</div>
+<div class="clone-url ssh">
+<input id="clone-url-ssh" readonly="readonly" type="text" value="git@github.com:spring-guides/gs-consuming-rest.git">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="git@github.com:spring-guides/gs-consuming-rest.git"></button>
+</div>
+<div class="clone-url subversion">
+<input id="clone-url-subversion" readonly="readonly" type="text" value="https://github.com/spring-guides/gs-consuming-rest">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="https://github.com/spring-guides/gs-consuming-rest"></button>
+</div>
+<a class="github_download btn btn-black uppercase" href="https://github.com/spring-guides/gs-consuming-rest/archive/master.zip">Download ZIP</a>
+<a class="gs-guide-import" href="https://github.com/spring-guides/gs-consuming-rest">Import into STS</a>
+<div class="go-to-repo--container">
+<a href="https://github.com/spring-guides/gs-consuming-rest">
+<i class="icon-github"></i>
+Go To Repo
+</a>
+</div>
+</div>
+</div>
+<div><div class="right-pane-widget--container">
+<div class="related_resources">
+<h3><a name="table-of-contents" class="anchor" href="https://spring.io/guides/gs/consuming-rest/#table-of-contents"></a>Table of contents</h3>
+<ul class="sectlevel1">
+<li><a href="https://spring.io/guides/gs/consuming-rest/#_what_you_ll_build">What you’ll build</a></li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#_what_you_ll_need">What you’ll need</a></li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#_how_to_complete_this_guide">How to complete this guide</a></li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#scratch">Build with Gradle</a> </li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#use-maven">Build with Maven</a> </li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#use-sts">Build with your IDE</a></li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#initial">Fetch a REST resource</a></li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#_make_the_application_executable">Make the application executable</a> </li>
+<li><a href="https://spring.io/guides/gs/consuming-rest/#_summary">Summary</a></li>
+</ul></div>
+</div>
+<div class="right-pane-widget--container">
+<div class="related_resources">
+<h3><a name="tags" class="anchor" href="https://spring.io/guides/gs/consuming-rest/#tags"></a>Tags</h3><ul class="inline">
+<li><a href="https://spring.io/guides?filter=rest">rest</a></li>
+<h3><a name="concepts-and-technologies" class="anchor" href="https://spring.io/guides/gs/consuming-rest/#concepts-and-technologies"></a>Concepts and technologies</h3>
+<ul>
+<li><a href="https://spring.io/understanding/WAR">WAR</a></li>
+<li><a href="https://spring.io/understanding/Git">Git</a></li>
+<li><a href="https://spring.io/understanding/Tomcat">Tomcat</a></li>
+</ul>
+</ul></div>
+</div></div>
+</aside>
+</div>
+</main>
+</div>
+<footer class="footer">
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span12">
+<div class="navbar">
+<div class="container">
+<ul class="nav">
+<li><a href="https://spring.io/team">Team</a></li>
+<li><a href="https://spring.io/services">Services</a></li>
+<li><a href="https://spring.io/tools">Tools</a></li>
+</ul>
+</div>
+</div>
+© <span>2016</span> <a href="http://www.pivotal.io/">Pivotal Software</a>, Inc. All Rights Reserved.
+<a href="http://www.pivotal.io/terms-of-use">Terms of Use</a>,
+<a href="http://www.pivotal.io/privacy-policy">Privacy</a> and
+<a href="https://spring.io/trademarks">Trademark Guidelines</a>
+</div>
+</div>
+</div>
+</footer>
+<div id="scrim"></div>
+</div>
+<div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>
