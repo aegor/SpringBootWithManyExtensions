@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files -->
+<html itemscope="" itemtype="http://schema.org/QAPage"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>java - Spring Boot and multiple external configuration files - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com">
+    <meta property="og:type" content="website">    
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&amp;a">
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Spring Boot and multiple external configuration files">
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I have multiple property files that I want to load from classpath. There is one default set under /src/main/resources which is part of myapp.jar. My springcontext expects files to be on the classpa...">
+    <meta property="og:url" content="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">
+    <link rel="canonical" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">
+
+    
+    
+    <script type="text/javascript" async="" src="http://engine.adzerk.net/ados?t=1466966286449&amp;request={%22Placements%22:[{%22A%22:22,%22S%22:8277,%22D%22:%22clc-tlb%22,%22AT%22:[4],%22Z%22:[43]},{%22A%22:22,%22S%22:8277,%22D%22:%22clc-mlb%22,%22AT%22:[4],%22Z%22:[44]}],%22Keywords%22:%22java%2C%20spring%2C%20config%2C%20spring-boot%22,%22Referrer%22:%22https%3A%2F%2Fwww.google.ru%2F%22,%22IsAsync%22:true}"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/quant.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/beacon.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/analytics.js"></script><script src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/jquery.min.js"></script>
+    <script src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/stub.en.js"></script>
+    <link rel="stylesheet" type="text/css" href="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/all.css">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;Spring Boot and multiple external configuration files&#39;" href="http://stackoverflow.com/feeds/question/25855795">
+            <meta name="twitter:app:country" content="US">
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:iphone" content="871299723">
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:ipad" content="871299723">
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:1,shownCommentCount:1,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:25855795});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '25855795');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","serverTime":1466966283,"routeName":"Questions/Show","site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"enableSocialMediaInSharePopup":true},"user":{"fkey":"582360fa3091bfa5e86e84b041879042","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true}}, {"site":{"allowImageUploads":true,"enableUserHovercards":true,"styleCode":true},"comments":{},"tags":{},"snippets":{"snippetsEnabled":true,"renderDomain":"stacksnippets.net"},"markdown":{"asteriskIntraWordEmphasis":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"a0eba261b644","js/moderator.en.js":"4b0592ca162a","js/full-anon.en.js":"92017dd59411","js/full.en.js":"30fee3acc5b6","js/wmd.en.js":"31c49844599d","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"3199d1e28733","js/help.en.js":"118cb359bcc6","js/tageditor.en.js":"9c6df10dabc4","js/tageditornew.en.js":"b7cfd77c5739","js/inline-tag-editing.en.js":"943c7090ea55","js/revisions.en.js":"2faaeaae2529","js/review.en.js":"439891eaa33b","js/tagsuggestions.en.js":"d1ff9b84abe5","js/post-validation.en.js":"79fde18773e4","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"d5053855e807","js/keyboard-shortcuts.en.js":"7bd7566c2b05","js/external-editor.en.js":"34f78799ad2d","js/external-editor.en.js":"34f78799ad2d","js/snippet-javascript.en.js":"fe3acada3e13","js/snippet-javascript-codemirror.en.js":"49a4ed81293f"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+<script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/full-anon.en.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/snippet-javascript.en.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/post-validation.en.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/prettify-full.en.js"></script><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/external-editor.en.js"></script><style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style><link type="text/css" rel="stylesheet" href="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/jobs-multi.min.css"><script type="text/javascript" src="http://static.adzerk.net/Extensions/adFeedback.js"></script><link rel="stylesheet" href="http://static.adzerk.net/Extensions/adFeedback.css"></head>
+<body class="question-page new-topbar">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+    
+        <script>(function () { var old = $.fn.contents; $.fn.contents = function () { try { return old.apply(this, arguments); } catch (e) { return $([]); } } })()</script>
+        
+
+
+
+
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="http://stackoverflow.com/">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+                    <a href="http://chat.stackoverflow.com/" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+            </div>
+
+
+
+
+    <a href="http://stackoverflow.com/" class="current-site-link site-link js-gps-track" data-id="1" data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com/" class="site-link js-gps-track" data-id="552" data-gps-track="
+            site.switch({ target_site:552, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track" href="http://careers.stackoverflow.com/?utm_source=stackoverflow.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider" data-gps-track="site_switcher.click({ item_type:9 })">
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:11 })">log in</a> to customize your list.
+            </div>
+    </div>
+    <div class="header">
+        <h3><a href="http://stackexchange.com/sites">more stack exchange communities</a></h3>
+        <a href="http://blog.stackoverflow.com/" class="fr">company blog</a>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 157 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+    <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" class="topbar-icon icon-inbox yes-hover js-inbox-button" title="Recent inbox messages">
+        <span class="hidden-text">Inbox</span>
+        <span class="unread-count" style="display:none"></span>
+    </a>
+    <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" class="topbar-icon icon-achievements yes-hover js-achievements-button" data-unread-class="" title="Recent achievements: reputation, badges, and privileges earned">
+        <span class="hidden-text">Reputation and Badges</span>
+        <span class="unread-count" style="display:none">
+            
+        </span>
+    </a>
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                    <a href="https://stackoverflow.com/users/signup?ssrc=head&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files" class="login-link">sign up</a>
+                                <a href="https://stackoverflow.com/users/login?ssrc=head&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files" class="login-link">log in</a>
+
+                            <a href="http://stackoverflow.com/tour">tour</a>
+    <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="http://stackoverflow.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="http://stackoverflow.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                        <li>
+                            <a href="http://meta.stackoverflow.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                                Meta
+                                <span class="item-summary">
+                                    Discuss the workings and policies of this site
+                                </span>
+                            </a>
+                        </li>
+                    <li>
+                        <a href="http://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                            About Us
+                            <span class="item-summary">
+                                Learn more about Stack Overflow the company
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://business.stackoverflow.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                            Business
+                            <span class="item-summary">
+                                Learn more about hiring developers or posting ads with us
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+                                            </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="http://stackoverflow.com/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="Search Q&amp;A" value="" tabindex="1" autocomplete="off" maxlength="240">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                            <li><a id="nav-jobs" href="http://stackoverflow.com/jobs?med=site-ui&amp;ref=jobs-tab">Jobs</a></li>
+                        <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                        <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                        <li><a id="nav-badges" href="http://stackoverflow.com/help/badges">Badges</a></li>
+                                            </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content" class="snippet-hidden">
+            
+
+<div itemscope="" itemtype="http://schema.org/Question">
+    <link itemprop="image" href="http://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+<div id="herobox">
+    <div id="hero-content">
+            <div id="close"><a title="click to minimize">_</a></div>
+        <div id="blurb">
+            Stack Overflow is a community of 4.7 million programmers, just like you, helping each other.
+            <br>
+                <br>Join them; it only takes a minute:<br>
+            <br>
+            <a href="http://stackoverflow.com/users/signup?ssrc=hero&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files" id="tell-me-more" class="button">Sign up</a>
+        </div>
+        <div id="desc">
+            <b>Join the Stack Overflow community to:</b>
+            <ol id="hiw">
+                <li id="q">Ask programming questions
+                </li>
+                <li id="an">Answer and help your peers
+                </li>
+                <li id="b">Get recognized for your expertise
+                </li>
+            </ol>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <script>
+        StackExchange.ready(function () {
+
+            var location = 0;
+            if ($("body").hasClass("questions-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("question-page")) {
+                location = 1;;
+            } else if ($("body").hasClass("faq-page")) {
+                location = 5;;
+            } else if ($("body").hasClass("home-page")) {
+                location = 3;;
+            }
+
+            $('#tell-me-more').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+                });
+            });
+            $('#herobox #close').click(function () {
+                StackExchange.using("gps", function () {
+                    StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+                });
+                $.cookie("hero", "mini", { path: "/", expires: 365 });
+                $.ajax({
+                    url: "/hero-mini",
+                    success: function (data) {
+                        $("#herobox").fadeOut("fast", function () {
+                            $("#herobox").replaceWith(data);
+                            $("#herobox-mini").fadeIn("fast");
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+
+    </script>
+</div>
+			<div id="question-header">
+                <h1 itemprop="name"><a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files" class="question-hyperlink">Spring Boot and multiple external configuration files</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="25855795" id="question">
+
+    <div class="everyonelovesstackoverflow" id="clc-tlb"><iframe id="ados_frame_clc-tlb_1773632" frameborder="0" scrolling="no" height="90" width="728" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/saved_resource.html"></iframe><img height="0px" width="0px" border="0" style="position: absolute; display: none !important;" src="http://engine.adzerk.net/i.gif?e=eyJhdiI6NjMzMDUsImF0Ijo0LCJidCI6MCwiY20iOjM4NjkzOCwiY2giOjExNzgsImNrIjp7fSwiY3IiOjE1MDY1MjgsImRpIjoiYWMyNzdlNTZhMmQ3NGNlNzlmMjMzZTc0ZDZhOWFlZDgiLCJkbSI6MSwiZmMiOjE3NTQzNjAsImZsIjoxNzczNjMyLCJpcCI6IjUuMTg5LjIuNzkiLCJrdyI6ImphdmEsc3ByaW5nLGNvbmZpZyxzcHJpbmctYm9vdCIsIm53IjoyMiwicGMiOjQuNSwiZWMiOjQuNSwicHIiOjc2NSwicnQiOjIsInJmIjoiaHR0cHM6Ly93d3cuZ29vZ2xlLnJ1LyIsInN0Ijo4Mjc3LCJ1ayI6InVlMS1jODBhMDkyNGY2ZTQ0NjU2YmZjODVlMGI2YmFhNTgyZSIsInpuIjo0MywidHMiOjE0NjY5NjYyODY4MDEsImJmIjp0cnVlLCJwbiI6ImNsYy10bGIiLCJmcSI6MH0&amp;s=5QvaPtFFvw8KN7XQgC51myBXfjk"></div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="25855795">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">14</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#">favorite</a>
+        <div class="favoritecount"><b>7</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>I have multiple property files that I want to load from classpath. There is one default set under <code>/src/main/resources</code> which is part of <code>myapp.jar</code>. My <code>springcontext</code> expects files to be on the classpath. i.e. </p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pun">&lt;</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties id</span><span class="pun">=</span><span class="str">"Job1Props"</span><span class="pln">
+    location</span><span class="pun">=</span><span class="str">"classpath:job1.properties"</span><span class="pun">&gt;&lt;/</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties</span><span class="pun">&gt;</span><span class="pln">
+
+</span><span class="pun">&lt;</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties id</span><span class="pun">=</span><span class="str">"Job2Props"</span><span class="pln">
+    location</span><span class="pun">=</span><span class="str">"classpath:job2.properties"</span><span class="pun">&gt;&lt;/</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties</span><span class="pun">&gt;</span></code></pre>
+
+<p>I also need the option to override these properties with an external set. I have an external config folder in <code>cwd</code>. As per spring boot doc config folder should be on classpath. But its not clear from doc if it will only override the <code>applicaiton.properties</code> from there or all the properties in config. </p>
+
+<p>When I tested it, only <code>application.properties</code> gets picked up and rest of properties are still picked up from <code>/src/main/resources</code>. I have tried supplying them as comma separated list to <code>spring.config.location</code> but the default set is still not being overriden.</p>
+
+<p>How do I make mulitiple external config files override default ones?  </p>
+
+<p>As workaround I currently used <code>app.config.location</code> (app specific property) which I supply through the command line. i.e </p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">java </span><span class="pun">-</span><span class="pln">jar myapp</span><span class="pun">.</span><span class="pln">jar app</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">location</span><span class="pun">=</span><span class="pln">file</span><span class="pun">:./</span><span class="pln">config</span></code></pre>
+
+<p>and I changed my <code>applicationcontext</code> to </p>
+
+<p></p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pun">&lt;</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties id</span><span class="pun">=</span><span class="str">"Job2Props"</span><span class="pln">
+    location</span><span class="pun">=</span><span class="str">"{app.config.location}/job2.properties"</span><span class="pun">&gt;&lt;/</span><span class="pln">util</span><span class="pun">:</span><span class="pln">properties</span><span class="pun">&gt;</span></code></pre>
+
+<p>And this is how I make separation between file and classpath while loading Application. <br>
+<strong>EDITS:</strong></p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="com">//psuedo code</span><span class="pln">
+
+</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="typ">StringUtils</span><span class="pun">.</span><span class="pln">isBlank</span><span class="pun">(</span><span class="pln">app</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">location</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="typ">System</span><span class="pun">.</span><span class="pln">setProperty</span><span class="pun">(</span><span class="pln">APP_CONFIG_LOCATION</span><span class="pun">,</span><span class="pln"> </span><span class="str">"classpath:"</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>I would really like not to use the above workaround and have spring override all external config files on the classpath like it does for the <code>application.properties</code> file.</p>
+    </div>
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/java" class="post-tag js-gps-track" title="show questions tagged &#39;java&#39;" rel="tag">java</a> <a href="http://stackoverflow.com/questions/tagged/spring" class="post-tag js-gps-track" title="show questions tagged &#39;spring&#39;" rel="tag">spring</a> <a href="http://stackoverflow.com/questions/tagged/config" class="post-tag js-gps-track" title="show questions tagged &#39;config&#39;" rel="tag">config</a> <a href="http://stackoverflow.com/questions/tagged/spring-boot" class="post-tag js-gps-track" title="" rel="tag">spring-boot</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/q/25855795" title="short permalink to this question" class="short-link" id="link-post-25855795">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/25855795/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/25855795/revisions" title="show all edits to this post">edited <span title="2015-09-02 16:16:46Z" class="relativetime">Sep 2 '15 at 16:16</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/2561313/nissiml"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/d207632f96049cb2f28fa331de62b6a8" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/2561313/nissiml">NissimL</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">146</span><span title="7 bronze badges"><span class="badge3"></span><span class="badgecount">7</span></span>
+        </div>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2014-09-15 19:47:02Z" class="relativetime">Sep 15 '14 at 19:47</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/1292104/nir"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/494d73d987480986f0f564f12976215a" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/1292104/nir">nir</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">592</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="8 silver badges"><span class="badge2"></span><span class="badgecount">8</span></span><span title="26 bronze badges"><span class="badge3"></span><span class="badgecount">26</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-25855795" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-40468481" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">The <code>application.properties</code> will always be loaded, with <code>spring.config.location</code> you can add additional configuration locations that are checked for files (that is when it ends with a <code>/</code>) however if you put a comma seperated list in there which points to files those will be loaded. This is also explained in the Spring Boot Reference Guide <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-application-property-files" rel="nofollow">here</a></span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2696260/m-deinum" title="36,137 reputation" class="comment-user">M. Deinum</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment40468481_25855795"><span title="2014-09-16 06:33:42Z" class="relativetime-clean">Sep 16 '14 at 6:33</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-25855795" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>        </tbody></table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								6 Answers
+                                <span style="display:none;" itemprop="answerCount">6</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active" data-shortcut="A">
+            active</a>
+        <a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest" data-shortcut="O">
+            oldest</a>
+        <a class="youarehere" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes" data-shortcut="V">
+            votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="25862357"></a>
+<div id="answer-25862357" class="answer" data-answerid="25862357" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="25862357">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">20</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>When using Spring Boot the properties are loaded in the following order (see <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html">Externalized Configuration</a> in the Spring Boot reference guide).</p>
+
+<ol>
+<li>Command line arguments.</li>
+<li>Java System properties (System.getProperties()).</li>
+<li>OS environment variables.</li>
+<li>JNDI attributes from java:comp/env</li>
+<li>A RandomValuePropertySource that only has properties in random.*.</li>
+<li>Application properties outside of your packaged jar (application.properties including YAML and profile variants).</li>
+<li>Application properties packaged inside your jar (application.properties including YAML and profile variants).</li>
+<li>@PropertySource annotations on your @Configuration classes.</li>
+<li>Default properties (specified using SpringApplication.setDefaultProperties).</li>
+</ol>
+
+<p>When resolving properties (i.e. <code>@Value("${myprop}")</code> resolving is done in the reverse order (so starting with 9).</p>
+
+<p>To add different files you can use the <code>spring.config.location</code> properties which takes a comma separated list of property files or file location (directories). </p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pun">-</span><span class="typ">Dspring</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">location</span><span class="pun">=</span><span class="pln">your</span><span class="pun">/</span><span class="pln">config</span><span class="pun">/</span><span class="pln">dir</span><span class="pun">/</span></code></pre>
+
+<p>The one above will add a directory which will be consulted for <code>application.properties</code> files.</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pun">-</span><span class="typ">Dspring</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">location</span><span class="pun">=</span><span class="pln">classpath</span><span class="pun">:</span><span class="pln">job1</span><span class="pun">.</span><span class="pln">properties</span><span class="pun">,</span><span class="pln">classpath</span><span class="pun">:</span><span class="pln">job2</span><span class="pun">.</span><span class="pln">properties</span></code></pre>
+
+<p>This will add the 2 properties file to the files that are loaded. </p>
+
+<p>The default configuration files and locations are loaded before the additonally specified <code>spring.config.location</code> ones meaning that the latter will always override properties set in the earlier ones. (See also <a href="http://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html#boot-features-external-config-application-property-files">this section</a> of the Spring Boot Reference Guide).</p>
+
+<blockquote>
+  <p>If <code>spring.config.location</code> contains directories (as opposed to files) they should end in / (and will be appended with the names generated from <code>spring.config.name</code> before being loaded). The default search path <code>classpath:,classpath:/config,file:,file:config/</code> is always used, irrespective of the value of <code>spring.config.location</code>. In that way you can set up default values for your application in <code>application.properties</code> (or whatever other basename you choose with <code>spring.config.name</code>) and override it at runtime with a different file, keeping the defaults.</p>
+</blockquote>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/25862357" title="short permalink to this answer" class="short-link" id="link-post-25862357">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/25862357/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2014-09-16 06:53:01Z" class="relativetime">Sep 16 '14 at 6:53</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/2696260/m-deinum"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/WflRS.jpg" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/2696260/m-deinum">M. Deinum</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 36,137" dir="ltr">36.1k</span><span title="4 gold badges"><span class="badge1"></span><span class="badgecount">4</span></span><span title="57 silver badges"><span class="badge2"></span><span class="badgecount">57</span></span><span title="83 bronze badges"><span class="badge3"></span><span class="badgecount">83</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-25862357" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-40493721" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks but I have read this ref doc already and following is confusing to me "-Dspring.config.location=your/config/dir/ The one above will add a directory which will be consulted for application.properties files." What does it mean by application.properties files. That is only one file. In any case if it is able to pick up whole directory with "/" at end then I dont need to specify each as comma separated list. I think I have tried both approach as I mentioned in my post but I'll give it one more try</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/1292104/nir" title="592 reputation" class="comment-user owner">nir</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment40493721_25862357"><span title="2014-09-16 18:25:07Z" class="relativetime-clean">Sep 16 '14 at 18:25</span></a></span>
+                    <span class="edited-yes" title="this comment was edited 3 times"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-40506788" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">As stated in the doc it will pick be consulted like the other default locations for the <code>application.properties</code> and <code>application-[env].properties</code>. It doesn't take into account other properties files. This is also stated in the reference guide (in the section the link leads to and the quote from the reference guide).</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2696260/m-deinum" title="36,137 reputation" class="comment-user">M. Deinum</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment40506788_25862357"><span title="2014-09-17 05:42:37Z" class="relativetime-clean">Sep 17 '14 at 5:42</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-40536083" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Yes but that is what doesn't make sense to me.. why consider only one kind of file from a directory on classpath instead of whole directory.  Its forces you to use one property file only which is not good imo. Like in tomcat I can configure common.loader to put particular directory (and everything insided it) on classpath why can't boot classloader can support it.</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/1292104/nir" title="592 reputation" class="comment-user owner">nir</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment40536083_25862357"><span title="2014-09-17 20:00:35Z" class="relativetime-clean">Sep 17 '14 at 20:00</span></a></span>
+                    <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-40546520" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Because that is how the Spring Boot guys made it work. If you want something else use a comma seperated list of files. Or specify another name (you can also override the default name <code>application</code> if you like). Next to that  you can always use a <code>@PropertySource</code> annotation to load your properties files yourself.</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2696260/m-deinum" title="36,137 reputation" class="comment-user">M. Deinum</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment40546520_25862357"><span title="2014-09-18 05:54:14Z" class="relativetime-clean">Sep 18 '14 at 5:54</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-25862357" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+<div class="everyonelovesstackoverflow" id="clc-mlb"><iframe id="ados_frame_clc-mlb_1773634" frameborder="0" scrolling="no" height="90" width="728" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/saved_resource(1).html"></iframe><img height="0px" width="0px" border="0" style="position: absolute; display: none !important;" src="http://engine.adzerk.net/i.gif?e=eyJhdiI6NjMzMDUsImF0Ijo0LCJidCI6MCwiY20iOjM4NjkzOCwiY2giOjExNzgsImNrIjp7fSwiY3IiOjE1MDY1MzIsImRpIjoiMDY4ZTE3NDE1MWRkNDg0ZWI0NjE2Zjk4MzBjNTQzMWYiLCJkbSI6MSwiZmMiOjE3NTQzNjMsImZsIjoxNzczNjM0LCJpcCI6IjUuMTg5LjIuNzkiLCJrdyI6ImphdmEsc3ByaW5nLGNvbmZpZyxzcHJpbmctYm9vdCIsIm53IjoyMiwicGMiOjIuNSwiZWMiOjIuNSwicHIiOjc2NSwicnQiOjIsInJmIjoiaHR0cHM6Ly93d3cuZ29vZ2xlLnJ1LyIsInN0Ijo4Mjc3LCJ1ayI6InVlMS1jODBhMDkyNGY2ZTQ0NjU2YmZjODVlMGI2YmFhNTgyZSIsInpuIjo0NCwidHMiOjE0NjY5NjYyODY4MDMsImJmIjp0cnVlLCJwbiI6ImNsYy1tbGIiLCJmcSI6MH0&amp;s=vl5nS-hd-ksJNz3mEm5ul7vbsWg"></div>
+  
+<a name="25884743"></a>
+<div id="answer-25884743" class="answer" data-answerid="25884743" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="25884743">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">4</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Take a look at the PropertyPlaceholderConfigurer, I find it clearer to use than annotation.</p>
+
+<p>e.g.</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="lit">@Configuration</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">PropertiesConfiguration</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+
+    </span><span class="lit">@Bean</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">PropertyPlaceholderConfigurer</span><span class="pln"> properties</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">PropertyPlaceholderConfigurer</span><span class="pln"> ppc </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PropertyPlaceholderConfigurer</span><span class="pun">();</span><span class="pln">
+</span><span class="com">//        ppc.setIgnoreUnresolvablePlaceholders(true);</span><span class="pln">
+        ppc</span><span class="pun">.</span><span class="pln">setIgnoreResourceNotFound</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">);</span><span class="pln">
+
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">Resource</span><span class="pun">&gt;</span><span class="pln"> resourceLst </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ArrayList</span><span class="pun">&lt;</span><span class="typ">Resource</span><span class="pun">&gt;();</span><span class="pln">
+
+        resourceLst</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ClassPathResource</span><span class="pun">(</span><span class="str">"myapp_base.properties"</span><span class="pun">));</span><span class="pln">
+        resourceLst</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FileSystemResource</span><span class="pun">(</span><span class="str">"/etc/myapp/overriding.propertie"</span><span class="pun">));</span><span class="pln">
+        resourceLst</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ClassPathResource</span><span class="pun">(</span><span class="str">"myapp_test.properties"</span><span class="pun">));</span><span class="pln">
+        resourceLst</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ClassPathResource</span><span class="pun">(</span><span class="str">"myapp_developer_overrides.properties"</span><span class="pun">));</span><span class="pln"> </span><span class="com">// for Developer debugging.</span><span class="pln">
+
+        ppc</span><span class="pun">.</span><span class="pln">setLocations</span><span class="pun">(</span><span class="pln">resourceLst</span><span class="pun">.</span><span class="pln">toArray</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Resource</span><span class="pun">[]{}));</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> ppc</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span></code></pre>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/25884743" title="short permalink to this answer" class="short-link" id="link-post-25884743">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/25884743/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2014-09-17 07:28:37Z" class="relativetime">Sep 17 '14 at 7:28</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/3206144/user3206144"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/1af09bea941e64343063c8a27bccd63e" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/3206144/user3206144">user3206144</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">181</span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-25884743" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-25884743" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="29040171"></a>
+<div id="answer-29040171" class="answer" data-answerid="29040171" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="29040171">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>I had the same problem. I wanted to have the ability to overwrite an internal configuration file at startup with an external file, similar to the Spring Boot application.properties detection. 
+In my case it's a user.properties file where my applications users are stored.</p>
+
+<p>My requirements:</p>
+
+<p>Load the file from the following locations (in this order)</p>
+
+<ol>
+<li>The classpath</li>
+<li>A <em>/config</em> subdir of the current directory. </li>
+<li>The current directory</li>
+<li>From directory or a file location given by a command line parameter at startup</li>
+</ol>
+
+<p>I came up with the following solution:</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">beans</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Value</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">context</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Bean</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">ClassPathResource</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">PathResource</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">Resource</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Properties</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Arrays</span><span class="pun">.</span><span class="pln">stream</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@Configuration</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">PropertiesConfig</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> LOG </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">PropertiesConfig</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">final</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> PROPERTIES_FILENAME </span><span class="pun">=</span><span class="pln"> </span><span class="str">"user.properties"</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="lit">@Value</span><span class="pun">(</span><span class="str">"${properties.location:}"</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> propertiesLocation</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="lit">@Bean</span><span class="pln">
+    </span><span class="typ">Properties</span><span class="pln"> userProperties</span><span class="pun">()</span><span class="pln"> </span><span class="kwd">throws</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Resource</span><span class="pun">[]</span><span class="pln"> possiblePropertiesResources </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ClassPathResource</span><span class="pun">(</span><span class="pln">PROPERTIES_FILENAME</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="str">"config/"</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> PROPERTIES_FILENAME</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="pln">PROPERTIES_FILENAME</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="pln">getCustomPath</span><span class="pun">())</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+        </span><span class="com">// Find the last existing properties location to emulate spring boot application.properties discovery</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Resource</span><span class="pln"> propertiesResource </span><span class="pun">=</span><span class="pln"> stream</span><span class="pun">(</span><span class="pln">possiblePropertiesResources</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">filter</span><span class="pun">(</span><span class="typ">Resource</span><span class="pun">::</span><span class="pln">exists</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">reduce</span><span class="pun">((</span><span class="pln">previous</span><span class="pun">,</span><span class="pln"> current</span><span class="pun">)</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln"> current</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">get</span><span class="pun">();</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Properties</span><span class="pln"> userProperties </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Properties</span><span class="pun">();</span><span class="pln">
+
+        userProperties</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="pln">propertiesResource</span><span class="pun">.</span><span class="pln">getInputStream</span><span class="pun">());</span><span class="pln">
+
+        LOG</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"Using {} as user resource"</span><span class="pun">,</span><span class="pln"> propertiesResource</span><span class="pun">);</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> userProperties</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getCustomPath</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> propertiesLocation</span><span class="pun">.</span><span class="pln">endsWith</span><span class="pun">(</span><span class="str">".properties"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> propertiesLocation </span><span class="pun">:</span><span class="pln"> propertiesLocation </span><span class="pun">+</span><span class="pln"> PROPERTIES_FILENAME</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></code></pre>
+
+<p>Now the application uses the classpath resource, but checks for a resource at the other given locations too. The last resource which exists will be picked and used.
+I'm able to start my app with java -jar myapp.jar --properties.location=/directory/myproperties.properties to use an properties location which floats my boat.</p>
+
+<p>An important detail here: Use an empty String as default value for the properties.location in the @Value annotation to avoid errors when the property is not set. </p>
+
+<p>The convention for a properties.location is: Use a directory or a path to a properties file as properties.location.</p>
+
+<p>If you want to override only specific properties, a PropertiesFactoryBean with setIgnoreResourceNotFound(true) can be used with the resource array set as locations.</p>
+
+<p>I'm sure that this solution can be extended to handle multiple files...</p>
+
+<p><strong>EDIT</strong></p>
+
+<p>Here my solution for multiple files :) Like before, this can be combined with a PropertiesFactoryBean.</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">Logger</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">slf4j</span><span class="pun">.</span><span class="typ">LoggerFactory</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">beans</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Value</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">context</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Bean</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">context</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">Configuration</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">ClassPathResource</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">PathResource</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">Resource</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">io</span><span class="pun">.</span><span class="typ">IOException</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Map</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Properties</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">Arrays</span><span class="pun">.</span><span class="pln">stream</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="pln">stream</span><span class="pun">.</span><span class="typ">Collectors</span><span class="pun">.</span><span class="pln">toMap</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@Configuration</span><span class="pln">
+</span><span class="kwd">class</span><span class="pln"> </span><span class="typ">PropertiesConfig</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">final</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="typ">Logger</span><span class="pln"> LOG </span><span class="pun">=</span><span class="pln"> </span><span class="typ">LoggerFactory</span><span class="pun">.</span><span class="pln">getLogger</span><span class="pun">(</span><span class="typ">PropertiesConfig</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">final</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> PROPERTIES_FILENAMES </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="str">"job1.properties"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"job2.properties"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"job3.properties"</span><span class="pun">};</span><span class="pln">
+
+    </span><span class="lit">@Value</span><span class="pun">(</span><span class="str">"${properties.location:}"</span><span class="pun">)</span><span class="pln">
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> propertiesLocation</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="lit">@Bean</span><span class="pln">
+    </span><span class="typ">Map</span><span class="pun">&lt;</span><span class="typ">String</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Properties</span><span class="pun">&gt;</span><span class="pln"> myProperties</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> stream</span><span class="pun">(</span><span class="pln">PROPERTIES_FILENAMES</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">collect</span><span class="pun">(</span><span class="pln">toMap</span><span class="pun">(</span><span class="pln">filename </span><span class="pun">-&gt;</span><span class="pln"> filename</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">::</span><span class="pln">loadProperties</span><span class="pun">));</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">Properties</span><span class="pln"> loadProperties</span><span class="pun">(</span><span class="kwd">final</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> filename</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Resource</span><span class="pun">[]</span><span class="pln"> possiblePropertiesResources </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">ClassPathResource</span><span class="pun">(</span><span class="pln">filename</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="str">"config/"</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> filename</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="pln">filename</span><span class="pun">),</span><span class="pln">
+                </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">PathResource</span><span class="pun">(</span><span class="pln">getCustomPath</span><span class="pun">(</span><span class="pln">filename</span><span class="pun">))</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Resource</span><span class="pln"> resource </span><span class="pun">=</span><span class="pln"> stream</span><span class="pun">(</span><span class="pln">possiblePropertiesResources</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">filter</span><span class="pun">(</span><span class="typ">Resource</span><span class="pun">::</span><span class="pln">exists</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">reduce</span><span class="pun">((</span><span class="pln">previous</span><span class="pun">,</span><span class="pln"> current</span><span class="pun">)</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln"> current</span><span class="pun">)</span><span class="pln">
+                </span><span class="pun">.</span><span class="pln">get</span><span class="pun">();</span><span class="pln">
+        </span><span class="kwd">final</span><span class="pln"> </span><span class="typ">Properties</span><span class="pln"> properties </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Properties</span><span class="pun">();</span><span class="pln">
+
+        </span><span class="kwd">try</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            properties</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="pln">resource</span><span class="pun">.</span><span class="pln">getInputStream</span><span class="pun">());</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">catch</span><span class="pun">(</span><span class="kwd">final</span><span class="pln"> </span><span class="typ">IOException</span><span class="pln"> exception</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="kwd">throw</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">RuntimeException</span><span class="pun">(</span><span class="pln">exception</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+
+        LOG</span><span class="pun">.</span><span class="pln">info</span><span class="pun">(</span><span class="str">"Using {} as user resource"</span><span class="pun">,</span><span class="pln"> resource</span><span class="pun">);</span><span class="pln">
+
+        </span><span class="kwd">return</span><span class="pln"> properties</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getCustomPath</span><span class="pun">(</span><span class="kwd">final</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> filename</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> propertiesLocation</span><span class="pun">.</span><span class="pln">endsWith</span><span class="pun">(</span><span class="str">".properties"</span><span class="pun">)</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> propertiesLocation </span><span class="pun">:</span><span class="pln"> propertiesLocation </span><span class="pun">+</span><span class="pln"> filename</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">}</span></code></pre>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/29040171" title="short permalink to this answer" class="short-link" id="link-post-29040171">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/29040171/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/29040171/revisions" title="show all edits to this post">edited <span title="2015-03-20 09:00:46Z" class="relativetime">Mar 20 '15 at 9:00</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2015-03-13 19:11:28Z" class="relativetime">Mar 13 '15 at 19:11</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/2343405/mxsb"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/5fe231eeb273e406c2b150253bc303dd" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/2343405/mxsb">mxsb</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">86</span><span title="3 bronze badges"><span class="badge3"></span><span class="badgecount">3</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-29040171" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-46324011" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">nice workaround. Like that java8 constructs! anyhow i cant use that as I need multiple  Properties beans not just one. If you see my EDITS my workaround is pretty similar and neat for my use case.</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/1292104/nir" title="592 reputation" class="comment-user owner">nir</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment46324011_29040171"><span title="2015-03-13 21:03:41Z" class="relativetime-clean">Mar 13 '15 at 21:03</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-46333491" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I posted a version for multiple files, just for completeness ;)</span>
+                    –&nbsp;<a href="http://stackoverflow.com/users/2343405/mxsb" title="86 reputation" class="comment-user">mxsb</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#comment46333491_29040171"><span title="2015-03-14 09:45:06Z" class="relativetime-clean">Mar 14 '15 at 9:45</span></a></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-29040171" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="37257363"></a>
+<div id="answer-37257363" class="answer" data-answerid="37257363" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="37257363">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">2</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>With Spring boot , the spring.config.location does work,just provide comma separated properties files.</p>
+
+<p>see the below code</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="lit">@PropertySource</span><span class="pun">(</span><span class="pln">ignoreResourceNotFound</span><span class="pun">=</span><span class="kwd">true</span><span class="pun">,</span><span class="pln">value</span><span class="pun">=</span><span class="str">"classpath:jdbc-${spring.profiles.active}.properties"</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">DBConfig</span><span class="pun">{</span><span class="pln">
+
+     </span><span class="lit">@Value</span><span class="pun">(</span><span class="str">"${jdbc.host}"</span><span class="pun">)</span><span class="pln">
+        </span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> jdbcHostName</span><span class="pun">;</span><span class="pln">
+     </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>one can put the default version of jdbc.properties inside application. The external versions can be set lie this.</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">java </span><span class="pun">-</span><span class="pln">jar target</span><span class="pun">/</span><span class="pln">myapp</span><span class="pun">.</span><span class="pln">jar </span><span class="pun">--</span><span class="pln">spring</span><span class="pun">.</span><span class="pln">config</span><span class="pun">.</span><span class="pln">location</span><span class="pun">=</span><span class="pln">classpath</span><span class="pun">:</span><span class="pln">file</span><span class="pun">:</span><span class="com">///C:/Apps/springtest/jdbc.properties,classpath:file:///C:/Apps/springtest/jdbc-dev.properties</span></code></pre>
+
+<p>Based on profile value set using spring.profiles.active property, the value of jdbc.host will be picked up.
+So when (on windows)</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">set spring</span><span class="pun">.</span><span class="pln">profiles</span><span class="pun">.</span><span class="pln">active</span><span class="pun">=</span><span class="pln">dev</span></code></pre>
+
+<p>jdbc.host will take value from jdbc-dev.properties.</p>
+
+<p>for </p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">set spring</span><span class="pun">.</span><span class="pln">profiles</span><span class="pun">.</span><span class="pln">active</span><span class="pun">=</span><span class="kwd">default</span></code></pre>
+
+<p>jdbc.host will take value from jdbc.properties.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/37257363" title="short permalink to this answer" class="short-link" id="link-post-37257363">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/37257363/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2016-05-16 15:17:08Z" class="relativetime">May 16 at 15:17</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/6341406/ganesh-jadhav"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/516b21f328caa23617ae52f4a8d797cb" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/6341406/ganesh-jadhav">ganesh jadhav</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">21</span><span title="1 bronze badge"><span class="badge3"></span><span class="badgecount">1</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-37257363" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-37257363" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="28609421"></a>
+<div id="answer-28609421" class="answer" data-answerid="28609421" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="28609421">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>I've just had a similar problem to this and finally figured out the cause:  the application.properties file had the wrong ownership and rwx attributes.  So when tomcat started up the application.properties file was in the right location, but owned by another user:</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">$ chmod </span><span class="lit">766</span><span class="pln"> application</span><span class="pun">.</span><span class="pln">properties
+
+$ chown tomcat application</span><span class="pun">.</span><span class="pln">properties</span></code></pre>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/28609421" title="short permalink to this answer" class="short-link" id="link-post-28609421">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/28609421/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2015-02-19 14:53:18Z" class="relativetime">Feb 19 '15 at 14:53</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/4315049/robjwilkins"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/photo.jpg" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/4315049/robjwilkins">robjwilkins</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">765</span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="18 bronze badges"><span class="badge3"></span><span class="badgecount">18</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-28609421" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-28609421" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="36897326"></a>
+<div id="answer-36897326" class="answer" data-answerid="36897326" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="36897326">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">0</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>this is one simple approach using spring boot</p>
+
+<p><strong>TestClass.java</strong></p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="lit">@Configuration</span><span class="pln">
+</span><span class="lit">@Profile</span><span class="pun">(</span><span class="str">"one"</span><span class="pun">)</span><span class="pln">
+</span><span class="lit">@PropertySource</span><span class="pun">(</span><span class="str">"file:/{selected location}/app.properties"</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">TestClass</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="lit">@Autowired</span><span class="pln">
+    </span><span class="typ">Environment</span><span class="pln"> env</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="lit">@Bean</span><span class="pln">
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">boolean</span><span class="pln"> test</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">System</span><span class="pun">.</span><span class="pln">out</span><span class="pun">.</span><span class="pln">println</span><span class="pun">(</span><span class="pln">env</span><span class="pun">.</span><span class="pln">getProperty</span><span class="pun">(</span><span class="str">"test.one"</span><span class="pun">));</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>the <strong>app.properties</strong> context, in your <em>selected location</em></p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">test</span><span class="pun">.</span><span class="pln">one </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1234</span></code></pre>
+
+<p>your <strong>spring boot application</strong> </p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="lit">@SpringBootApplication</span><span class="pln">
+
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">TestApplication</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="pln">testApplication</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+<p>and the predefined <strong>application.properties</strong> context</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="pln">spring</span><span class="pun">.</span><span class="pln">profiles</span><span class="pun">.</span><span class="pln">active </span><span class="pun">=</span><span class="pln"> one</span></code></pre>
+
+<p>you can write as many configuration class as you like and enable/disable them just by setting <em>spring.profiles.active</em> = the profile name/names {separated by commas}</p>
+
+<p>as you can see spring boot is great it just needs sometime to get familiar with, it's worth mentioning that you may use @Value on your fields as well</p>
+
+<pre class="lang-java prettyprint prettyprinted"><code><span class="lit">@Value</span><span class="pun">(</span><span class="str">"${test.one}"</span><span class="pun">)</span><span class="pln">
+</span><span class="typ">String</span><span class="pln"> str</span><span class="pun">;</span></code></pre>
+
+<p>happy coding :)</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/36897326" title="short permalink to this answer" class="short-link" id="link-post-36897326">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/36897326/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/36897326/revisions" title="show all edits to this post">edited <span title="2016-04-27 17:57:10Z" class="relativetime">Apr 27 at 17:57</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2016-04-27 17:52:00Z" class="relativetime">Apr 27 at 17:52</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/4608874/farzan-skt"><div class="gravatar-wrapper-32"><img src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/photo(1).jpg" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/4608874/farzan-skt">Farzan Skt</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">19</span><span title="1 silver badge"><span class="badge2"></span><span class="badgecount">1</span></span><span title="4 bronze badges"><span class="badge3"></span><span class="badgecount">4</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-36897326" class="comments  dno">
+		    <table>
+                <tbody data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                        <tr><td></td><td></td></tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-36897326" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+									<a name="new-answer"></a>
+						<form id="post-form" action="http://stackoverflow.com/questions/25855795/answer/submit" method="post" class="post-form">
+						    <input type="hidden" id="post-id" value="25855795">
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false">
+                            <input type="hidden" name="referrer" value="https://www.google.ru/">
+							<h2 class="space">Your Answer</h2>
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.settings.snippets.snippetsEnabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"><ul id="wmd-button-row" class="wmd-button-row"><li id="wmd-bold-button" class="wmd-button" style="left: 0px;"><span style="background-position: 0px -20px;"></span></li><li id="wmd-italic-button" class="wmd-button" style="left: 25px;"><span style="background-position: -20px -20px;"></span></li><li id="wmd-spacer1" class="wmd-spacer" style="left: 50px;"><span style="background-position: -40px -20px;"></span></li><li id="wmd-link-button" class="wmd-button" style="left: 75px;"><span style="background-position: -40px -20px;"></span></li><li id="wmd-quote-button" class="wmd-button" style="left: 100px;"><span style="background-position: -60px -20px;"></span></li><li id="wmd-code-button" class="wmd-button" style="left: 125px;"><span style="background-position: -80px -20px;"></span></li><li id="wmd-image-button" class="wmd-button" style="left: 150px;"><span style="background-position: -100px -20px;"></span></li><li id="wmd-spacer2" class="wmd-spacer" style="left: 175px;"><span style="background-position: -120px -20px;"></span></li><li id="wmd-olist-button" class="wmd-button" style="left: 200px;"><span style="background-position: -120px -20px;"></span></li><li id="wmd-ulist-button" class="wmd-button" style="left: 225px;"><span style="background-position: -140px -20px;"></span></li><li id="wmd-heading-button" class="wmd-button" style="left: 250px;"><span style="background-position: -160px -20px;"></span></li><li id="wmd-hr-button" class="wmd-button" style="left: 275px;"><span style="background-position: -180px -20px;"></span></li><li id="wmd-spacer3" class="wmd-spacer" style="left: 300px;"><span style="background-position: -200px -20px;"></span></li><li id="wmd-undo-button" class="wmd-button" style="left: 325px;"><span style="background-position: -200px -20px;"></span></li><li id="wmd-redo-button" class="wmd-button" style="left: 350px;"><span style="background-position: -220px -20px;"></span></li></ul></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="582360fa3091bfa5e86e84b041879042">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+								            <div class="form-item new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="http://stackoverflow.com/users/login?ssrc=question_page&amp;returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid">
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false">
+                    <input type="hidden" name="use-google" class="use-google" value="false">
+                    <input type="button" class="submit-openid" value="Submit" style="display:none">
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown">
+                </div>
+            </td>
+        </tr>
+        </tbody></table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', 'http%3a%2f%2fstackoverflow.com%2fquestions%2f25855795%2fspring-boot-and-multiple-external-configuration-files%23new-answer', 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        &lt;h3&gt;Post as a guest&lt;/h3&gt;
+    &lt;div class="form-item"&gt;
+        &lt;table&gt;
+        &lt;tr&gt;
+                    &lt;td class="vm"&gt;
+                &lt;div&gt;
+                    &lt;label for="display-name"&gt;Name&lt;/label&gt;
+                    &lt;input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105"&gt;
+                &lt;/div&gt;
+                &lt;div&gt;
+                    &lt;label for="m-address"&gt;Email&lt;/label&gt;
+                    &lt;input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" /&gt;
+                &lt;/div&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+
+            </noscript>
+
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" target="_blank">terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1">								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/java" class="post-tag" title="show questions tagged &#39;java&#39;" rel="tag">java</a> <a href="http://stackoverflow.com/questions/tagged/spring" class="post-tag" title="show questions tagged &#39;spring&#39;" rel="tag">spring</a> <a href="http://stackoverflow.com/questions/tagged/config" class="post-tag" title="show questions tagged &#39;config&#39;" rel="tag">config</a> <a href="http://stackoverflow.com/questions/tagged/spring-boot" class="post-tag" title="show questions tagged &#39;spring-boot&#39;" rel="tag">spring-boot</a>  or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tbody><tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2014-09-15 19:47:02Z"><b>1 year ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>46517 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="http://stackoverflow.com/questions/25855795/spring-boot-and-multiple-external-configuration-files?lastactivity" class="lastactivity-link" title="2016-05-16 15:17:08Z">1 month ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </tbody></table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="http://blog.stackoverflow.com/2016/06/learn-more-about-your-site-with-the-se-data-explorer-heres-how/?cb=1" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="http://blog.stackoverflow.com/2016/06/learn-more-about-your-site-with-the-se-data-explorer-heres-how/?cb=1" class="question-hyperlink">Learn more about your site with the SE Data Explorer. Here's how!</a>
+                </div>
+                <br class="cbt">
+            </div>
+    </div>
+</div>			
+			<div class="everyonelovesstackoverflow blue remote tagged clc-jobs-multi" id="hireme"><a href="http://stackoverflow.com/jobs?allowsremote=true" target="_blank" data-at="0" data-tz="1" data-ti="14" class="top"><span>Work from anywhere</span></a><div class="middle"><ul class="jobs"><li><a data-at="0" data-tz="3" data-ti="216011" href="http://stackoverflow.com/jobs/116011/full-stack-developer-60k-crossover" target="_blank" title="Full Stack Developer - $60k at Crossover. Click to learn more."><div class="title">Full Stack Developer - $60k</div><div><span class="company">Crossover</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag highlight">java</span><span class="post-tag">meteor</span></a></li><li><a data-at="0" data-tz="3" data-ti="215383" href="http://stackoverflow.com/jobs/115383/demandware-software-engineering-manager-120k-crossover" target="_blank" title="Demandware Software Engineering Manager - $120K at Crossover. Click to learn more."><div class="title">Demandware Software Engineering Manager - $120K</div><div><span class="company">Crossover</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag highlight">java</span><span class="post-tag">demandware</span></a></li><li><a data-at="0" data-tz="3" data-ti="219177" href="http://stackoverflow.com/jobs/119177/code-review-expert-java-and-html5-vgw-gaming" target="_blank" title="Code Review Expert (JAVA and HTML5) at VGW Gaming. Click to learn more."><div class="title">Code Review Expert (JAVA and HTML5)</div><div><span class="company">VGW Gaming</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag highlight">java</span><span class="post-tag">javascript</span></a></li><li><a data-at="0" data-tz="3" data-ti="217686" href="http://stackoverflow.com/jobs/117686/angular-2-dev-small-team-south-america-or-custody-x-change-inc" target="_blank" title="Angular 2 Dev - Small Team - South America or Europe at Custody X Change Inc.. Click to learn more."><div class="title">Angular 2 Dev - Small Team - South America or Europe</div><div><span class="company">Custody X Change Inc.</span><span class="location">No office location</span></div><div class="opts"><span class="opt remote">Remote</span></div><span class="post-tag">javascript</span><span class="post-tag">node.js</span></a></li></ul><div style="clear:both"></div></div><img class="impression" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/soi.gif" style="display:none;"></div>
+        <script>
+;"use strict";(function(n){function it(n,i,r){var u=t.createElement("script"),e="onreadystatechange",o="onload",f="readyState",s=!1;u.async=!0;u.src=n;typeof i=="function"&&(u[o]=u[e]=function(){s||u[f]&&u[f]!=="loaded"&&u[f]!=="complete"||(s=!0,typeof i=="function"&&i(u),u[o]=u[e]=null,r&&u.parentNode.removeChild(u))});ft.appendChild(u)}function rt(n){var i=t.createElement("link");i.type="text/css";i.rel="stylesheet";i.href=n;et.appendChild(i)}function ct(){var n=i.StackExchange,t="options",r="user";return n&&n[t]&&n[t][r]&&n[t][r].accountId}function lt(n){var t,i;return n=ot(r.hash?r.hash.substr(1):"",n||{}),t=n.ac||n.accountId||ct(),t&&(n.ac=t),n.tags||(i=tt(),i.length>0&&(n.tags=i.join(";"))),n.host=r.host.replace(/\.internal$/,""),n}function at(n,t,i,r){var c=h(n);if(c===null)return function(){};var e=null,f=null,l=u(),a=function a(){g(c)?(s(e),r(!1,u()-l)):f=o(a,t)};return f=o(a,t),i!==undefined&&(e=o(function(){s(f);r(!0,u()-l)},i)),function(){s(f);s(e)}}function vt(n){var f=r.hash.indexOf("large=1")!==-1,e=r.hash.indexOf("small=1")!==-1,s=y(),t,u;t=e?!1:f||!s||n;var h=t?1:2,c=a(["hireme","clc-sb"],v),i=[h+"="+c],o=a(["careers1","clc-tlb"],v);return o&&i.push("5="+o),u=a(["careers3","clc-mlb"],v),u&&i.push("6="+u),i.join("&")}function ut(n,t){var e=!!h("#careersadsdoublehigh"),c=k({},f,{zones:f.zones||vt(e)}),r=lt(c),o;n&&(r.azt=1);t&&(r.lw=t);typeof i.innerWidth=="number"&&(r.bw=i.innerWidth);b&&(r.ver=b);o=p()-(e+0);o>0&&(r.az="1");var a=st(r,["zones","ip","ac","eng","prov","tags","theme","at","remote","seed","lw","azt","sysadmin","bw","nocpm","creative","jobview","cpview","ver","host","exp","fallback","cp","az","jc","job"]),s=w+"?"+a;l=u();it(s)}function yt(n){function h(){f.forEach(rt);e.forEach(function(n){return pt(n,t[n],s,o)});typeof i.clc_after_load=="function"&&i.clc_after_load()}var t=n.cr,r=n.h,f=n.st,e=Object.keys(t),o=l?u()-l:0,s="//"+r+"/ct";h()}function pt(n,t,i,r){var s=t.cl,c=t.cn,f=t.an,l=t.tr,o=(s||[]).join(" "),u=h("#"+n);u&&(o&&(u.className+=" "+o),u.innerHTML=c.replace("&pt=0","&pt="+(r||0)),u.onmousedown=function(n){for(var t=n.target,r,o,s;t.tagName!=="A"&&t!==u;)t=t.parentNode;t!==u&&(/(^|\s+)clc-non-ad(\s+|$)/.test(t.className)||(r=[],f&&r.push("an="+f),o=[].filter.call(t.attributes,function(n){return/^data-/.test(n.name)}),o.length>0&&o.forEach(function(n){var t=n.name.replace(/^data-/,"");r.push(e(t)+"="+e(n.value))}),r.push("tr="+l),s="",r.length>0&&(s="?"+r.join("&")),t.href=i+s))})}function wt(n){var i=t.createElement("a");return i.href=n,i.host}function bt(){var i,n;y()?(n=at("#sidebar "+c,20,i,ut),o(function(){var r=h(c),i;g(r)||(r.parentNode.removeChild(r),typeof n=="function"&&n(),i=t.createElement("img"),i.src="//"+wt(w)+"/to.gif",i.style.display="none",t.body.appendChild(i))},2e3)):ut()}var w=n.u,f=n.o,b=n.c,y,p;f=f||{};var k=Object.assign||function(n){for(var i,r,t=1;t<arguments.length;t++){i=arguments[t];for(r in i)Object.prototype.hasOwnProperty.call(i,r)&&(n[r]=i[r])}return n},i=window,r=i.location,e=i.encodeURIComponent,d=i.decodeURIComponent,t=i.document,ft=t.body,et=t.getElementsByTagName("head")[0],o=i.setTimeout,s=i.clearTimeout,c="[id^=adzerk].everyonelovesstackoverflow",l=0,u=function(){return(new Date).getTime()},ot=function(n,t){return n.split(/\&/g).reduce(function(n,t){var i=t.split("=");return n[d(i[0])]=d(i[1]),n},t||{})},st=function(n,t){return Object.keys(n).filter(function(n){return t.indexOf(n)!==-1}).map(function(t){return e(t)+"="+e(n[t])}).join("&")},g=function(n){return n.innerHTML.replace(/\s+$/g,"")},nt=t.querySelectorAll.bind(t),h=t.querySelector.bind(t),ht=t.getElementById.bind(t),a=function(n,t){return n.filter(t)[0]},tt=function(){return[].map.call(nt(".post-taglist .post-tag"),function(n){return n.textContent})},v=function(n){return!!ht(n)};y=function(){return p()>0};p=function(){return nt(c).length};i.clc=k(window.clc||{},{init:yt,load:bt,ls:it,as:rt,tags:tt});window.clc_init&&window.clc_init.forEach&&window.clc_init.forEach(function(n){return n()})}).call(null, {"c":"26f5779","u":"//clc.stackoverflow.com/p.js"});"use strict";var allowedHosts=["stackoverflow.com","serverfault.com"];(allowedHosts[0]==="*"||allowedHosts.indexOf(location.hostname)!==-1)&&window.clc.load();        </script>
+			<div style="margin-bottom: 10px;">
+        
+
+<style type="text/css">
+#newsletter-ad {
+    width: 270px;
+    height: 250px;
+    overflow: hidden;
+    background: url('//cdn.sstatic.net/Sites/stackoverflow/img/newsletter-ad.png?v=4');
+    padding: 0 15px 0 15px;
+}
+#newsletter-ad-header {
+    margin-top: 60px;
+}
+#newsletter-ad ul {
+    margin: 1em 0 1em 1.5em;
+}
+#newsletter-ad ul li {
+    margin-bottom: 5px;
+}
+#newsletter-signup-container {
+    text-align: center;
+}
+#newsletter-preview-container {
+    margin-top: 10px;
+    text-align: center;
+}
+#newsletter-email-input {
+    width: 200px;
+}
+</style>
+
+<script>
+    StackExchange.ready(function () {
+        StackExchange.newsletterAd.init();
+    });
+</script>
+
+<div id="newsletter-ad">
+        <p id="newsletter-ad-header">Get the <b>weekly newsletter!</b> In it, you'll get:</p>
+        <ul>
+            <li>The week's top questions and answers</li>
+            <li>Important community announcements</li>
+            <li>Questions that need answers</li>
+        </ul>
+    <div id="newsletter-signup-container"><input id="newsletter-signup" type="button" value="Sign up for the newsletter"></div>
+    <p id="newsletter-preview-container">see an <a href="http://stackexchange.com/newsletters/newsletter?site=stackoverflow.com" id="newsletter-preview">example newsletter</a></p>
+    <div class="dno">
+        
+<p class="privacy-policy-agreement">
+By subscribing, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" target="_blank">terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1">
+    </div>
+</div>
+
+    </div>  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="http://stackoverflow.com/q/26870785?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/26870785/spring-boot-external-config?lq=1" class="question-hyperlink">spring boot external config</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/33229793?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">2</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/33229793/how-to-add-multiple-application-properties-files-in-spring-boot?lq=1" class="question-hyperlink">How to add multiple application.properties files in spring-boot?</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/31301394?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">0</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/31301394/externalizing-properties-files-in-spring-boot?lq=1" class="question-hyperlink">Externalizing properties files in spring boot</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/25576894?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/25576894/spring-boot-external-configuration-entire-class?rq=1" class="question-hyperlink">spring-boot external configuration entire class</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/26870785?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/26870785/spring-boot-external-config?rq=1" class="question-hyperlink">spring boot external config</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/29551975?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/29551975/spring-boot-configuration-priority?rq=1" class="question-hyperlink">Spring Boot Configuration Priority</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/29822735?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/29822735/java-spring-boot-external-logging-file-jar?rq=1" class="question-hyperlink">Java Spring Boot external logging file jar</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/34507660?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">3
+    </div>
+</a><a href="http://stackoverflow.com/questions/34507660/spring-boot-executable-jar-and-external-configuration-file?rq=1" class="question-hyperlink">Spring Boot executable jar and external configuration file</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/34556677?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/34556677/spring-boot-load-value-from-yaml-file?rq=1" class="question-hyperlink">Spring Boot: Load @Value from YAML file</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/34745769?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/34745769/create-externalized-configuration-in-spring-boot-along-with-profiles?rq=1" class="question-hyperlink">Create Externalized Configuration in spring-boot along with profiles</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/36474716?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/36474716/spring-boot-configuring-different-versions-of-a-property-file-with-hardcoded-fi?rq=1" class="question-hyperlink">spring-boot: configuring different versions of a property-file with hardcoded filename?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/36635163?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/36635163/spring-boot-externalizing-properties-not-working?rq=1" class="question-hyperlink">Spring Boot Externalizing properties not working</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/36849991?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/36849991/how-to-externalize-configuration-in-spring-boot-using-profiles?rq=1" class="question-hyperlink">How to externalize configuration in Spring Boot using profiles?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="http://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/316681/upright-quote-in-dejavu-serif" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Upright quote in DejaVu Serif
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="http://electronics.stackexchange.com/questions/242949/why-is-the-inductive-reactance-or-capacitive-reactance-phasor-on-the-imaginary-a" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is the inductive reactance or capacitive reactance phasor on the imaginary axis?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/83792/falling-ascii-balls" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Falling ASCII balls
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/36659/the-drouble-with-doorples" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    The Drouble with Doorples
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/119377/replacing-elements-in-lists-of-a-nested-list" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Replacing elements in lists of a nested list
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-superuser" title="Super User"></div><a href="http://superuser.com/questions/1093653/how-do-i-wipe-an-encrypted-usb-flash-drive" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:3 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I wipe an encrypted USB flash drive?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/334390/what-is-the-term-for-repetition-of-an-initial-syllable-in-successive-words" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is the term for repetition of an initial syllable in successive words?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-history" title="History Stack Exchange"></div><a href="http://history.stackexchange.com/questions/30501/did-albert-einstein-really-receive-this-rejection-letter" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:324 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Did Albert Einstein really receive this rejection letter?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/45169/how-would-someone-hide-an-asteroid-in-the-void-of-space-so-only-they-could-find" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How would someone hide an asteroid in the void of space so only they could find it?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/36667/coffee-break-puzzle-where-does-the-driver-sit" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Coffee-break Puzzle: Where does the Driver Sit?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/45267/are-sheer-numbers-enough-to-beat-a-foe-with-more-advanced-technology" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Are sheer numbers enough to beat a foe with more advanced technology?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/45245/migrating-dungeon-monsters-why-do-monsters-not-leave-the-dungeons" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Migrating Dungeon Monsters / Why do monsters not leave the dungeons?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/71874/is-it-ethical-to-use-a-recommendation-letter-from-a-deceased-professor" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it ethical to use a recommendation letter from a deceased professor?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/119417/my-code-uses-clebschgordan-but-mathematica-is-using-threejsymbol" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    My code uses `ClebschGordan` but `Mathematica` is using `ThreeJSymbol`
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-photo" title="Photography Stack Exchange"></div><a href="http://photo.stackexchange.com/questions/79593/how-can-i-make-a-reflector-at-home" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:61 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I make a reflector at home?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/132926/whose-helmet-did-rey-put-on" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Whose helmet did Rey put on?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-datascience" title="Data Science Stack Exchange"></div><a href="http://datascience.stackexchange.com/questions/12413/what-does-it-mean-when-people-say-a-cost-function-is-something-you-want-to-minim" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:557 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What does it mean when people say a cost function is something you want to minimize?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/128335/is-sending-a-password-encrypted-or-as-sha1-any-safer-than-clear-text" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is sending a password encrypted or as SHA1 any safer than clear text?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-serverfault" title="Server Fault"></div><a href="http://serverfault.com/questions/785949/how-can-i-keep-the-content-i-was-reading-from-man-after-i-quit" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:2 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How can I keep the content I was reading from man after I quit?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-apple" title="Ask Different"></div><a href="http://apple.stackexchange.com/questions/243937/less-doesnt-work" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:118 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    less doesn't work
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-arduino" title="Arduino Stack Exchange"></div><a href="http://arduino.stackexchange.com/questions/25698/what-does-mean" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:540 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What does "+=" mean?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-programmers" title="Programmers Stack Exchange"></div><a href="http://programmers.stackexchange.com/questions/323146/in-software-programming-would-it-be-possible-to-have-both-cpu-and-gpu-loads-at" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:131 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    In software programming, would it be possible to have both CPU and GPU loads at 100%?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/132953/does-the-predator-eat-human-flesh" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does the Predator eat human flesh?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-mathoverflow" title="MathOverflow"></div><a href="http://mathoverflow.net/questions/243084/history-of-the-notation-for-substitution" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:504 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    History of the notation for substitution
+                </a>
+
+            </li>
+    </ul>
+
+        
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="http://stackoverflow.com/feeds/question/25855795" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/25855795/ivc/a5c5');});
+</script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/25855795/ivc/a5c5" class="dno" alt="" width="0" height="0"&gt;&lt;/div&gt;
+</noscript><div style="display:none" id="prettify-lang">lang-java</div></div>
+
+
+        </div>
+    </div><script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/p.js"></script>
+    <div id="footer" class="categories">
+        <div class="footerwrap">            
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                    <a href="http://stackoverflow.com/company/about">about us</a>
+                        <a href="http://stackoverflow.com/tour">tour</a>
+                    <a href="http://stackoverflow.com/help">help</a>
+                    <a href="http://blog.stackoverflow.com/?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com/">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackoverflow.com/company/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick="StackExchange.switchMobile(&quot;on&quot;)">mobile</a>
+                    <b><a href="http://stackoverflow.com/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://programmers.stackexchange.com/" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="http://salesforce.stackexchange.com/" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                        <li><a href="http://expressionengine.stackexchange.com/" title="administrators, end users, developers and designers for ExpressionEngine® CMS">ExpressionEngine® Answers</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://graphicdesign.stackexchange.com/" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="http://movies.stackexchange.com/" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="http://money.stackexchange.com/" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="http://academia.stackexchange.com/" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (9)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                        <li><a href="http://chemistry.stackexchange.com/" title="scientists, academics, teachers and students">Chemistry</a></li>
+                        <li><a href="http://biology.stackexchange.com/" title="biology researchers, academics, and students">Biology</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (5)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://meta.stackexchange.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="http://careers.stackoverflow.com/">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+            <div id="copyright">
+                site design / logo © 2016 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2016.6.23.3704
+            </div>
+                </div>
+    </div>
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Stack Overflow works best with JavaScript enabled&lt;img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+        <script> setTimeout(function() { $("#adzerk-user-match").remove(); }, 2000);</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');
+                        ga('set', 'dimension2', '|java|spring|config|spring-boot|');         ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+                qc.async = true;
+                qc.src = (ssl ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+                s.parentNode.insertBefore(qc, s);
+                _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+                            var sc=document.createElement('script');
+                sc.async=true;
+                sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+                s.parentNode.insertBefore(sc, s);
+                _comscore.push({ c1: "2", c2: "17440561" });
+        })();
+                
+    </script>
+        
+    
+    
+<script async="" src="./java - Spring Boot and multiple external configuration files - Stack Overflow_files/ados.js"></script><div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>

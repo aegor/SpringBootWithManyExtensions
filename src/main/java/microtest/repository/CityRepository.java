@@ -12,7 +12,7 @@ import microtest.domain.model.City;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "citys", path = "cities")
+@RepositoryRestResource(collectionResourceRel = "cities", path = "cities")
 public interface CityRepository extends PagingAndSortingRepository<City, Long> {
 
 	// search block

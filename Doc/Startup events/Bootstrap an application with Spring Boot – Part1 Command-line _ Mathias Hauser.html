@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<!-- saved from url=(0108)https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Bootstrap an application with Spring Boot – Part1 Command-line | Mathias Hauser</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://mhdevelopment.wordpress.com/xmlrpc.php">
+<meta name="google-site-verification" content="zn5GD43vrhbA6cBWhMLRbqVCU9p6HCH3k8vOA-33lZg">
+<meta name="msvalidate.01" content="0AE35360C9199AEFC14F07204EB3D284">
+<link rel="alternate" type="application/rss+xml" title="Mathias Hauser » Feed" href="https://mhdevelopment.wordpress.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mathias Hauser » Comments Feed" href="https://mhdevelopment.wordpress.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Mathias Hauser » Bootstrap an application with Spring Boot – Part1 Command-line Comments Feed" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/feed/">
+	<script async="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/beacon.js"></script><script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+	<link rel="stylesheet" id="all-css-0" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+var LoggedOutFollow = {"invalid_email":"Your subscription did not succeed, please try again with a valid email address."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource(1)"></script>
+<link rel="stylesheet" id="all-css-0" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/style.css" type="text/css" media="all">
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s1.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://mhdevelopment.wordpress.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="My intentions behind starting a blog and what I want to achieve with it :)" href="https://mhdevelopment.wordpress.com/2014/02/05/my-intentions-behind-starting-a-blog-and-what-i-want-to-achieve-with-it/">
+<link rel="next" title="Bootstrap an application with Spring Boot – Part2 Web application" href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/">
+<meta name="generator" content="WordPress.com">
+<link rel="canonical" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">
+<link rel="shortlink" href="http://wp.me/p4jCWo-8">
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=https%3A%2F%2Fmhdevelopment.wordpress.com%2F2014%2F02%2F09%2Fbootstrap-an-application-with-spring-boot-part1-command-line%2F&amp;for=wpcom-auto-discovery"><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=https%3A%2F%2Fmhdevelopment.wordpress.com%2F2014%2F02%2F09%2Fbootstrap-an-application-with-spring-boot-part1-command-line%2F&amp;for=wpcom-auto-discovery">
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bootstrap an application with Spring Boot – Part1 Command-line">
+<meta property="og:url" content="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">
+<meta property="og:description" content="Spring Boot is a new piece of technology with the aim to reduce the configuration overhead and easier project bootstrap. There are many little examples out there which describe how to use it, but t…">
+<meta property="article:published_time" content="2014-02-09T16:39:46+00:00">
+<meta property="article:modified_time" content="2014-10-05T20:46:30+00:00">
+<meta property="og:site_name" content="Mathias Hauser">
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@mh_development">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@mh_development">
+<meta property="fb:app_id" content="249643311490">
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom">
+<link rel="shortcut icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="icon" type="image/x-icon" href="https://s2.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48">
+<link rel="apple-touch-icon-precomposed" href="https://s0.wp.com/i/webclip.png">
+<link rel="openid.server" href="https://mhdevelopment.wordpress.com/?openidserver=1">
+<link rel="openid.delegate" href="https://mhdevelopment.wordpress.com/">
+<link rel="search" type="application/opensearchdescription+xml" href="https://mhdevelopment.wordpress.com/osd.xml" title="Mathias Hauser">
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com">
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+				<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Mathias Hauser"><meta name="msapplication-window" content="width=device-width;height=device-height"><meta name="msapplication-tooltip" content="My opinions and thoughts on various things  and experiences of software development"><meta name="msapplication-task" content="name=Subscribe;action-uri=https://mhdevelopment.wordpress.com/feed/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s2.wp.com/i/favicon.ico"><meta name="title" content="Bootstrap an application with Spring Boot – Part1 Command-line | Mathias Hauser on WordPress.com">
+<meta name="description" content="Spring Boot is a new piece of technology with the aim to reduce the configuration overhead and easier project bootstrap. There are many little examples out there which describe how to use it, but there is in many cases something that you don&#39;t want or a configuration parameter you need, but not mentioned in a…">
+	<style type="text/css">
+		#title h1,
+	#title h1 a,
+	#title p {
+		color: #222 !important;
+	}
+	</style>		<script type="text/javascript" src="https://c.amazon-adsystem.com/aax2/amzn_ads.js"></script>
+		<script type="text/javascript">
+		try { amznads.getAds("3033"); } catch(e) { /* ignore */ }
+		</script>
+		<script type="text/javascript">
+		try {
+			var a9_p = amznads.getKeys(),
+			_ipw_custom = {
+				wordAds: '0',
+				adSafe: '0',
+				domain: 'mhdevelopment.wordpress.com',
+				pageURL: 'https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/'
+			};
+			if("undefined"!=typeof a9_p&&""!=a9_p&&null!==a9_p&&"[object Array]"===Object.prototype.toString.call(a9_p)){var a="",b=0,c=a9_p.length;a9_p.sort();for(var d=0;d<c;d++){a9_p[d-b]=a9_p[d-b].replace(/a1x6p/,"a160x600p");var e=a9_p[d-b].split("p");e[0]==a&&(a9_p.splice(d-b,1),b++);a=e[0]}_ipw_custom.amznPay=a9_p};document.close();
+		} catch(e) {}
+		</script>		<!-- IPONWEB header script -->
+		<script type="text/javascript">
+			window.__ATA = {
+				scriptSrc: '//s.pubmine.com/showad.js',
+				slotPrefix: 'automattic-id-',
+				initAd: function(o) {
+					var o = o || {},
+						g = window,
+						d = g.document,
+						wr = d.write,
+						id = g.__ATA.id();
+					wr.call(d, '<div id="' + id + '" data-section="' + (o.sectionId || 0) + '"' + (o.type ? ('data-type="' + o.type + '"') : '') + ' ' + (o.forcedUrl ? ('data-forcedurl="' + o.forcedUrl + '"') : '') + ' style="width:' + (o.width || 0) + 'px; height:' + (o.height || 0) + 'px;">');
+					g.__ATA.displayAd(id);
+					wr.call(d, '</div>');
+				},
+				displayAd: function(id) {
+					window.__ATA.ids = window.__ATA.ids || {};
+					window.__ATA.ids[id] = 1;
+				},
+				customParams: _ipw_custom,
+				id: function() {
+					return window.__ATA.slotPrefix + (parseInt(Math.random() * 10000, 10) + 1 + (new Date()).getMilliseconds());
+				}
+			};
+			(function(d, ata) {
+				var pr = "https:" === d.location.protocol ? "https:" : "http:",
+					src = pr + ata.scriptSrc,
+					st = "text/javascript";
+				d.write('<scr' + 'ipt type="' + st + '" src="' + src + '"><\/scr' + 'ipt>');
+			})(window.document, window.__ATA);
+		</script><script type="text/javascript" src="https://s.pubmine.com/showad.js"></script>
+		<script type="text/javascript">
+		jQuery(window).ready(function () {
+			jQuery("a.wpa-about").text("About these ads");
+		});
+		</script><link rel="amphtml" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/amp/"><link rel="stylesheet" type="text/css" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script><script type="text/javascript" async="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ga.js"></script>
+<link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/services.css"><style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+<body class="single single-post postid-8 single-format-standard mp6 customizer-styles-applied two-column content-sidebar highlander-enabled highlander-light">
+
+<div id="wrapper">
+
+<div id="header">
+	<div id="header_inner">
+		<ul class="nav sf-menu"><li><a href="https://mhdevelopment.wordpress.com/">Home</a></li><li class="page_item page-item-1"><a href="https://mhdevelopment.wordpress.com/about/">About</a></li></ul>
+		<form id="search-form" role="search" method="get" action="https://mhdevelopment.wordpress.com/">
+			<input type="text" value="Search: type, hit enter" onfocus="if (this.value == &#39;Search: type, hit enter&#39; ) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39; ) {this.value = &#39;Search: type, hit enter&#39;;}" name="s" id="s">
+			<input type="submit" id="search-submit" value="Search">
+		</form>
+	</div>
+</div>
+
+<div id="content">
+
+		<div id="title">
+		<h1><a href="https://mhdevelopment.wordpress.com/">Mathias Hauser</a></h1>
+		<p>My opinions and thoughts on various things  and experiences of software development</p>
+	</div>
+
+	
+	<div id="maincontent">
+		<div id="maincontent_inner">
+
+	
+		<div id="post-8" class="post-8 post type-post status-publish format-standard hentry category-gradle category-spring category-spring-boot category-spring-data-jpa">
+
+			<h2 class="title">Bootstrap an application with Spring Boot – Part1&nbsp;Command-line</h2>
+
+			<div class="post-info">
+				<div>
+					<span class="comments-meta"><a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#respond">11 Comments</a></span>
+					Posted by <span class="author"><a href="https://mhdevelopment.wordpress.com/author/mhdevelopment/" title="Posts by mhdevelopment" rel="author">mhdevelopment</a></span> on <span class="time">February 9, 2014</span>
+									</div>
+			</div>
+
+			<div class="content">
+				<p>Spring Boot is a new piece of technology with the aim to reduce the configuration overhead and easier project bootstrap. There are many little examples out there which describe how to use it, but there is in many cases something that you don’t want or a configuration parameter you need, but not mentioned in a specific tutorial. I try to give you a good starting point for you application plus additional references to additional informations you might need for your setup.</p>
+<h2>Command-line application with Spring Boot</h2>
+<p>Most Spring Boot examples are web applications. This is ok because many new applications are web based, but its not optimal in each situation. I personally prefer to start with as little new as possible. My experience is that solving problems with two new things cost more time than solving one after another. So I decided to start things off with a really simple command-line application which allows inserting a word with a specific text to the database.</p>
+<p>I recommend downloading the source of this example before you start. Link to the repository <a title="blog_springBoot-commandLine" href="https://github.com/mh-dev/blog_springBoot-commandLine" target="_blank">blog_springBoot-commandLine</a> direct link to the source zip <a title="source-zip" href="https://github.com/mh-dev/blog_springBoot-commandLine/archive/master.zip">source-zip</a></p>
+<h3>Four key points of the configuration</h3>
+<ol>
+<li> Build- and Dependencymanagement -&gt; build.gradle -&gt; in the project root</li>
+<li> Application configuration -&gt; Application.java -&gt; anywhere in your package structure in this case mh.dev.blog (src/main/java)</li>
+<li> Property configuration -&gt; application.yml -&gt; src/main/resources</li>
+<li> Logging configuration -&gt; logback.xml -&gt; src/main/resources</li>
+</ol>
+<p><span id="more-8"></span></p>
+<h3>Build- and Dependencymanagement -&gt; build.gradle </h3>
+<p>This file is located in the root of the project. The majority of the file is a standard gradle script. Only the dependencies are specific for this Spring Boot project. I also include <a href="http://commons.apache.org/" title="Apache Commons Lang" target="_blank">Apache Commons Lang</a> and <a href="http://code.google.com/p/guava-libraries/" title="Google Guava" target="_blank">Google Guava</a> into my projects even if I might not need them.</p>
+<div><div id="highlighter_35676" class="syntaxhighlighter  groovy"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="groovy plain">apply plugin: </code><code class="groovy string">'java'</code></div><div class="line number2 index1 alt1"><code class="groovy plain">apply plugin: </code><code class="groovy string">'eclipse'</code></div><div class="line number3 index2 alt2"><code class="groovy plain">apply plugin: </code><code class="groovy string">'idea'</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="groovy plain">version = </code><code class="groovy string">'1.0'</code></div><div class="line number6 index5 alt1"><code class="groovy plain">group = </code><code class="groovy string">'mh.dev.blog'</code></div><div class="line number7 index6 alt2"><code class="groovy plain">description = </code><code class="groovy string">'bootstrap-spring-boot'</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="groovy plain">project.ext {</code></div><div class="line number10 index9 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">springBootVersion = </code><code class="groovy string">'1.0.0.RC1'</code></div><div class="line number11 index10 alt2"><code class="groovy plain">}</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="groovy plain">repositories {</code></div><div class="line number14 index13 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">mavenLocal()</code></div><div class="line number15 index14 alt2"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">mavenCentral()</code></div><div class="line number16 index15 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">maven { url </code><code class="groovy string">"<a href="http://repo.spring.io/libs-snapshot">http://repo.spring.io/libs-snapshot</a>"</code> <code class="groovy plain">}</code></div><div class="line number17 index16 alt2"><code class="groovy plain">}</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2"><code class="groovy plain">dependencies {</code></div><div class="line number20 index19 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"org.springframework.boot:spring-boot-starter:$springBootVersion"</code><code class="groovy plain">)</code></div><div class="line number21 index20 alt2"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"</code><code class="groovy plain">)</code></div><div class="line number22 index21 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"org.apache.commons:commons-lang3:3.2.1"</code><code class="groovy plain">)</code></div><div class="line number23 index22 alt2"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"com.google.guava:guava:16.0.1"</code><code class="groovy plain">)</code></div><div class="line number24 index23 alt1"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"org.yaml:snakeyaml:1.13"</code><code class="groovy plain">)</code></div><div class="line number25 index24 alt2"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">compile(</code><code class="groovy string">"mysql:mysql-connector-java:5.1.28"</code><code class="groovy plain">)</code></div><div class="line number26 index25 alt1"><code class="groovy plain">}</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="groovy plain">task wrapper(type: Wrapper) {</code></div><div class="line number29 index28 alt2"><code class="groovy spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="groovy plain">gradleVersion = </code><code class="groovy string">'1.10'</code></div><div class="line number30 index29 alt1"><code class="groovy plain">}</code></div></div></td></tr></tbody></table></div></div>
+<h4>Dependencies</h4>
+<ul>
+<li>spring-boot-starter – responsible for the Spring Boot magic </li>
+<li>spring-boot-starter-data-jpa – integrates Spring Data JPA into the environment </li>
+<li>snakeyaml – library for a special property configuration syntax -&gt; application.yml </li>
+</ul>
+<h4> Wrapper task </h4>
+<p>The wrapper task is a nice extra from gradle it allows to create files which can be added to the repository. One of these files is graldew.bat it allows to download the gradle distribution on demand as long as JAVA_HOME is set in the environment variables. More details see <a href="http://www.gradle.org/docs/current/userguide/gradle_wrapper.html" title="gradle wrapper documentation" target="_blank">gradle wrapper documentation</a></p>
+<h4> How to create Eclipse / IntelliJ project with the source-zip </h4>
+<p>Navigate with the command line to the folder where build.gradle is located and type the following</p>
+<ul>
+<li>Eclipse -&gt; windows: gradlew eclipse or unix: ./gradlew eclipse</li>
+<li>IntelliJ -&gt; windows: gradlew idea or unix: ./gradlew idea </li>
+</ul>
+<p>From this command generated project can now be opened with the respective IDE.</p>
+<h3>Appication configuration -&gt; Application.java</h3>
+<p>The following class is the main configuration of your application. The “@EnableAutoConfiguration” annotation is the key part which configures the application itself based on dependencies on the classpath. Don’t think to much about how this works, accept that it reduces the amount of configurations you have to do on your own. The other two annotations should be self-explanatory. ComponentScan activates the scanning for classes which should be added to the application context and EnableJpaRepositories is responsible for the magic of Spring Data JPA.</p>
+<div><div id="highlighter_746980" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java keyword">package</code> <code class="java plain">mh.dev.blog;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="java keyword">import</code> <code class="java plain">org.springframework.boot.SpringApplication;</code></div><div class="line number4 index3 alt1"><code class="java keyword">import</code> <code class="java plain">org.springframework.boot.autoconfigure.EnableAutoConfiguration;</code></div><div class="line number5 index4 alt2"><code class="java keyword">import</code> <code class="java plain">org.springframework.context.annotation.ComponentScan;</code></div><div class="line number6 index5 alt1"><code class="java keyword">import</code> <code class="java plain">org.springframework.data.jpa.repository.config.EnableJpaRepositories;</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="java color1">@ComponentScan</code></div><div class="line number9 index8 alt2"><code class="java color1">@EnableJpaRepositories</code></div><div class="line number10 index9 alt1"><code class="java color1">@EnableAutoConfiguration</code></div><div class="line number11 index10 alt2"><code class="java keyword">public</code> <code class="java keyword">class</code> <code class="java plain">Application {</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java keyword">static</code> <code class="java keyword">void</code> <code class="java plain">main(String[] args) {</code></div><div class="line number14 index13 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">SpringApplication.run(Application.</code><code class="java keyword">class</code><code class="java plain">, args);</code></div><div class="line number15 index14 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<h4>Further configuration possibilities</h4>
+<p>You might want to use async methods or scheduling. Annotations for that case are @EnableAsync and @EnableScheduling. Or you might want something else just try @Enable and use the autocompletion of your IDE to activate specific features.</p>
+<h3>Property configuration -&gt; application.yml</h3>
+<p>Well Spring Boot reduces the amount of required configuration, but there are some things which can’t be automatically configured. These properties are located in a specific configuration file. New with Spring Boot is the possibility to use <a href="http://de.wikipedia.org/wiki/YAML" title="YAML" target="_blank">YAML</a> as syntax for this file.<br>
+In the file itself is a reference to a page with a lot of existing properties. </p>
+<h4>Database configuration</h4>
+<p>Important in our case is the database configuration. You can change it for your local environment to be suitable for you environment. I’ve decided to use the update strategy.</p>
+<ul>
+<li>Databasename: blog</li>
+<li>Username: root</li>
+<li>Passowrd: root</li>
+<li>ddl-auto: update/create/create-drop/validate</li>
+</ul>
+<div><div id="highlighter_174042" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">## based on example application.yml -&amp;amp;gt; <a href="https://github.com/spring-projects/spring-boot/blob/6b83e0ad5de5f127cad5b12ab1738923c4a58a9f/docs/application.yml">https://github.com/spring-projects/spring-boot/blob/6b83e0ad5de5f127cad5b12ab1738923c4a58a9f/docs/application.yml</a></code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="plain plain">spring:</code></div><div class="line number4 index3 alt1"><code class="plain spaces">&nbsp;&nbsp;</code><code class="plain plain">application.name: CommandLineRunner</code></div><div class="line number5 index4 alt2"><code class="plain spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number6 index5 alt1"><code class="plain spaces">&nbsp;&nbsp;</code><code class="plain plain">datasource:</code></div><div class="line number7 index6 alt2"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">driverClassName: com.mysql.jdbc.Driver</code></div><div class="line number8 index7 alt1"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">url: jdbc:<a href="mysql://localhost:3306/blog">mysql://localhost:3306/blog</a></code></div><div class="line number9 index8 alt2"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">username: root</code></div><div class="line number10 index9 alt1"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">password: root</code></div><div class="line number11 index10 alt2"><code class="plain spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number12 index11 alt1"><code class="plain spaces">&nbsp;&nbsp;</code><code class="plain plain">jpa:</code></div><div class="line number13 index12 alt2"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">show-sql: true</code></div><div class="line number14 index13 alt1"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">hibernate:</code></div><div class="line number15 index14 alt2"><code class="plain spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain plain">ddl-auto: update</code></div></div></td></tr></tbody></table></div></div>
+<h3> Command-line runner </h3>
+<p>The HelloWorldController shown in the next code segment is the application itself. This example contains two important things. </p>
+<ol>
+<li>@Controller – allows the class to detected by Spring -&gt; @ComponentScan </li>
+<li>implements CommandLineRunner – an interface with a run method which is automatically invoked by Spring</li>
+</ol>
+<p>I don’t explain the Word, WordRepository, WordService class in this blog entry. You can take a look at it in the code but they don’t contain something Spring Boot specific.</p>
+<div><div id="highlighter_857252" class="syntaxhighlighter  java"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="java keyword">package</code> <code class="java plain">mh.dev.blog.controller;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="java keyword">import</code> <code class="java plain">java.util.Scanner;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="java keyword">import</code> <code class="java plain">mh.dev.blog.model.Word;</code></div><div class="line number6 index5 alt1"><code class="java keyword">import</code> <code class="java plain">mh.dev.blog.service.WordService;</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="java keyword">import</code> <code class="java plain">org.apache.log4j.Logger;</code></div><div class="line number9 index8 alt2"><code class="java keyword">import</code> <code class="java plain">org.springframework.beans.factory.annotation.Autowired;</code></div><div class="line number10 index9 alt1"><code class="java keyword">import</code> <code class="java plain">org.springframework.boot.CommandLineRunner;</code></div><div class="line number11 index10 alt2"><code class="java keyword">import</code> <code class="java plain">org.springframework.stereotype.Controller;</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="java color1">@Controller</code></div><div class="line number14 index13 alt1"><code class="java keyword">public</code> <code class="java keyword">class</code> <code class="java plain">HelloController </code><code class="java keyword">implements</code> <code class="java plain">CommandLineRunner {</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@Autowired</code></div><div class="line number17 index16 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">private</code> <code class="java plain">WordService wordService;</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">private</code> <code class="java plain">Logger log = Logger.getLogger(HelloController.</code><code class="java keyword">class</code><code class="java plain">);</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java color1">@Override</code></div><div class="line number22 index21 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">public</code> <code class="java keyword">void</code> <code class="java plain">run(String... args) </code><code class="java keyword">throws</code> <code class="java plain">Exception {</code></div><div class="line number23 index22 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">try</code> <code class="java plain">(Scanner scanner = </code><code class="java keyword">new</code> <code class="java plain">Scanner(System.in)) {</code></div><div class="line number24 index23 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">log.info(</code><code class="java string">"Enter text for a new word"</code><code class="java plain">);</code></div><div class="line number25 index24 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">String text = scanner.nextLine();</code></div><div class="line number26 index25 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java keyword">if</code> <code class="java plain">(wordService.byText(text) == </code><code class="java keyword">null</code><code class="java plain">) {</code></div><div class="line number27 index26 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">Word word = wordService.createWord(text);</code></div><div class="line number28 index27 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">log.info(String.format(</code><code class="java string">"Word with text %s and id %d created!"</code><code class="java plain">, word.getText(), word.getId()));</code></div><div class="line number29 index28 alt2">&nbsp;</div><div class="line number30 index29 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">} </code><code class="java keyword">else</code> <code class="java plain">{</code></div><div class="line number31 index30 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">log.error(String.format(</code><code class="java string">"Word with text %s does already exist!"</code><code class="java plain">, text));</code></div><div class="line number32 index31 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number33 index32 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">log.info(</code><code class="java string">"Restart the application to creat additional words"</code><code class="java plain">);</code></div><div class="line number34 index33 alt1"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number35 index34 alt2"><code class="java spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="java plain">}</code></div><div class="line number36 index35 alt1"><code class="java plain">}</code></div></div></td></tr></tbody></table></div></div>
+<h4>Multiple Command-line runners</h4>
+<p>You can define multiple command-line runners, but the execution is per default not parallel.</p>
+<h3>Logging with logback </h3>
+<p>Spring Boot supports logging configuration with Logback out of the box. The only thing you need to do is to include the base configuration from Spring Boot.</p>
+<div><div id="highlighter_15278" class="syntaxhighlighter  xml"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xml plain">&lt;?</code><code class="xml keyword">xml</code> <code class="xml color1">version</code><code class="xml plain">=</code><code class="xml string">"1.0"</code> <code class="xml color1">encoding</code><code class="xml plain">=</code><code class="xml string">"UTF-8"</code><code class="xml plain">?&gt;</code></div><div class="line number2 index1 alt1"><code class="xml plain">&lt;</code><code class="xml keyword">configuration</code><code class="xml plain">&gt;</code></div><div class="line number3 index2 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">include</code> <code class="xml color1">resource</code><code class="xml plain">=</code><code class="xml string">"org/springframework/boot/logging/logback/base.xml"</code> <code class="xml plain">/&gt;</code></div><div class="line number4 index3 alt1"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">logger</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"org.springframework.web"</code> <code class="xml color1">level</code><code class="xml plain">=</code><code class="xml string">"DEBUG"</code> <code class="xml plain">/&gt;</code></div><div class="line number5 index4 alt2"><code class="xml spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="xml plain">&lt;</code><code class="xml keyword">logger</code> <code class="xml color1">name</code><code class="xml plain">=</code><code class="xml string">"mh.dev.blog"</code> <code class="xml color1">level</code><code class="xml plain">=</code><code class="xml string">"DEBUG"</code> <code class="xml plain">/&gt;</code></div><div class="line number6 index5 alt1"><code class="xml plain">&lt;/</code><code class="xml keyword">configuration</code><code class="xml plain">&gt;</code></div></div></td></tr></tbody></table></div></div>
+<h3> Further reading and references </h3>
+<ul>
+<li><a href="http://projects.spring.io/spring-boot/docs/spring-boot/README.html" title="Spring Boot - Core" target="_blank">Spring Boot – Core</a></li>
+<li><a href="http://projects.spring.io/spring-boot/docs/docs/howto.html" title="How Do I Do That With Spring Boot?" target="_blank">How Do I Do That With Spring Boot?</a></li>
+<li><a href="http://spring.io/guides/gs/spring-boot/" title="Building an Application with Spring Boot" target="_blank">Building an Application with Spring Boot</a></li>
+<li><a href="https://github.com/spring-projects/spring-boot/blob/6b83e0ad5de5f127cad5b12ab1738923c4a58a9f/docs/application.yml" title="Possible properties for the YAML configuration" target="_blank">Possible properties for the YAML configuration</a></li>
+<li><a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples" title="Samples from Spring Boot" target="_blank">Samples from Spring Boot</a>
+</li></ul>
+<h3> Plan for my next entry </h3>
+<p>My next entry will be part 2 of this blog entry with the focus on a web based Spring Boot application. I’m not sure which web technology I should use for this maybe AngularJS?<br>
+The entry is finally realesed <a href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/" title="Bootstrap an application with Spring Boot – Part2 Webapplication">Bootstrap an application with Spring Boot – Part2 Webapplication</a></p>
+		<div class="wpcnt">
+			<div class="wpa wpmrec">
+				<a class="wpa-about" href="https://wordpress.com/about-these-ads/" rel="nofollow">About these ads</a>
+				<div class="u">
+					<script type="text/javascript">
+					(function(g){g.__ATA.initAd({sectionId:26942, width:300, height:250});})(window);
+					</script><div id="automattic-id-3545" data-section="26942" style="width:300px; height:250px;"></div>
+				</div>
+			</div>
+		</div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-8" class="share-twitter sd-button share-icon" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?share=twitter&amp;nb=1" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-8" class="share-facebook sd-button share-icon" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?share=facebook&amp;nb=1" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-8" class="share-google-plus-1 sd-button share-icon" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?share=google-plus-1&amp;nb=1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-end"></li></ul></div></div></div><div class="sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-loaded" id="like-post-wrapper-63783268-8-5770e015abe6a" data-src="//widgets.wp.com/likes/#blog_id=63783268&amp;post_id=8&amp;origin=mhdevelopment.wordpress.com&amp;obj_id=63783268-8-5770e015abe6a" data-name="like-post-frame-63783268-8-5770e015abe6a"><h3 class="sd-title">Like this:</h3><div class="likes-widget-placeholder post-likes-widget-placeholder" style="height: 55px; display: none;"><span class="button"><span>Like</span></span> <span class="loading">Loading...</span></div><iframe class="post-likes-widget jetpack-likes-widget" name="like-post-frame-63783268-8-5770e015abe6a" height="55px" width="100%" frameborder="0" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource.html"></iframe><span class="sd-text-color"></span><a class="sd-link-color"></a></div></div>			</div>
+
+			<div class="post-meta">
+								<span class="categories"><a href="https://mhdevelopment.wordpress.com/category/gradle/" rel="category tag">Gradle</a>, <a href="https://mhdevelopment.wordpress.com/category/spring/" rel="category tag">Spring</a>, <a href="https://mhdevelopment.wordpress.com/category/spring-boot/" rel="category tag">Spring Boot</a>, <a href="https://mhdevelopment.wordpress.com/category/spring-data-jpa/" rel="category tag">Spring Data JPA</a></span>
+							</div>
+			<div class="sep"></div>
+
+			<div class="next-prev-links">
+				<a href="https://mhdevelopment.wordpress.com/2014/02/05/my-intentions-behind-starting-a-blog-and-what-i-want-to-achieve-with-it/" rel="prev"><span class="nav-previous">← My intentions behind starting a blog and what I want to achieve with it&nbsp;:)</span></a>				<a href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/" rel="next"><span class="nav-next">Bootstrap an application with Spring Boot – Part2 Web&nbsp;application →</span></a>			</div>
+			<div class="sep"></div>
+
+		</div>
+
+		<div id="comments">
+
+		<h3 id="comments-title">
+		11 responses to “<em>Bootstrap an application with Spring Boot – Part1&nbsp;Command-line</em>”	</h3>
+
+
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-18">
+		<div id="comment-18">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/8072a2fea8e287b103a70230594ac9a3" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-8072a2fea8e287b103a70230594ac9a3-0"><cite class="fn">Steve Gelman</cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-18">October 5, 2014 at 10:35 pm</a>
+						<div class="comment-body"><p>Thank you.  This is a nice starting point.  However, I had to add my own CRUDRepository class.  I did not see any reference to needing to do this, though it could be my error.</p>
+<p>   package mh.dev.blog.repository;<br>
+   import org.springframework.data.repository.CrudRepository;<br>
+   import mh.dev.blog.model.Word;<br>
+   public interface WordRepository extends CrudRepository {<br>
+        Word findByText(String text);<br>
+   }</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=18#respond" onclick="return addComment.moveForm( &quot;comment-18&quot;, &quot;18&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to Steve Gelman">Reply</a>			</div>
+		</div>
+	</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-mhdevelopment bypostauthor odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-19">
+		<div id="comment-19">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-806459817aeda0166f2d39931f12acfe-0"><cite class="fn"><a href="https://mhdevelopment.wordpress.com/" rel="external nofollow" class="url">mhdevelopment</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-19">October 5, 2014 at 10:45 pm</a>
+						<div class="comment-body"><p>Sorry, seems that i forgot to add this file to the commit. Its now added.<br>
+I also fixed some special characters, wordpress has converted them for any reason at a later point.<br>
+Thanks for the info<img width="16" height="16" class="wp-smiley emoji" draggable="false" alt=":)" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/simple-smile.svg" style="height: 1em; max-height: 1em;"></p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=19#respond" onclick="return addComment.moveForm( &quot;comment-19&quot;, &quot;19&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to mhdevelopment">Reply</a>			</div>
+		</div>
+	</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-amitstechblog even thread-even depth-1 highlander-comment" id="li-comment-29">
+		<div id="comment-29">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/74b320743aa89bafb58a43cc5e08123b" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-74b320743aa89bafb58a43cc5e08123b-0"><cite class="fn"><a href="http://amitstechblog.wordpress.com/" rel="external nofollow" class="url">Amit</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-29">December 17, 2014 at 2:36 pm</a>
+						<div class="comment-body"><p>Nice article to start. One question – how can I upgrade spring-boot version? To be specific – What task do I execute in gradle after changing the spring boot version in build.gradle file ?</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=29#respond" onclick="return addComment.moveForm( &quot;comment-29&quot;, &quot;29&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to Amit">Reply</a>			</div>
+		</div>
+	</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-mhdevelopment bypostauthor odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-30">
+		<div id="comment-30">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-806459817aeda0166f2d39931f12acfe-1"><cite class="fn"><a href="https://mhdevelopment.wordpress.com/" rel="external nofollow" class="url">mhdevelopment</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-30">December 17, 2014 at 4:33 pm</a>
+						<div class="comment-body"><p>In that case its just updating the entry<br>
+project.ext {<br>
+    springBootVersion = ‘1.0.0.RC1’<br>
+}<br>
+to the version you prefer. The current version is 1.2.0.RELEASE.<br>
+But keep in mind that it might be necessary to refresh the dependencies in Intellij/Eclipse</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=30#respond" onclick="return addComment.moveForm( &quot;comment-30&quot;, &quot;30&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to mhdevelopment">Reply</a>			</div>
+		</div>
+	<ul class="children">
+		<li class="comment byuser comment-author-amitstechblog even depth-2 highlander-comment" id="li-comment-31">
+		<div id="comment-31">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/74b320743aa89bafb58a43cc5e08123b" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-74b320743aa89bafb58a43cc5e08123b-1"><cite class="fn"><a href="http://amitstechblog.wordpress.com/" rel="external nofollow" class="url">Amit</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-31">December 18, 2014 at 6:52 am</a>
+						<div class="comment-body"><p>…and what gradle command should we execute so that the dependencies are updated in Intellij?</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=31#respond" onclick="return addComment.moveForm( &quot;comment-31&quot;, &quot;31&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to Amit">Reply</a>			</div>
+		</div>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-mhdevelopment bypostauthor odd alt thread-even depth-1 highlander-comment" id="li-comment-32">
+		<div id="comment-32">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-806459817aeda0166f2d39931f12acfe-2"><cite class="fn"><a href="https://mhdevelopment.wordpress.com/" rel="external nofollow" class="url">mhdevelopment</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-32">December 18, 2014 at 7:01 am</a>
+						<div class="comment-body"><p>I would rely on the gradle plugin of Intellij, but that depends on the version of Intellij your using. The following approach works for at least 13 and 14.<br>
+1. Import Project<br>
+2. Select the build.gradle file<br>
+3. Intellij does now import the whole project as a gradle project for you.<br>
+4. Open the gradle view on the right side and click the “Refresh all Gradle projects” button, after changing dependencies. (Its ~a blue arrow cycle)</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=32#respond" onclick="return addComment.moveForm( &quot;comment-32&quot;, &quot;32&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to mhdevelopment">Reply</a>			</div>
+		</div>
+	<ul class="children">
+		<li class="comment byuser comment-author-amitstechblog even depth-2 highlander-comment" id="li-comment-33">
+		<div id="comment-33">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/74b320743aa89bafb58a43cc5e08123b" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-74b320743aa89bafb58a43cc5e08123b-2"><cite class="fn"><a href="http://amitstechblog.wordpress.com/" rel="external nofollow" class="url">Amit</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-33">December 18, 2014 at 7:06 am</a>
+						<div class="comment-body"><p>Great. That seems to working. Thanks for the quick reply. I wonder there should be a gradle task for doing the same.</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=33#respond" onclick="return addComment.moveForm( &quot;comment-33&quot;, &quot;33&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to Amit">Reply</a>			</div>
+		</div>
+	<ul class="children">
+		<li class="comment byuser comment-author-mhdevelopment bypostauthor odd alt depth-3 highlander-comment" id="li-comment-34">
+		<div id="comment-34">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-806459817aeda0166f2d39931f12acfe-3"><cite class="fn"><a href="https://mhdevelopment.wordpress.com/" rel="external nofollow" class="url">mhdevelopment</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-34">December 18, 2014 at 8:13 am</a>
+						<div class="comment-body"><p>Of course you can reexecute gradlew idea, but I told you the way I do it. Theres no point in switching to the console, for something you can do with Intellij with just a click on a single button.</p>
+</div>
+
+			<div class="reply">
+							</div>
+		</div>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-amitstechblog even depth-2 highlander-comment" id="li-comment-35">
+		<div id="comment-35">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/74b320743aa89bafb58a43cc5e08123b" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-74b320743aa89bafb58a43cc5e08123b-3"><cite class="fn"><a href="http://amitstechblog.wordpress.com/" rel="external nofollow" class="url">Amit</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-35">December 18, 2014 at 10:00 am</a>
+						<div class="comment-body"><p>For some reason spring dependencies are not getting downloaded when I refresh the gradle project. I updated the gradle file as I pasted here – <a href="https://paste.ee/p/TsZY7" rel="nofollow">https://paste.ee/p/TsZY7</a> and refreshed. The newly added oracle jar dependency was fetched and added in idea’s dependency list but<br>
+none of the spring jars were downloaded. </p>
+<p>Even executing “gradlew idea” doesn’t download the spring dependencies.</p>
+<p>Any guesses on what could be wrong?</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=35#respond" onclick="return addComment.moveForm( &quot;comment-35&quot;, &quot;35&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to Amit">Reply</a>			</div>
+		</div>
+	<ul class="children">
+		<li class="comment byuser comment-author-mhdevelopment bypostauthor odd alt depth-3 highlander-comment" id="li-comment-36">
+		<div id="comment-36">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-806459817aeda0166f2d39931f12acfe-4"><cite class="fn"><a href="https://mhdevelopment.wordpress.com/" rel="external nofollow" class="url">mhdevelopment</a></cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-36">December 18, 2014 at 10:05 am</a>
+						<div class="comment-body"><p>The Spring Boot Version is wrong, you forgot the .RELEASE at the end.<br>
+Correct version should look like <a href="https://paste.ee/p/Z54os" rel="nofollow">https://paste.ee/p/Z54os</a></p>
+</div>
+
+			<div class="reply">
+							</div>
+		</div>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-45">
+		<div id="comment-45">
+			<img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/e7f9f05ffd3df99849e58984a73774b6" class="avatar avatar-40 grav-hashed grav-hijack" height="40" width="40" id="grav-e7f9f05ffd3df99849e58984a73774b6-0"><cite class="fn">priya bapte</cite>			<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-45">March 11, 2015 at 12:48 pm</a>
+						<div class="comment-body"><p>I want to restart a spring boot app. like when user hit where url /restart the  application should restart. any idea about this ?</p>
+<p>Thanks in advance.<br>
+-Priya</p>
+</div>
+
+			<div class="reply">
+				<a rel="nofollow" class="comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/?replytocom=45#respond" onclick="return addComment.moveForm( &quot;comment-45&quot;, &quot;45&quot;, &quot;respond&quot;, &quot;8&quot; )" aria-label="Reply to priya bapte">Reply</a>			</div>
+		</div>
+	</li><!-- #comment-## -->
+	</ol>
+
+	
+
+				<div id="respond" class="comment-respond js">
+			<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="https://mhdevelopment.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+					<input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="4f98a679d1"><input type="hidden" name="_wp_http_referer" value="/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest">
+
+<div class="comment-form-field comment-textarea">
+	
+	<div id="comment-form-comment"><textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; word-wrap: break-word; overflow: hidden; transition: none; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; word-spacing: 0px; text-indent: 0px; line-height: 22px; width: 621.188px;" class="autosizejs "></textarea><textarea id="comment" name="comment" title="Enter your comment here..." placeholder="Enter your comment here..." style="height: 42px; overflow: hidden; word-wrap: break-word; resize: none;"></textarea></div>
+</div>
+
+<div id="comment-form-identity" style="display: none;">
+
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-form-guest" id="postas-guest" title="Guest">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-form-load-service:WordPress.com" id="postas-wordpress" title="WordPress.com">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-form-load-service:Twitter" id="postas-twitter" title="Twitter">
+					<span></span>
+				</a>
+			</li>
+			<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#comment-form-load-service:Facebook" id="postas-facebook" title="Facebook">
+					<span></span>
+				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource(6).html" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ad516503a11cd5ca435acc9bb6523536" alt="Gravatar" width="25" class="no-grav">
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value=""></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="text" value=""></div>
+				</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ad516503a11cd5ca435acc9bb6523536" alt="WordPress.com Logo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="">
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="">
+				<p class="comment-form-posting-as pa-wordpress"><strong></strong> You are commenting using your WordPress.com account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;wordpress&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ad516503a11cd5ca435acc9bb6523536" alt="Twitter picture" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="">
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="">
+				<p class="comment-form-posting-as pa-twitter"><strong></strong> You are commenting using your Twitter account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;twitter&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ad516503a11cd5ca435acc9bb6523536" alt="Facebook photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="">
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="">
+				<p class="comment-form-posting-as pa-facebook"><strong></strong> You are commenting using your Facebook account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;facebook&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/ad516503a11cd5ca435acc9bb6523536" alt="Google+ photo" width="25" class="no-grav">
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="">
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="">
+				<p class="comment-form-posting-as pa-googleplus"><strong></strong> You are commenting using your Google+ account. <span class="comment-form-log-out">(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( &#39;googleplus&#39; );">Log&nbsp;Out</a>&nbsp;/&nbsp;<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)</span></p>
+			</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe" style="display: none;">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p></div>
+
+
+
+
+<p class="form-submit" style="display: none;"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="8" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="4bf790175b"></p>
+<input type="hidden" name="genseq" value="1467015189">
+<p style="display: none;"></p>				<input type="hidden" id="ak_js" name="ak_js" value="1467015191013"></form>
+					</div><!-- #respond -->
+		<div style="clear: both"></div>
+</div><!-- #comments -->
+
+	</div>
+
+
+</div><div id="sidebar" class="sidebar">
+			<div id="rssfeed"><a href="https://mhdevelopment.wordpress.com/feed/"><span>RSS feed</span></a></div>
+
+		<div class="sidebar-border active" id="primary-widget-area">
+		<div class="sidebar-inner">
+		<div id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://mhdevelopment.wordpress.com/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/09/16/how-to-configure-spring-boot-with-jpa-and-multiple-projects/">How to configure Spring Boot with JPA and multiple&nbsp;projects</a>
+						</li>
+					<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/23/my-start-with-neo4j-and-what-you-should-consider-when-starting-with-it/">My start with Neo4J and what you should consider when starting with&nbsp;it</a>
+						</li>
+					<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/">Bootstrap an application with Spring Boot – Part2 Web&nbsp;application</a>
+						</li>
+					<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">Bootstrap an application with Spring Boot – Part1&nbsp;Command-line</a>
+						</li>
+					<li>
+				<a href="https://mhdevelopment.wordpress.com/2014/02/05/my-intentions-behind-starting-a-blog-and-what-i-want-to-achieve-with-it/">My intentions behind starting a blog and what I want to achieve with it&nbsp;:)</a>
+						</li>
+				</ul>
+		</div>		<div id="recent-comments-2" class="widget widget_recent_comments"><h3 class="widget-title">Recent Comments</h3>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tbody><tr><td title="visitor" class="recentcommentsavatartop" style="height:48px; width:48px;"><img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/853d4d02b64cac0b7836c2e5fe6976f1" class="avatar avatar-48 grav-hashed grav-hijack" height="48" width="48" id="grav-853d4d02b64cac0b7836c2e5fe6976f1-0"></td><td class="recentcommentstexttop" style="">visitor on <a href="https://mhdevelopment.wordpress.com/2014/09/16/how-to-configure-spring-boot-with-jpa-and-multiple-projects/comment-page-1/#comment-74">How to configure Spring Boot w…</a></td></tr><tr><td title="mhdevelopment" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="https://mhdevelopment.wordpress.com/" rel="nofollow"><img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe(1)" class="avatar avatar-48 grav-hashed" height="48" width="48" id="grav-806459817aeda0166f2d39931f12acfe-5"></a></td><td class="recentcommentstextend" style=""><a href="https://mhdevelopment.wordpress.com/" rel="nofollow">mhdevelopment</a> on <a href="https://mhdevelopment.wordpress.com/2014/09/16/how-to-configure-spring-boot-with-jpa-and-multiple-projects/comment-page-1/#comment-66">How to configure Spring Boot w…</a></td></tr><tr><td title="Ben" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="http://installingcats.com/" rel="nofollow"><img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/24b1ea75387e15d2d326dc64bb280101" class="avatar avatar-48 grav-hashed" height="48" width="48" id="grav-24b1ea75387e15d2d326dc64bb280101-0"></a></td><td class="recentcommentstextend" style=""><a href="http://installingcats.com/" rel="nofollow">Ben</a> on <a href="https://mhdevelopment.wordpress.com/2014/09/16/how-to-configure-spring-boot-with-jpa-and-multiple-projects/comment-page-1/#comment-64">How to configure Spring Boot w…</a></td></tr><tr><td title="mhdevelopment" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="https://mhdevelopment.wordpress.com/" rel="nofollow"><img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/806459817aeda0166f2d39931f12acfe(1)" class="avatar avatar-48 grav-hashed" height="48" width="48" id="grav-806459817aeda0166f2d39931f12acfe-6"></a></td><td class="recentcommentstextend" style=""><a href="https://mhdevelopment.wordpress.com/" rel="nofollow">mhdevelopment</a> on <a href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/comment-page-1/#comment-55">Bootstrap an application with…</a></td></tr><tr><td title="Rockey 123" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="https://plus.google.com/109806664471092698918" rel="nofollow"><img alt="" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/photo.jpg" class="avatar avatar-48" height="48" width="48"></a></td><td class="recentcommentstextend" style=""><a href="https://plus.google.com/109806664471092698918" rel="nofollow">Rockey 123</a> on <a href="https://mhdevelopment.wordpress.com/2014/02/16/bootstrap-an-application-with-spring-boot-part2-webapplication/comment-page-1/#comment-54">Bootstrap an application with…</a></td></tr>				</tbody></table>
+				</div><div id="archives-2" class="widget widget_archive"><h3 class="widget-title">Archives</h3>		<ul>
+			<li><a href="https://mhdevelopment.wordpress.com/2014/09/">September 2014</a></li>
+	<li><a href="https://mhdevelopment.wordpress.com/2014/02/">February 2014</a></li>
+		</ul>
+		</div><div id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-54"><a href="https://mhdevelopment.wordpress.com/category/general/">General</a>
+</li>
+	<li class="cat-item cat-item-8644597"><a href="https://mhdevelopment.wordpress.com/category/gradle/">Gradle</a>
+</li>
+	<li class="cat-item cat-item-102270"><a href="https://mhdevelopment.wordpress.com/category/junit/">junit</a>
+</li>
+	<li class="cat-item cat-item-11651972"><a href="https://mhdevelopment.wordpress.com/category/neo4j/">Neo4j</a>
+</li>
+	<li class="cat-item cat-item-9486"><a href="https://mhdevelopment.wordpress.com/category/spring/">Spring</a>
+</li>
+	<li class="cat-item cat-item-91482705"><a href="https://mhdevelopment.wordpress.com/category/spring-boot/">Spring Boot</a>
+</li>
+	<li class="cat-item cat-item-81312455"><a href="https://mhdevelopment.wordpress.com/category/spring-data-jpa/">Spring Data JPA</a>
+</li>
+		</ul>
+</div><div id="meta-2" class="widget widget_meta"><h3 class="widget-title">Meta</h3>			<ul>
+			<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li>			<li><a href="https://mhdevelopment.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://mhdevelopment.wordpress.com/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://mhdevelopment.wordpress.com/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>			</ul>
+			</div>
+		</div>
+	</div>
+
+	
+
+</div>
+
+
+</div>
+<div id="footer">
+	<div>
+		<a href="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/#wrapper" id="top-link">↑ Top</a>
+		<a href="https://wordpress.com/?ref=footer_blog">Blog at WordPress.com.</a>
+		<a href="https://wordpress.com/themes/zbench/" title="Learn more about this theme">The zBench Theme</a>.	</div>
+</div>
+
+</div>
+<!-- wpcom_wp_footer -->
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/gprofiles.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/wpgroho.js"></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-8072a2fea8e287b103a70230594ac9a3">
+	</div>
+	<div class="grofile-hash-map-806459817aeda0166f2d39931f12acfe">
+	</div>
+	<div class="grofile-hash-map-74b320743aa89bafb58a43cc5e08123b">
+	</div>
+	<div class="grofile-hash-map-e7f9f05ffd3df99849e58984a73774b6">
+	</div>
+	<div class="grofile-hash-map-853d4d02b64cac0b7836c2e5fe6976f1">
+	</div>
+	<div class="grofile-hash-map-24b1ea75387e15d2d326dc64bb280101">
+	</div>
+	<div class="grofile-hash-map-135dad910d473e02d78285d984d0292b">
+	</div>
+	</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/mhdevelopment.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/mhdevelopment.wordpress.com\/wp-login.php?action=logout&_wpnonce=5f1e582c15","homeURL":"https:\/\/mhdevelopment.wordpress.com\/","postID":"8","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"0","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource(2)"></script>
+
+	<div id="bit" class="loggedout-follow-normal" style="bottom: -249px;">
+		<a class="bsub" href="javascript:void(0)"><span id="bsub-text">Follow</span></a>
+		<div id="bitsubscribe">
+
+					<h3><label for="loggedout-follow-field">Follow “Mathias Hauser”</label></h3>
+
+			<form action="https://subscribe.wordpress.com/" method="post" accept-charset="utf-8" id="loggedout-follow">
+			<p>Get every new post delivered to your Inbox.</p>
+
+			<p id="loggedout-follow-error" style="display: none;"></p>
+
+			
+			<p><input type="email" name="email" placeholder="Enter your email address" id="loggedout-follow-field"></p>
+
+			<input type="hidden" name="action" value="subscribe">
+			<input type="hidden" name="blog_id" value="63783268">
+			<input type="hidden" name="source" value="https://mhdevelopment.wordpress.com/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">
+			<input type="hidden" name="sub-type" value="loggedout-follow">
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="adf6ad4c86"><input type="hidden" name="_wp_http_referer" value="/2014/02/09/bootstrap-an-application-with-spring-boot-part1-command-line/">
+			<p id="bsub-subscribe-button"><input type="submit" value="Sign me up"></p>
+			</form>
+					<div id="bsub-credit"><a href="https://wordpress.com/?ref=lof">Build a website with WordPress.com</a></div>
+		</div><!-- #bitsubscribe -->
+	</div><!-- #bit -->
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/mhdevelopment.wordpress.com\/2014\/02\/09\/bootstrap-an-application-with-spring-boot-part1-command-line\/":8};
+	</script>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+		<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/form.js"></script>
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource(3)"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://s0.wp.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?m=1363304414h&amp;ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var JetpackEmojiSettings = {"base_url":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/emoji\/twemoji\/"};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/saved_resource(4)"></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/master.html" scrolling="no" id="likes-master" name="likes-master" style="display:none;"></iframe>
+		<div id="likes-other-gravatars"><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+		<script>
+			var _comscore = _comscore || [];
+			_comscore.push({
+				c1: "2",
+				c2: "7518284"
+			});
+			(function() {
+				var s = document.createElement("script"),
+					el = document.getElementsByTagName("script")[0];
+				s.async = true;
+				s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+				el.parentNode.insertBefore(s, el);
+			})();
+		</script>
+		<noscript>
+			&lt;p class="robots-nocontent"&gt;&lt;img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=7518284&amp;c3=&amp;c4=&amp;c5=&amp;c6=&amp;c15=&amp;cv=2.0&amp;cj=1" alt="" style="display:none;" width="1" height="1" /&gt;&lt;/p&gt;
+		</noscript><script src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/w.js" type="text/javascript" async="" defer=""></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'63783268','blog_tz':'2','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'63783268','v':'wpcom','tz':'2','user_id':'0','post':'8','subd':'mhdevelopment'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWFnNncxc1tjZG9XVXhReFBBJixXRU5XS21MRHxpSS09aXYlbX5OeEJ+cldzR3Faait3YjFGeGczLXp3cVNVaVYlUythSUF+fDJjaFBjMXpjTTBKQWcmdCxUVE4wbDIyOTA2NUVKSCtkTT11ek89fEQrZ1k/ZHVCR3JnJUxsZnBjTiZFOVNOLTFaYV1fWU4uZktvaGFTbk0sQ3U3flNuK1ltWzVqSDBZal1hZU15Ymc2RnRCTjFjZX5SNzNvcT0sfnpsQVdnSmRSNjV6bXV1PWNNYzhBT3E5ak9YJmdYTXRHOHlIVlFYdC1aP3hzJVNxV3p8M3F+X3pvNzd0LmRjMiw='}]);
+_stq.push([ 'clickTrackerInit', '63783268', '8' ]);
+	</script>
+<noscript>&lt;img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<img src="./Bootstrap an application with Spring Boot – Part1 Command-line _ Mathias Hauser_files/g.gif" alt=":)" id="wpstats"><div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>

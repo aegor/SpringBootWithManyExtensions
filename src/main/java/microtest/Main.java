@@ -31,10 +31,10 @@ import javax.persistence.EntityManagerFactory;
 @EnableAdminServer
 public class Main implements CommandLineRunner{
 
-//	@Autowired
-//	private AccountRepository accountRepository;
+/*	@Autowired
+	private AccountRepository accountRepository;
 	@Autowired
-	private EntityManagerFactory emf;
+	private EntityManagerFactory emf;*/
 
 //
 //	@Autowired
@@ -49,19 +49,19 @@ public class Main implements CommandLineRunner{
 	// TODO @Override
 	public void run(String... args) throws Exception {
 
-		EntityManager em = emf.createEntityManager();
+/*		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
 		Object cnt = em.createQuery("select count (r) from Role r").getSingleResult();
 		System.out.println("roles found:"+cnt);
 
-//		if (cnt==0) {
-//			em.persist(new Role("ROLE_USER"));
-//			em.persist(new Role("ROLE_USER"));
-//			em.persist(new Role("ROLE_USER"));
-//		}
+		if (cnt==0) {
+			em.persist(new Role("ROLE_USER"));
+			em.persist(new Role("ROLE_USER"));
+			em.persist(new Role("ROLE_USER"));
+		}
 
-		em.getTransaction().commit();
+		em.getTransaction().commit();*/
 //	this.accountRepository.deleteAll();
 //	this.accountRepository.save(new Account("egor", "1234"));
 

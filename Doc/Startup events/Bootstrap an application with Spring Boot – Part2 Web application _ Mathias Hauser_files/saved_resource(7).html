@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)https://public-api.wordpress.com/wp-admin/rest-proxy/#https://widgets.wp.com -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="./saved_resource(5)"></script>
+
+<script>
+(function() {
+var receiveMessage, sendMessage, sendError, cookies, cookie = '', i, ajaxSetup = { dataType: 'json' },
+    bufferMessage = true, emptyBuffer, buffer = [],
+    origin = window.location.hash.replace( '#', '' ).split( '/', 3 ).join( '/' ),
+    giveMeAccessToAllUsersBlogs = false,
+    usePM = false,
+    headersWhiteList = ['Date', 'Content-Type'], // headers provided to the proxied callback
+    getResponseHeaders, normalizeData;
+
+var allBlogWhitelist = [
+	'https://mc.a8c.com',
+];
+
+var originWhitelist = [
+	'https://wordpress.com',
+	'http://widgets.wp.com',
+	'https://widgets.wp.com',
+	'http://wpeditor.org',
+	'https://dev-mc.a8c.com',
+	'https://mc.a8c.com',
+	'https://wpeditor.org',
+	'http://calypso.dev:3000',
+	'https://calypso.dev:3000',
+	'http://calypso.dev:3001',
+	'https://calypso.dev:3001',
+	'http://calypso.localhost:3000',
+	'https://calypso.localhost:3000',
+	'http://calypso.localhost:3001',
+	'https://calypso.localhost:3001',
+	'https://calypso.live',
+	'http://notifications.dev:3000',
+	'http://notifications.dev:8888',
+	'https://notifications.dev:3000',
+	'https://automattic.github.io',
+	'http://wpeditor.local',
+	'http://wpeditor.local:3000',
+	'http://wpeditor.local:8888',
+	'https://wpeditor.local',
+	'https://wpeditor.local:3000',
+	'https://wpeditor.local:8888',
+	'http://wpeditor.dev',
+	'http://wpeditor.dev:8888',
+	'https://wpeditor.dev',
+	'https://wpeditor.dev:8888',
+];
+
+if ( !origin ) {
+	return;
+}
+
+if ( jQuery.inArray( origin, allBlogWhitelist ) > -1 ) {
+	giveMeAccessToAllUsersBlogs = true;
+}
+
+var pixel = function(key, value, unit) {
+	(new Image()).src = 'https://pixel.wp.com/boom.gif?' +
+		'v=0.9&u=https://public-api.wordpress.com/pinghub&' +
+		'json={"beacons":["' +
+		key + ':' + value + '|' + unit +
+		'"]}';
+};
+
+receiveMessage = function( event ) {
+	var data, i, url, acceptsVariableArgs, legacyError, opts, sendAsString = false;
+
+	if ( !usePM ) {
+		if ( 'string' === typeof event ) {
+			event = JSON.parse( event );
+		}
+
+		if ( origin !== event.origin ) {
+			return;
+		}
+
+		if ( bufferMessage ) {
+			buffer.push( { data: event.data, origin: event.origin } );
+			return;
+		}
+
+		if ( 'string' === typeof event.data ) {
+			data = JSON.parse( event.data );
+			sendAsString = true;
+		} else {
+			data = event.data;
+		}
+	} else {
+		if ( bufferMessage ) {
+			buffer.push( event );
+			return;
+		}
+
+		data = event;
+	}
+
+	if ( 'undefined' !== typeof data.metaAPI && data.metaAPI ) {
+		if ( 'undefined' !== typeof data.metaAPI.accessAllUsersBlogs ) {
+			giveMeAccessToAllUsersBlogs = !!data.metaAPI.accessAllUsersBlogs; // (bool)
+		}
+
+		sendMessage( data.callback, sendAsString )( data.metaAPI );
+		return;
+	}
+
+	if ( 'string' !== typeof data.apiVersion ) {
+		// default to api v1
+		data.apiVersion = '1';
+
+		if ( data.version ) {
+			// legacy support for specifying api version
+			data.apiVersion = data.version.replace( /[^0-9\.]/, '' );
+		}
+	}
+
+	url = window.location.protocol + '//public-api.wordpress.com/rest/v' + data.apiVersion + data.path + '?http_envelope=1';
+
+	// Adjust the url if this is a WP-API request
+	if ( data.apiNamespace ) {
+		// Example WP-API URL: /wpcom/v2/sites/%s/post-counts
+		url = window.location.protocol + '//public-api.wordpress.com/' + data.apiNamespace + data.path + '?_envelope=1';
+	}
+
+	if ( data.query ) {
+		if ( 'string' === typeof data.query ) {
+			url += '&' + data.query.replace( /^&/, '' );
+		} else {
+			url += '&' + jQuery.param( data.query );
+		}
+	}
+	acceptsVariableArgs = data.supports_args;
+	legacyError = !data.supports_error_obj;
+	opts = {
+		url : url,
+		type : data.method,
+		success : sendMessage( data.callback, sendAsString, acceptsVariableArgs ),
+		error : sendError( data.callback, sendAsString, acceptsVariableArgs, legacyError )
+	};
+
+	if ( data.path && data.path.indexOf( '/pinghub/' ) === 0 ) {
+		handlePinghubMessage(data, opts);
+		return;
+	}
+
+	if ( data.token ) {
+		opts.beforeSend = function( jqXHR ) {
+			jqXHR.setRequestHeader( 'Authorization', 'Bearer ' + data.token );
+		};
+	}
+
+	if ( data.body ) {
+		opts.data = data.body;
+	} else if ( data.formData && data.formData.length > 0 ) {
+		// FormData instances cannot be passed over the <iframe> postMessage machinery,
+		// so instead the host page needs to pass over a 2D `formData` array of fields
+		// to append to the request. This makes it possible to do client-side uploads.
+		opts.data = new FormData();
+		opts.cache = false;
+		opts.contentType = false;
+		opts.processData = false;
+		for ( i = 0; i < data.formData.length; i++ ) {
+
+			// For browsers that don't like sending `File` instances cross-domain (looking at you Firefox)
+			// we implement this workaround by sending the File as an `ArrayBuffer` and recreating the blob instead
+			if ( 'object' == typeof data.formData[i][1] && 'undefined' != typeof data.formData[i][1].fileContents ) {
+				var key = data.formData[i][0],
+					name = data.formData[i][1].fileName,
+					blob = new Blob( [ data.formData[i][1].fileContents ], { type: data.formData[i][1].mimeType });
+				opts.data.append( key, blob, name );
+			} else {
+				opts.data.append( data.formData[i][0], data.formData[i][1] );
+			}
+		}
+	}
+
+	function onuploadprogress( e ) {
+		var c = {
+			upload: true,
+			lengthComputable: e.lengthComputable,
+			loaded: e.loaded,
+			total: e.total,
+			callbackId: data.callback
+		};
+		window.parent.postMessage( c, origin );
+	}
+
+	function ondownloadprogress( e ) {
+		var c = {
+			download: true,
+			lengthComputable: e.lengthComputable,
+			loaded: e.loaded,
+			total: e.total,
+			callbackId: data.callback
+		};
+		window.parent.postMessage( c, origin );
+	}
+
+	if ( data.supports_progress ) {
+		// http://stackoverflow.com/a/19127053/376773
+		opts.xhr = function() {
+			var xhr = new XMLHttpRequest();
+
+			// upload "progress" events
+			xhr.upload.onprogress = onuploadprogress;
+
+			// download "progress" events
+			xhr.onprogress = ondownloadprogress;
+
+			return xhr;
+		};
+	}
+
+	// fire off the ajax call
+	jQuery.ajax( opts );
+};
+
+// IE 8 has postMessage, but uses attachEvent instead of addEventListener
+if ( window.postMessage && ( window.addEventListener || window.attachEvent ) ) {
+	// jQuery abstracts this away for us
+	jQuery(window).on( 'message', function( e ) { receiveMessage( e.originalEvent ); } );
+} else {
+	usePM = true;
+	pm.bind( 'proxy', receiveMessage );
+}
+
+cookies = document.cookie.split( /;\s*/ );
+for ( i = 0; i < cookies.length; i++ ) {
+	if ( cookies[i].match( /^wp_api=/ ) ) {
+		cookies = cookies[i].split( '=' );
+		cookie = cookies[1];
+		break;
+	}
+}
+
+if ( cookie ) {
+	ajaxSetup['beforeSend'] = function( jqXHR ) {
+		if ( giveMeAccessToAllUsersBlogs ) {
+			jqXHR.setRequestHeader( 'Authorization', 'X-WPCOOKIE ' + cookie + ':1:' + origin );
+		} else {
+			jqXHR.setRequestHeader( 'Authorization', 'X-WPCOOKIE ' + cookie + ':0:' + origin );
+		}
+	};
+}
+
+jQuery.ajaxSetup( ajaxSetup );
+
+emptyBuffer = function(){
+	var event;
+	while(event = buffer.shift()){
+		receiveMessage( event );
+	}
+};
+
+if ( jQuery.inArray( origin, originWhitelist ) > -1 || origin.match( /^https:\/\/[a-z0-9-]+\.wordpress\.com$/ ) ) {
+	bufferMessage = false;
+	emptyBuffer();
+}
+else {
+	jQuery.get( window.location.protocol + '//public-api.wordpress.com/rest/v1/sites/' + encodeURIComponent( origin ) + '?http_envelope=1&check_wpcom=1' ).done( function( response ) {
+		if ( 'undefined' === typeof response.code || 200 !== response.code || 'undefined' === typeof response.body.isWPcom || true !== response.body.isWPcom ) {
+			window.removeEventListener( 'message', receiveMessage );
+			buffer = [];
+			return;
+		}
+		bufferMessage = false;
+		emptyBuffer();
+	} );
+}
+
+sendMessage = function( callback, sendAsString, acceptsVariableArgs ) {
+	return function( data, textStatus, jqXHR ) {
+		var headers, info;
+
+		data = normalizeData( data, textStatus, jqXHR );
+		headers = getResponseHeaders( data, jqXHR );
+		info = [ data.body, data.code, headers, callback ];
+
+		// For older versions of wpcom-proxy-request that only accept 2 args and callback
+		if ( !acceptsVariableArgs ) {
+			info = [ data.body, data.code, callback ];
+		}
+		if ( sendAsString ) {
+			info = JSON.stringify( info );
+		}
+		if ( !usePM ) {
+			window.parent.postMessage( info, origin );
+		} else {
+			pm( {
+				data:   info,
+				type:   'proxy',
+				target: window.parent,
+				origin: origin
+			} );
+		}
+	}
+};
+
+getResponseHeaders = function( data, jqXHR ) {
+	var envelopeHeaders = [],
+		headers = {},
+		whiteListed = {},
+		hasXHR = jqXHR && 'function' === typeof( jqXHR.getResponseHeader );
+
+	if ( data && data.headers ) {
+		if ( data.headers[0] && data.headers[0].name ) {
+			// REST API v1 envelope: headers = [ { name: 'Accept', value: 'GET' }, ... ]
+			envelopeHeaders = data.headers;
+		} else {
+			// WP-API envelope: headers = { Accept: 'GET', ... }
+			envelopeHeaders = jQuery.map( data.headers, function( name, value ) {
+				return {
+					name: name,
+					value: value
+				};
+			} );
+		}
+	}
+
+	// first pull out any of the envelope headers with a case-insensitive match
+	jQuery.each(envelopeHeaders, function(i, header){
+		headers[header.name.toUpperCase()] = header.value;
+	});
+	// loop through the white-listed headers and grab the enveloped headers if available,
+	// otherwise getResponseHeader if we can
+	jQuery.each(headersWhiteList, function(i, headerName){
+		var headerNameUpper = headerName.toUpperCase();
+		if ( headers[headerNameUpper]) {
+			whiteListed[headerName] = headers[headerNameUpper];
+		} else if (hasXHR) {
+			whiteListed[headerName] = jqXHR.getResponseHeader(headerName);
+		}
+	});
+	return whiteListed;
+};
+
+normalizeData = function( data, textStatus, jqXHR ) {
+	if ( textStatus !== 'nocontent' ) {
+		return data;
+	}
+
+	return {
+		body: jqXHR.responseText,
+		code: jqXHR.status
+	};
+};
+
+sendError = function( callback, sendAsString, acceptsVariableArgs, legacyError ) {
+	return function( jqXHR, ajaxOptions, thrownError ) {
+		var headers, info, body, code;
+
+		if ( legacyError ) {
+			code = 0;
+			body = 'error';
+		} else {
+			headers = getResponseHeaders( null, jqXHR );
+			code = jqXHR.status;
+			body = jqXHR.responseJSON || {};
+			if ( jqXHR.responseText && ! jqXHR.responseJSON ) {
+				body.message = jqXHR.responseText;
+			}
+		}
+
+		// For older versions of wpcom-proxy-request that only accept 2 args and callback
+		if ( acceptsVariableArgs ) {
+			info = [ body, code, headers, callback ];
+		} else {
+			info = [ body, code, callback ];
+		}
+
+		if ( sendAsString ) {
+			info = JSON.stringify( info );
+		}
+		if ( !usePM ) {
+			window.parent.postMessage( info, origin );
+		} else {
+			pm( {
+				data:   info,
+				type:   'proxy',
+				target: window.parent,
+				origin: origin
+			} );
+		}
+	}
+};
+
+var reported = false;
+var handlePinghubMessage = function( data, opts ) {
+	if ( !window["WebSocket"] ) {
+		reported || pixel( 'pinghub.restproxy.ws_unsupported', '1', 'c' );
+		opts.success( { body: { type: 'error', data: 'unsupported' }, code: 500 } );
+		return;
+	} else {
+		reported || pixel( 'pinghub.restproxy.ws_supported', '1', 'c' );
+	}
+	reported = true;
+	if ( data.action === 'connect' ) {
+		pinghubConnect( data.path, opts.success );
+	}
+	if ( data.action === 'disconnect' ) {
+		pinghubDisconnect( data.path, opts.success );
+	}
+	if ( data.action === 'send' ) {
+		pinghubSend( data.path, data.message, opts.success );
+	}
+};
+
+var pinghubConnections = {};
+
+var pinghubConnect = function( path, success ) {
+	if ( path in pinghubConnections ) {
+		success( { body: { type: 'error', text: 'already subscribed' }, code: 444 } );
+		return;
+	}
+	var start = (new Date()).getTime();
+	var ws = pinghubAdd( path );
+	ws.onopen = function(e){
+		pixel( 'pinghub.conn_open_dc.dfw', ( (new Date()).getTime() - start ), 'ms' );
+		success( { body: { type: 'open' }, code: 207 } );
+	};
+	ws.onclose = function(e){
+		pixel( 'pinghub.conn_close_code.' + e.code, ( (new Date()).getTime() - start ), 'ms' );
+		pinghubRemove( path );
+		success( { body: { type: 'close' }, code: 200 } );
+	};
+	ws.onerror = function(e){
+		pixel('pinghub.conn_err', ((new Date()).getTime() - start), 'ms')
+		pinghubRemove( path );
+		success( { body: { type: 'error' }, code: 500 } );
+	};
+	ws.onmessage = function(e){
+		success( { body: { type: 'message', data: e.data }, code: 207 } );
+	};
+};
+
+var pinghubDisconnect = function( path, success ) {
+	if ( path in pinghubConnections ) {
+		pinghubConnections[ path ].close();
+		pinghubRemove( path );
+		success( { body: { type: 'disconnect' }, code: 200 } );
+	} else {
+		success( { body: { type: 'error', data: 'not connected' }, code: 200 } );
+	}
+};
+
+var pinghubAdd = function( path ) {
+	return pinghubConnections[ path ] = new WebSocket('wss://public-api.wordpress.com' + path);
+};
+
+var pinghubRemove = function( path ) {
+	delete pinghubConnections[ path ];
+};
+
+var pinghubSend = function( path, message, success ) {
+	if ( path in pinghubConnections ) {
+		try {
+			pinghubConnections[ path ].send( message );
+			success( { body: { type: 'sent' }, code: 201 } );
+		} catch ( e ) {
+			success( { body: { type: 'error' }, code: 600 } );
+		}
+	} else {
+		success( { body: { type: 'error' }, code: 404 } );
+	}
+};
+
+})();
+</script>
+</head>
+<body>
+<div id="csscan-wrapper" style="display: none;"><h2 id="csscan-header">element</h2><table id="csscan-table"><tbody><tr><th colspan="2" id="csscan-header-font" class="csscan-header">Font</th></tr><tr id="csscan-row-font-family"><td id="csscan-property-font-family" class="csscan-property">font-family</td><td id="csscan-value-font-family" class="csscan-value"></td></tr><tr id="csscan-row-font-size"><td id="csscan-property-font-size" class="csscan-property">font-size</td><td id="csscan-value-font-size" class="csscan-value"></td></tr><tr id="csscan-row-font-style"><td id="csscan-property-font-style" class="csscan-property">font-style</td><td id="csscan-value-font-style" class="csscan-value"></td></tr><tr id="csscan-row-font-variant"><td id="csscan-property-font-variant" class="csscan-property">font-variant</td><td id="csscan-value-font-variant" class="csscan-value"></td></tr><tr id="csscan-row-font-weight"><td id="csscan-property-font-weight" class="csscan-property">font-weight</td><td id="csscan-value-font-weight" class="csscan-value"></td></tr><tr id="csscan-row-letter-spacing"><td id="csscan-property-letter-spacing" class="csscan-property">letter-spacing</td><td id="csscan-value-letter-spacing" class="csscan-value"></td></tr><tr id="csscan-row-line-height"><td id="csscan-property-line-height" class="csscan-property">line-height</td><td id="csscan-value-line-height" class="csscan-value"></td></tr><tr id="csscan-row-text-decoration"><td id="csscan-property-text-decoration" class="csscan-property">text-decoration</td><td id="csscan-value-text-decoration" class="csscan-value"></td></tr><tr id="csscan-row-text-align"><td id="csscan-property-text-align" class="csscan-property">text-align</td><td id="csscan-value-text-align" class="csscan-value"></td></tr><tr id="csscan-row-text-indent"><td id="csscan-property-text-indent" class="csscan-property">text-indent</td><td id="csscan-value-text-indent" class="csscan-value"></td></tr><tr id="csscan-row-text-transform"><td id="csscan-property-text-transform" class="csscan-property">text-transform</td><td id="csscan-value-text-transform" class="csscan-value"></td></tr><tr id="csscan-row-white-space"><td id="csscan-property-white-space" class="csscan-property">white-space</td><td id="csscan-value-white-space" class="csscan-value"></td></tr><tr id="csscan-row-word-spacing"><td id="csscan-property-word-spacing" class="csscan-property">word-spacing</td><td id="csscan-value-word-spacing" class="csscan-value"></td></tr><tr id="csscan-row-color"><td id="csscan-property-color" class="csscan-property">color</td><td id="csscan-value-color" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-background" class="csscan-header">Background</th></tr><tr id="csscan-row-background-attachment"><td id="csscan-property-background-attachment" class="csscan-property">bg-attachment</td><td id="csscan-value-background-attachment" class="csscan-value"></td></tr><tr id="csscan-row-background-color"><td id="csscan-property-background-color" class="csscan-property">bg-color</td><td id="csscan-value-background-color" class="csscan-value"></td></tr><tr id="csscan-row-background-image"><td id="csscan-property-background-image" class="csscan-property">bg-image</td><td id="csscan-value-background-image" class="csscan-value"></td></tr><tr id="csscan-row-background-position"><td id="csscan-property-background-position" class="csscan-property">bg-position</td><td id="csscan-value-background-position" class="csscan-value"></td></tr><tr id="csscan-row-background-repeat"><td id="csscan-property-background-repeat" class="csscan-property">bg-repeat</td><td id="csscan-value-background-repeat" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-size" class="csscan-header">Box</th></tr><tr id="csscan-row-width"><td id="csscan-property-width" class="csscan-property">width</td><td id="csscan-value-width" class="csscan-value"></td></tr><tr id="csscan-row-height"><td id="csscan-property-height" class="csscan-property">height</td><td id="csscan-value-height" class="csscan-value"></td></tr><tr id="csscan-row-border-top"><td id="csscan-property-border-top" class="csscan-property">border-top</td><td id="csscan-value-border-top" class="csscan-value"></td></tr><tr id="csscan-row-border-right"><td id="csscan-property-border-right" class="csscan-property">border-right</td><td id="csscan-value-border-right" class="csscan-value"></td></tr><tr id="csscan-row-border-bottom"><td id="csscan-property-border-bottom" class="csscan-property">border-bottom</td><td id="csscan-value-border-bottom" class="csscan-value"></td></tr><tr id="csscan-row-border-left"><td id="csscan-property-border-left" class="csscan-property">border-left</td><td id="csscan-value-border-left" class="csscan-value"></td></tr><tr id="csscan-row-margin"><td id="csscan-property-margin" class="csscan-property">margin</td><td id="csscan-value-margin" class="csscan-value"></td></tr><tr id="csscan-row-padding"><td id="csscan-property-padding" class="csscan-property">padding</td><td id="csscan-value-padding" class="csscan-value"></td></tr><tr id="csscan-row-max-height"><td id="csscan-property-max-height" class="csscan-property">max-height</td><td id="csscan-value-max-height" class="csscan-value"></td></tr><tr id="csscan-row-min-height"><td id="csscan-property-min-height" class="csscan-property">min-height</td><td id="csscan-value-min-height" class="csscan-value"></td></tr><tr id="csscan-row-max-width"><td id="csscan-property-max-width" class="csscan-property">max-width</td><td id="csscan-value-max-width" class="csscan-value"></td></tr><tr id="csscan-row-min-width"><td id="csscan-property-min-width" class="csscan-property">min-width</td><td id="csscan-value-min-width" class="csscan-value"></td></tr><tr id="csscan-row-outline-color"><td id="csscan-property-outline-color" class="csscan-property">outline-color</td><td id="csscan-value-outline-color" class="csscan-value"></td></tr><tr id="csscan-row-outline-style"><td id="csscan-property-outline-style" class="csscan-property">outline-style</td><td id="csscan-value-outline-style" class="csscan-value"></td></tr><tr id="csscan-row-outline-width"><td id="csscan-property-outline-width" class="csscan-property">outline-width</td><td id="csscan-value-outline-width" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-position" class="csscan-header">Positioning</th></tr><tr id="csscan-row-position"><td id="csscan-property-position" class="csscan-property">position</td><td id="csscan-value-position" class="csscan-value"></td></tr><tr id="csscan-row-top"><td id="csscan-property-top" class="csscan-property">top</td><td id="csscan-value-top" class="csscan-value"></td></tr><tr id="csscan-row-bottom"><td id="csscan-property-bottom" class="csscan-property">bottom</td><td id="csscan-value-bottom" class="csscan-value"></td></tr><tr id="csscan-row-right"><td id="csscan-property-right" class="csscan-property">right</td><td id="csscan-value-right" class="csscan-value"></td></tr><tr id="csscan-row-left"><td id="csscan-property-left" class="csscan-property">left</td><td id="csscan-value-left" class="csscan-value"></td></tr><tr id="csscan-row-float"><td id="csscan-property-float" class="csscan-property">float</td><td id="csscan-value-float" class="csscan-value"></td></tr><tr id="csscan-row-display"><td id="csscan-property-display" class="csscan-property">display</td><td id="csscan-value-display" class="csscan-value"></td></tr><tr id="csscan-row-clear"><td id="csscan-property-clear" class="csscan-property">clear</td><td id="csscan-value-clear" class="csscan-value"></td></tr><tr id="csscan-row-z-index"><td id="csscan-property-z-index" class="csscan-property">z-index</td><td id="csscan-value-z-index" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-list" class="csscan-header">List</th></tr><tr id="csscan-row-list-style-image"><td id="csscan-property-list-style-image" class="csscan-property">list-style-image</td><td id="csscan-value-list-style-image" class="csscan-value"></td></tr><tr id="csscan-row-list-style-type"><td id="csscan-property-list-style-type" class="csscan-property">list-style-type</td><td id="csscan-value-list-style-type" class="csscan-value"></td></tr><tr id="csscan-row-list-style-position"><td id="csscan-property-list-style-position" class="csscan-property">list-style-position</td><td id="csscan-value-list-style-position" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-table" class="csscan-header">Table</th></tr><tr id="csscan-row-vertical-align"><td id="csscan-property-vertical-align" class="csscan-property">vertical-align</td><td id="csscan-value-vertical-align" class="csscan-value"></td></tr><tr id="csscan-row-border-collapse"><td id="csscan-property-border-collapse" class="csscan-property">border-collapse</td><td id="csscan-value-border-collapse" class="csscan-value"></td></tr><tr id="csscan-row-border-spacing"><td id="csscan-property-border-spacing" class="csscan-property">border-spacing</td><td id="csscan-value-border-spacing" class="csscan-value"></td></tr><tr id="csscan-row-caption-side"><td id="csscan-property-caption-side" class="csscan-property">caption-side</td><td id="csscan-value-caption-side" class="csscan-value"></td></tr><tr id="csscan-row-empty-cells"><td id="csscan-property-empty-cells" class="csscan-property">empty-cells</td><td id="csscan-value-empty-cells" class="csscan-value"></td></tr><tr id="csscan-row-table-layout"><td id="csscan-property-table-layout" class="csscan-property">table-layout</td><td id="csscan-value-table-layout" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-effects" class="csscan-header">Effects</th></tr><tr id="csscan-row-text-shadow"><td id="csscan-property-text-shadow" class="csscan-property">text-shadow</td><td id="csscan-value-text-shadow" class="csscan-value"></td></tr><tr id="csscan-row--webkit-box-shadow"><td id="csscan-property--webkit-box-shadow" class="csscan-property">-webkit-box-shadow</td><td id="csscan-value--webkit-box-shadow" class="csscan-value"></td></tr><tr id="csscan-row-border-radius"><td id="csscan-property-border-radius" class="csscan-property">border-radius</td><td id="csscan-value-border-radius" class="csscan-value"></td></tr><tr><th colspan="2" id="csscan-header-other" class="csscan-header">Other</th></tr><tr id="csscan-row-overflow"><td id="csscan-property-overflow" class="csscan-property">overflow</td><td id="csscan-value-overflow" class="csscan-value"></td></tr><tr id="csscan-row-cursor"><td id="csscan-property-cursor" class="csscan-property">cursor</td><td id="csscan-value-cursor" class="csscan-value"></td></tr><tr id="csscan-row-visibility"><td id="csscan-property-visibility" class="csscan-property">visibility</td><td id="csscan-value-visibility" class="csscan-value"></td></tr></tbody></table></div></body></html>

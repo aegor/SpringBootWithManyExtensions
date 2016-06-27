@@ -26,7 +26,7 @@ import microtest.domain.model.Hotel;
 import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "hotels", path = "hotels")
-interface HotelRepository extends PagingAndSortingRepository<Hotel, Long> {
+public interface HotelRepository extends PagingAndSortingRepository<Hotel, Long> {
 
 	// find hotels by part of city's name
 	@Query("SELECT h " +

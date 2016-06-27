@@ -1,0 +1,1 @@
+conditionizr.config({assets:'https://blog.codecentric.de/wp-content/themes/codecentric2015',tests:{}});
